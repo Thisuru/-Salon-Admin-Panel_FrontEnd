@@ -17,10 +17,12 @@ const Sidebar = () => {
       <div className="center">
         <ul>
           <p className="title">MAIN</p>
+          <Link to="/" style={{ textDecoration: "none" }}>
           <li>
             <DashboardIcon className="icon" />
             <span>Dashboard</span>
           </li>
+          </Link>
           <p className="title">LISTS</p>
           <Link to="/users" style={{ textDecoration: "none" }}>
             <li>
@@ -29,15 +31,19 @@ const Sidebar = () => {
             </li>
           </Link>
           <p className="title">RESERVATION</p>
+          <Link to="/calendar" style={{ textDecoration: "none" }}>
           <li>
             <CalendarMonthIcon className="icon" />
-            <span>Calender</span>
+            <span>Calendar</span>
           </li>
+          </Link>
           <p className="title">USER</p>
+          <Link to="/login" style={{ textDecoration: "none" }}>
           <li>
             <ExitToAppIcon className="icon" />
             <span>Logout</span>
           </li>
+          </Link>
         </ul>
       </div>
     </div>
