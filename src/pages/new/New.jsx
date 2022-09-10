@@ -4,8 +4,14 @@ import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const New = ({ inputs, title }) => {
+  // const location = useLocation();
+  // console.log("location: ", location);
+  
   const [file, setFile] = useState("");
   const [firstName, setFirstName] = useState('');
   const [lasttName, setLastName] = useState('');
@@ -26,9 +32,10 @@ const New = ({ inputs, title }) => {
 
     if (response.status === 200) {
       console.log("Post Client: ", response);
+      toast("Success! Client created successfully", { type: "success" });
 
     } else {
-      console.log("Something went wrong in Axios");
+      toast("Something went wrong", { type: "error" });
     }
   }
 
@@ -43,7 +50,7 @@ const New = ({ inputs, title }) => {
           <h1>{title}</h1>
         </div>
         <div className="bottom">
-          <div className="left">
+          {/* <div className="left">
             <img
               src={
                 file
@@ -52,13 +59,13 @@ const New = ({ inputs, title }) => {
               }
               alt=""
             />
-          </div>
+          </div> */}
           <div className="right">
             <form>
               <div className="formInput">
-                <label htmlFor="file">
+                {/* <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon" />
-                </label>
+                </label> */}
                 <input
                   type="file"
                   id="file"
@@ -97,6 +104,7 @@ const New = ({ inputs, title }) => {
               <button onClick={(e) => clientCreate(e)}>Send</button>
             </form>
           </div>
+          <ToastContainer />
         </div>
       </div>
     </div>
