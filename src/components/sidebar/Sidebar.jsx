@@ -3,6 +3,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
@@ -31,6 +32,12 @@ const Sidebar = () => {
             </li>
           </Link>
           <p className="title">RESERVATION</p>
+          <Link to="/reservation" style={{ textDecoration: "none" }}>
+          <li>
+            <BookmarkIcon className="icon" />
+            <span>Reservation</span>
+          </li>
+          </Link>
           <Link to="/calendar" style={{ textDecoration: "none" }}>
           <li>
             <CalendarMonthIcon className="icon" />
