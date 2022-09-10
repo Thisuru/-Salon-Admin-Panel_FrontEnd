@@ -1,124 +1,97 @@
 export const userColumns = [
     { field: "id", headerName: "ID", width: 70 },
     {
-      field: "user",
-      headerName: "User",
+      field: "firstname",
+      headerName: "FirstName",
       width: 230,
-      renderCell: (params) => {
-        return (
-          <div className="cellWithImg">
-            <img className="cellImg" src={params.row.img} alt="avatar" />
-            {params.row.username}
-          </div>
-        );
-      },
+    },
+    {
+      field: "lastname",
+      headerName: "LastName",
+      width: 230,
+    },
+    {
+      field: "phonenumber",
+      headerName: "PhoneNumber",
+      width: 230,
     },
     {
       field: "email",
       headerName: "Email",
       width: 230,
-    },
-  
-    {
-      field: "age",
-      headerName: "Age",
-      width: 100,
-    },
-    {
-      field: "status",
-      headerName: "Status",
-      width: 160,
-      renderCell: (params) => {
-        return (
-          <div className={`cellWithStatus ${params.row.status}`}>
-            {params.row.status}
-          </div>
-        );
-      },
-    },
+    }
   ];
   
   //temporary data
   export const userRows = [
     {
       id: 1,
-      username: "Kamal",
-      img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-      status: "active",
-      email: "1test@gmail.com",
-      age: 35,
+      firstname: "Kamal",
+      lastname: "Nishantha",
+      phonenumber: "0714487755",
+      email: "1test@gmail.com"
     },
     {
       id: 2,
-      username: "Anura Perera",
-      img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-      email: "2test@gmail.com",
-      status: "passive",
-      age: 42,
+      firstname: "Anura",
+      lastname: "Perera",
+      phonenumber: "0784487755",
+      email: "2test@gmail.com"
     },
     {
       id: 3,
-      username: "Alex Peter",
-      img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-      email: "3test@gmail.com",
-      status: "pending",
-      age: 45,
+      firstname: "Alex",
+      lastname: "Peter",
+      phonenumber: "0724577755",
+      email: "3test@gmail.com"
     },
     {
       id: 4,
-      username: "Charith",
-      img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+      firstname: "Charith",
+      lastname: "Ranaweera",
+      phonenumber: "0774487755",
       email: "4test@gmail.com",
-      status: "active",
-      age: 16,
     },
     {
       id: 5,
-      username: "Jhone Doe",
-      img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-      email: "5test@gmail.com",
-      status: "passive",
-      age: 22,
+      firstname: "Jhone",
+      lastname: "Doe",
+      phonenumber: "0728887755",
+      email: "5test@gmail.com"
     },
     {
       id: 6,
-      username: "Amal Perera",
-      img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-      email: "6test@gmail.com",
-      status: "active",
-      age: 15,
+      firstname: "Amal ",
+      lastname: "Perera",
+      phonenumber: "0712587755"
     },
     {
       id: 7,
-      username: "Nuwan",
-      img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-      email: "7test@gmail.com",
-      status: "passive",
-      age: 44,
+      firstname: "Nuwan",
+      lastname: "Nirwan",
+      phonenumber: "0723487755",
+      email: "7test@gmail.com"
     },
     {
       id: 8,
-      username: "Gihan",
-      img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-      email: "8test@gmail.com",
-      status: "active",
-      age: 36,
+      firstname: "Gihan",
+      lastname: "Ranathunga",
+      phonenumber: "0722487755",
+      email: "8test@gmail.com"
     },
     {
       id: 9,
-      username: "Kumar",
-      img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-      email: "9test@gmail.com",
-      status: "pending",
-      age: 65,
+      firstname: "Kumar",
+      lastname: "Aunoda",
+      phonenumber: "0754487755",
+      email: "9test@gmail.com"
     },
     {
       id: 10,
-      username: "Malinga",
-      img: "https://images.pexels.com/photos/1820770/pexels-photo-1820770.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-      email: "10test@gmail.com",
-      status: "active",
-      age: 65,
+      firstname: "Malinga",
+      lastname: "Nishantha",
+      phonenumber: "0706487755",
+      email: "10test@gmail.com"
     },
   ];
   
