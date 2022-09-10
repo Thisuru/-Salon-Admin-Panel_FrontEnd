@@ -3,9 +3,36 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
+import axios from 'axios';
 
 const New = ({ inputs, title }) => {
   const [file, setFile] = useState("");
+  const [firstName, setFirstName] = useState('');
+  const [lasttName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  async function clientCreate(e) {
+    e.preventDefault()
+    const response = await axios.post(
+      "http://localhost:5000/api/v1/clients",
+      {
+        firstname: firstName,
+        lastname: lasttName,
+        phonenumber: phoneNumber,
+        email: email
+      }
+    );
+
+    if (response.status === 200) {
+      console.log("Post Client: ", response);
+
+    } else {
+      console.log("Something went wrong in Axios");
+    }
+  }
+
+  console.log("Firstname ", firstName);
 
   return (
     <div className="new">
@@ -40,13 +67,34 @@ const New = ({ inputs, title }) => {
                 />
               </div>
 
-              {inputs.map((input) => (
+              {/* {inputs.map((input) => (
                 <div className="formInput" key={input.id}>
                   <label>{input.label}</label>
-                  <input type={input.type} placeholder={input.placeholder} value={input.value} onChange={()=>console.log("Value")}/>
+                  <input type={input.type} placeholder={input.placeholder} value={input.value} onChange={() => console.log("Value")} />
                 </div>
-              ))}
-              <button>Send</button>
+              ))} */}
+
+              <div className="formInput">
+                <label>First Name</label>
+                <input type="text" placeholder="John" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+              </div>
+
+              <div className="formInput">
+                <label>Last Name</label>
+                <input type="text" placeholder="Doe" value={lasttName} onChange={(e) => setLastName(e.target.value)} />
+              </div>
+
+              <div className="formInput">
+                <label>Email</label>
+                <input type="text" placeholder="john_doe@gmail.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+              </div>
+
+              <div className="formInput">
+                <label>Phone</label>
+                <input type="text" placeholder="+94 234 567 897" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+              </div>
+
+              <button onClick={(e) => clientCreate(e)}>Send</button>
             </form>
           </div>
         </div>

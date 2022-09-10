@@ -3,13 +3,13 @@ export const userInputs = [
       id: 1,
       label: "First Name",
       type: "text",
-      placeholder: "john_doe",
+      placeholder: "John",
     },
     {
       id: 2,
       label: "Last Name",
       type: "text",
-      placeholder: "John Doe",
+      placeholder: "Doe",
     },
     {
       id: 3,
@@ -21,25 +21,8 @@ export const userInputs = [
       id: 4,
       label: "Phone",
       type: "text",
-      placeholder: "+1 234 567 89",
-    },
-    // {
-    //   id: 5,
-    //   label: "Password",
-    //   type: "password",
-    // },
-    // {
-    //   id: 6,
-    //   label: "Address",
-    //   type: "text",
-    //   placeholder: "Elton St. 216 NewYork",
-    // },
-    // {
-    //   id: 7,
-    //   label: "Country",
-    //   type: "text",
-    //   placeholder: "USA",
-    // },
+      placeholder: "+94 234 567 897",
+    }
   ];
 
   export const userUpdateInputs = [
@@ -47,15 +30,15 @@ export const userInputs = [
       id: 1,
       label: "First Name",
       type: "text",
-      placeholder: "john_doe",
-      value:"john_doe"
+      placeholder: "John",
+      value:"John"
     },
     {
       id: 2,
       label: "Last Name",
       type: "text",
-      placeholder: "John Doe",
-      value:"John Doe"
+      placeholder: "Doe",
+      value:"Doe"
 
     },
     {
@@ -70,31 +53,8 @@ export const userInputs = [
       id: 4,
       label: "Phone",
       type: "text",
-      placeholder: "+1 234 567 89",
-      value: "+1 234 567 89",
+      placeholder: "+94 234 567 897",
+      value: "+94 234 567 897",
 
-    },
-    // {
-    //   id: 5,
-    //   label: "Password",
-    //   type: "password",
-    //   value: "password",
-
-    // },
-    // {
-    //   id: 6,
-    //   label: "Address",
-    //   type: "text",
-    //   placeholder: "Elton St. 216 NewYork",
-    //   value: "Elton St. 216 NewYork",
-
-    // },
-    // {
-    //   id: 7,
-    //   label: "Country",
-    //   type: "text",
-    //   placeholder: "USA",
-    //   value: "USA",
-
-    // },
+    }
   ];

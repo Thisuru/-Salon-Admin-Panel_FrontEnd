@@ -40,10 +40,9 @@ const Datatable = () => {
     const response = await axios.get(
       "http://localhost:5000/api/v1/clients?page=1"
     );
-    console.log("GetAll Client API: ", response)
 
     if (response.status === 200) {
-      console.log("Success in Axios res.client ", response.data.clients);
+      // console.log("Success in Axios res.client ", response.data.clients);
       setData(response.data.clients)
 
     } else {
