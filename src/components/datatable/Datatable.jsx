@@ -2,7 +2,8 @@ import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { userColumns, userRows } from "../../datatablesource";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from 'axios';
 
 const Datatable = () => {
   const [data, setData] = useState(userRows);
@@ -10,6 +11,7 @@ const Datatable = () => {
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
   };
+
 
   const actionColumn = [
     {
@@ -33,6 +35,26 @@ const Datatable = () => {
       },
     },
   ];
+
+  async function getAllClient() {
+    const response = await axios.get(
+      "http://localhost:5000/api/v1/clients?page=1"
+    );
+    console.log("GetAll Client API: ", response)
+
+    if (response.status === 200) {
+      console.log("Success in Axios res.client ", response.data.clients);
+      setData(response.data.clients)
+
+    } else {
+      console.log("Something went wrong in Axios");
+    }
+  }
+
+  useEffect(() => {
+    getAllClient()
+  }, []);
+
   return (
     <div className="datatable">
       <div className="datatableTitle">
@@ -47,6 +69,8 @@ const Datatable = () => {
         columns={userColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
+        // rowCount={50000}
+        // onPageChange={(newPage) => setPage(newPage)}
         // checkboxSelection
       />
     </div>
