@@ -95,3 +95,45 @@ export const userColumns = [
     },
   ];
   
+
+  //Reservation Table
+  export const reservationColumns = [
+    // { field: "_id", headerName: "ID", width: 70 },
+    {
+      field: "client",
+      headerName: "Client Name",
+      width: 230,
+    },
+    {
+      field: "service",
+      headerName: "service Type",
+      width: 230,
+    },
+    {
+      field: "stylist",
+      headerName: "Stylist Name",
+      width: 230,
+    },
+    {
+      field: "startTime",
+      headerName: "Date",
+      width: 230,
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      width: 230,
+    }
+  ];
+
+  //temporary data
+  export const reservationRows = [
+    {
+      id: 1,
+      client: "Kamal",
+      service:"Hair Cut",
+      stylist: "Nishantha",
+      startTime: "2022-09-18T09:15:55.970Z",
+      status: "pending"
+    }
+  ];
