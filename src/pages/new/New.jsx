@@ -1,45 +1,103 @@
 import "./new.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import { useState } from "react";
-import axios from 'axios';
-import { useLocation } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const New = ({ inputs, title }) => {
-  // const location = useLocation();
-  // console.log("location: ", location);
-  
-  const [file, setFile] = useState("");
-  const [firstName, setFirstName] = useState('');
-  const [lasttName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+import Grid from "@mui/material/Grid";
 
-  async function clientCreate(e) {
-    e.preventDefault()
-    const response = await axios.post(
-      "http://localhost:5000/api/v1/clients",
-      {
-        firstname: firstName,
-        lastname: lasttName,
-        phonenumber: phoneNumber,
-        email: email
-      }
+const New = ({ inputs, title }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const params = useParams();
+  const [file, setFile] = useState("");
+  const [isEdit, setIsEdit] = useState(false);
+
+  const [firstName, setFirstName] = useState("");
+  const [lasttName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [userDetails, setUserDetails] = useState(null);
+  useEffect(() => {
+    // Your code here
+    const isEditRoute = location?.pathname?.includes("edit");
+    setIsEdit(isEditRoute);
+    if (isEditRoute) {
+    }
+    getClientById();
+  }, []);
+
+  async function getClientById() {
+    const response = await axios.get(
+      `http://localhost:5000/api/v1/clients/${params?.id}`
     );
 
     if (response.status === 200) {
-      console.log("Post Client: ", response);
-      toast("Success! Client created successfully", { type: "success" });
-
+      const userDetail = response?.data;
+      setUserDetails(userDetail);
+      setFirstName(userDetail?.firstname);
+      setLastName(userDetail?.lastname);
+      setEmail(userDetail?.email);
+      setPhoneNumber(userDetail?.phonenumber);
     } else {
       toast("Something went wrong", { type: "error" });
     }
   }
 
-  console.log("Firstname ", firstName);
+  async function clientCreate(e) {
+    e.preventDefault();
+    const response = await axios.post("http://localhost:5000/api/v1/clients", {
+      firstname: firstName,
+      lastname: lasttName,
+      phonenumber: phoneNumber,
+      email: email,
+    });
+
+    if (response.status === 200) {
+      toast("Success! Client created successfully", { type: "success" });
+    } else {
+      toast("Something went wrong", { type: "error" });
+    }
+  }
+
+  async function updateClient(e) {
+    e.preventDefault();
+    const response = await axios.put(
+      `http://localhost:5000/api/v1/clients/${userDetails?._id}`,
+      {
+        firstname: firstName,
+        lastname: lasttName,
+        phonenumber: phoneNumber,
+        email: email,
+      }
+    );
+
+    if (response.status === 200) {
+      toast("Success! Client updated successfully", { type: "success" });
+
+      setTimeout(() => {
+        navigate("/users");
+      }, "2000");
+    } else {
+      toast("Something went wrong", { type: "error" });
+    }
+  }
+
+  //   {
+  //     "client": "6318c5ba72182088162c6c3e",
+  //     "service": "test",
+  //     "stylist": "631ac79de92d57e79c79b180",
+  //     "date": "Sat Sep 10 2022 00:00:00 GMT+0530 (India Standard Time)",
+  //     "startTime": "Sat Sep 10 2022 06:00:00 GMT+0530 (India Standard Time)",
+  //     "endTime": "Sat Sep 10 2022 06:00:00 GMT+0530 (India Standard Time)"
+  // }
+
+  const sendHandler = (e) => {
+    isEdit ? updateClient(e) : clientCreate(e);
+  };
 
   return (
     <div className="new">
@@ -49,59 +107,65 @@ const New = ({ inputs, title }) => {
         <div className="top">
           <h1>{title}</h1>
         </div>
+
         <div className="bottom">
-          {/* <div className="left">
-            <img
-              src={
-                file
-                  ? URL.createObjectURL(file)
-                  : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
-              }
-              alt=""
-            />
-          </div> */}
           <div className="right">
             <form>
-              <div className="formInput">
-                {/* <label htmlFor="file">
-                  Image: <DriveFolderUploadOutlinedIcon className="icon" />
-                </label> */}
-                <input
-                  type="file"
-                  id="file"
-                  onChange={(e) => setFile(e.target.files[0])}
-                  style={{ display: "none" }}
-                />
-              </div>
+              <Grid container>
+                <Grid item xs={6}>
+                  {/* <div className='formInput'>
+                    <input
+                      type='file'
+                      id='file'
+                      onChange={(e) => setFile(e.target.files[0])}
+                      style={{ display: 'none' }}
+                    />
+                  </div> */}
 
-              {/* {inputs.map((input) => (
-                <div className="formInput" key={input.id}>
-                  <label>{input.label}</label>
-                  <input type={input.type} placeholder={input.placeholder} value={input.value} onChange={() => console.log("Value")} />
-                </div>
-              ))} */}
+                  <div className="formInput">
+                    <label>First Name</label>
+                    <input
+                      type="text"
+                      placeholder="John"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                    />
+                  </div>
 
-              <div className="formInput">
-                <label>First Name</label>
-                <input type="text" placeholder="John" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-              </div>
+                  <div className="formInput">
+                    <label>Last Name</label>
+                    <input
+                      type="text"
+                      placeholder="Doe"
+                      value={lasttName}
+                      onChange={(e) => setLastName(e.target.value)}
+                    />
+                  </div>
+                </Grid>
+                <Grid item xs={6}>
+                  <div className="formInput">
+                    <label>Email</label>
+                    <input
+                      type="text"
+                      placeholder="john_doe@gmail.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
 
-              <div className="formInput">
-                <label>Last Name</label>
-                <input type="text" placeholder="Doe" value={lasttName} onChange={(e) => setLastName(e.target.value)} />
-              </div>
+                  <div className="formInput">
+                    <label>Phone</label>
+                    <input
+                      type="text"
+                      placeholder="+94 234 567 897"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                    />
+                  </div>
+                </Grid>
+              </Grid>
 
-              <div className="formInput">
-                <label>Email</label>
-                <input type="text" placeholder="john_doe@gmail.com" value={email} onChange={(e) => setEmail(e.target.value)} />
-              </div>
-
-              <div className="formInput">
-                <label>Phone</label>
-                <input type="text" placeholder="+94 234 567 897" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-              </div>
-
-              <button onClick={(e) => clientCreate(e)}>Send</button>
+              <button onClick={(e) => sendHandler(e)}>Send</button>
             </form>
           </div>
           <ToastContainer />
