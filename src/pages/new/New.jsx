@@ -56,8 +56,14 @@ const New = ({ inputs, title }) => {
       email: email,
     });
 
+    console.log("Req body: ", firstName, lasttName, phoneNumber, email);
+
     if (response.status === 200) {
       toast("Success! Client created successfully", { type: "success" });
+
+      setTimeout(() => {
+        navigate("/users");
+      }, "2000");
     } else {
       toast("Something went wrong", { type: "error" });
     }
