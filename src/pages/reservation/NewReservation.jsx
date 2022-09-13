@@ -60,6 +60,7 @@ const NewReservation = ({ inputs, title }) => {
     } else {
       getAllClients();
       getAllStylist();
+      // getOnlyAvailableStylists();
     }
 
   }, []);
@@ -92,7 +93,7 @@ const NewReservation = ({ inputs, title }) => {
   }
 
   async function reservationCreate(e) {
-    console.log("create API");
+   
     e.preventDefault();
     const response = await axios.post(
       "http://localhost:5000/api/v1/reservation",
@@ -136,7 +137,7 @@ const NewReservation = ({ inputs, title }) => {
     const response = await axios.get("http://localhost:5000/api/v1/stylists");
 
     if (response.status === 200) {
-      // console.log("Success in Axios res.stylists ", response);
+      console.log("Success in Axios res.stylists ", response);
       setAllServices(response.data);
       // setLoading(false)
     } else {
@@ -144,9 +145,28 @@ const NewReservation = ({ inputs, title }) => {
     }
   }
 
+//test
+  async function getOnlyAvailableStylists(e) {
+    const response = await axios.post(
+      "http://localhost:5000/api/v1/stylists/getAvailableStylish",
+      {
+        start: "2022-09-20T00:00:00.000+00:00",
+        end :  "2022-09-21T00:00:00.000+00:00"
+      }
+    );
+
+    if (response.status === 200) {
+      console.log("getOnlyAvailableStylists: ", response.data.availabelStylish);
+      setAllServices(response.data.availabelStylish);
+    } else {
+      toast("Something went wrong", { type: "error" });
+    }
+  }
+//test
+
   async function reservationUpdate(e) {
     e.preventDefault();
-    console.log("Update API");
+    
     const response = await axios.put(
       `http://localhost:5000/api/v1/reservation/${userDetails?._id}`,
       {
