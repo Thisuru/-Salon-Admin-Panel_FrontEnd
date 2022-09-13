@@ -72,13 +72,20 @@ const NewReservation = ({ inputs, title }) => {
     if (response.status === 200) {
       const userDetail = response?.data;
       console.log("userDetails", userDetail);
+
+      var d = new Date(userDetail?.endTime);
+      var endT = d.toISOString().split('T')[0]
+      var sd = new Date(userDetail?.startTime);
+      var startT = sd.toISOString().split('T')[0]
+
       setUserDetails(userDetail);
       // setClient(userDetail?.client);
       setService(userDetail?.service);
       setStylist(userDetail?.stylist);
-      setStartTime(userDetail?.startTime);
-      setEndTime(userDetail?.endTime);
+      setStartTime(startT);
+      setEndTime(endT);
       setStatus(userDetail?.status);
+
     } else {
       toast("Something went wrong", { type: "error" });
     }
@@ -214,7 +221,7 @@ const NewReservation = ({ inputs, title }) => {
                       sx={{ width: 150 }}
                     />
                   </div> */}
-                  
+
                   <div className="formInput">
                     <label>Start Time</label>
                     <TextField
@@ -224,7 +231,10 @@ const NewReservation = ({ inputs, title }) => {
                       // defaultValue="2017-05-24"
                       value={startTime}
                       sx={{ width: 220 }}
-                      onChange={(e) => setStartTime(e.target.value)}
+                      onChange={(e) => {
+                        console.log("Start time: ", e.target.value);
+                        setStartTime(e.target.value)
+                      }}
                       InputLabelProps={{
                         shrink: true,
                       }}
