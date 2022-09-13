@@ -1,40 +1,20 @@
 import "./reservation.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import Grid from '@material-ui/core/Grid'
 
 import Grid from "@mui/material/Grid";
 import { MenuItem, Select, TextField } from "@mui/material";
-
-import dayjs, { Dayjs } from "dayjs";
-import Stack from "@mui/material/Stack";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
 const NewReservation = ({ inputs, title }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const params = useParams();
   const [isEdit, setIsEdit] = useState(false);
-  // const location = useLocation();
-  // console.log("location: ", location);
-
-  //     "client": "6318c5ba72182088162c6c3e",
-  //     "service": "test",
-  //     "stylist": "631ac79de92d57e79c79b180",
-  //     "date": "Sat Sep 10 2022 00:00:00 GMT+0530 (India Standard Time)",
-  //     "startTime": "Sat Sep 10 2022 06:00:00 GMT+0530 (India Standard Time)",
-  //     "endTime": "Sat Sep 10 2022 06:00:00 GMT+0530 (India Standard Time)"
 
   const [allClients, setAllClients] = useState("");
   const [allservices, setAllServices] = useState("");
@@ -42,7 +22,6 @@ const NewReservation = ({ inputs, title }) => {
   const [client, setClient] = useState("");
   const [service, setService] = useState("");
   const [stylist, setStylist] = useState("");
-  const [date, setDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [status, setStatus] = useState("");
@@ -85,7 +64,7 @@ const NewReservation = ({ inputs, title }) => {
       setStylist(userDetail?.stylist);
       setStartTime(startT);
       setEndTime(endT);
-      setStatus(userDetail?.status);
+      // setStatus(userDetail?.status);
 
     } else {
       toast("Something went wrong", { type: "error" });
@@ -109,7 +88,6 @@ const NewReservation = ({ inputs, title }) => {
     );
 
     if (response.status === 200) {
-      console.log("Post Client: ", response);
       toast("Success! Reservation created successfully", { type: "success" });
       setTimeout(() => {
         navigate("/reservation");
@@ -125,9 +103,7 @@ const NewReservation = ({ inputs, title }) => {
     );
 
     if (response.status === 200) {
-      // console.log("Success in Axios res.client ", response);
       setAllClients(response.data.clients);
-      // setLoading(false)
     } else {
       console.log("Something went wrong in Axios");
     }
@@ -137,15 +113,12 @@ const NewReservation = ({ inputs, title }) => {
     const response = await axios.get("http://localhost:5000/api/v1/stylists");
 
     if (response.status === 200) {
-      console.log("Success in Axios res.stylists ", response);
       setAllServices(response.data);
-      // setLoading(false)
     } else {
       console.log("Something went wrong in Axios");
     }
   }
 
-//test
   async function getOnlyAvailableStylists(e) {
     const response = await axios.post(
       "http://localhost:5000/api/v1/stylists/getAvailableStylish",
@@ -162,7 +135,6 @@ const NewReservation = ({ inputs, title }) => {
       toast("Something went wrong", { type: "error" });
     }
   }
-//test
 
   async function reservationUpdate(e) {
     e.preventDefault();
@@ -190,22 +162,6 @@ const NewReservation = ({ inputs, title }) => {
       toast("Something went wrong", { type: "error" });
     }
   }
-
-  // useEffect(() => {
-  //   getAllClients();
-  //   getAllStylist();
-  // }, []);
-
-  // console.log('Firstname ', firstName)
-
-  //   {
-  //     "client": "6318c5ba72182088162c6c3e",
-  //     "service": "test",
-  //     "stylist": "631ac79de92d57e79c79b180",
-  //     "date": "Sat Sep 10 2022 00:00:00 GMT+0530 (India Standard Time)",
-  //     "startTime": "Sat Sep 10 2022 06:00:00 GMT+0530 (India Standard Time)",
-  //     "endTime": "Sat Sep 10 2022 06:00:00 GMT+0530 (India Standard Time)"
-  // }
 
   const sendHandler = (e) => {
     isEdit ? reservationUpdate(e) : reservationCreate(e);
@@ -257,25 +213,6 @@ const NewReservation = ({ inputs, title }) => {
                     />
                   </div>
 
-                  {/* <div className="formInput">
-                    <label>Start Time</label>
-                    <TextField
-                      id="startTime"
-                      // label='End Time'
-                      type="time"
-                      // defaultValue='07:30'
-                      onChange={(e) => setStartTime(e.target.value)}
-                      value={startTime}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      inputProps={{
-                        step: 300, // 5 min
-                      }}
-                      sx={{ width: 150 }}
-                    />
-                  </div> */}
-
                   <div className="formInput">
                     <label>Start Time</label>
                     <TextField
@@ -314,41 +251,6 @@ const NewReservation = ({ inputs, title }) => {
                         ))}
                     </Select>
                   </div>
-
-                  {/* <div className="formInput">
-                    <label>Date</label>
-                    <TextField
-                      id="date"
-                      // label='Date'
-                      type="date"
-                      defaultValue="2017-05-24"
-                      value={date}
-                      sx={{ width: 220 }}
-                      onChange={(e) => setDate(e.target.value)}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </div> */}
-
-                  {/* <div className="formInput">
-                    <label>End Time</label>
-                    <TextField
-                      id="endTime"
-                      // label='End Time'
-                      type="time"
-                      // defaultValue='07:30'
-                      value={endTime}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      onChange={(e) => setEndTime(e.target.value)}
-                      inputProps={{
-                        step: 300, // 5 min
-                      }}
-                      sx={{ width: 150 }}
-                    />
-                  </div> */}
 
                   <div className="formInput">
                     <label>End Time</label>
