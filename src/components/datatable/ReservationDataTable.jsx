@@ -141,7 +141,7 @@ const ReservationDataTable = () => {
     <div className="datatable">
       <div className="datatableTitle">
         Reservations
-        <Link to="/users/new" className="link">
+        <Link to="/reservation/new" className="link">
           Add New
         </Link>
       </div>

@@ -25,6 +25,7 @@ const NewReservation = ({ inputs, title }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const params = useParams();
+  const [isEdit, setIsEdit] = useState(false);
   // const location = useLocation();
   // console.log("location: ", location);
 
@@ -44,8 +45,46 @@ const NewReservation = ({ inputs, title }) => {
   const [date, setDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const [status, setStatus] = useState("");
 
-  async function clientCreate(e) {
+  const [userDetails, setUserDetails] = useState(null);
+
+  useEffect(() => {
+    // Your code here
+    const isEditRoute = location?.pathname?.includes("edit");
+    setIsEdit(isEditRoute);
+    if (isEditRoute) {
+      getReservationById();
+      getAllClients();
+      getAllStylist();
+    } else {
+      getAllClients();
+      getAllStylist();
+    }
+
+  }, []);
+
+  async function getReservationById() {
+    const response = await axios.get(
+      `http://localhost:5000/api/v1/reservation/${params?.id}`
+    );
+
+    if (response.status === 200) {
+      const userDetail = response?.data;
+      console.log("userDetails", userDetail);
+      setUserDetails(userDetail);
+      // setClient(userDetail?.client);
+      setService(userDetail?.service);
+      setStylist(userDetail?.stylist);
+      setStartTime(userDetail?.startTime);
+      setEndTime(userDetail?.endTime);
+      setStatus(userDetail?.status);
+    } else {
+      toast("Something went wrong", { type: "error" });
+    }
+  }
+
+  async function reservationCreate(e) {
     e.preventDefault();
     const response = await axios.post(
       "http://localhost:5000/api/v1/reservation",
@@ -53,7 +92,7 @@ const NewReservation = ({ inputs, title }) => {
         client: client,
         service: service,
         stylist: stylist,
-        date: new Date(date),
+        // date: new Date(date),
         startTime: new Date(startTime),
         endTime: new Date(endTime),
       }
@@ -77,7 +116,7 @@ const NewReservation = ({ inputs, title }) => {
 
     if (response.status === 200) {
       console.log("Success in Axios res.client ", response);
-      setAllClients(response.data);
+      setAllClients(response.data.clients);
       // setLoading(false)
     } else {
       console.log("Something went wrong in Axios");
@@ -88,7 +127,7 @@ const NewReservation = ({ inputs, title }) => {
     const response = await axios.get("http://localhost:5000/api/v1/stylists");
 
     if (response.status === 200) {
-      console.log("Success in Axios res.client ", response);
+      console.log("Success in Axios res.stylists ", response);
       setAllServices(response.data);
       // setLoading(false)
     } else {
@@ -96,10 +135,10 @@ const NewReservation = ({ inputs, title }) => {
     }
   }
 
-  useEffect(() => {
-    getAllClients();
-    getAllStylist();
-  }, []);
+  // useEffect(() => {
+  //   getAllClients();
+  //   getAllStylist();
+  // }, []);
 
   // console.log('Firstname ', firstName)
 
@@ -148,7 +187,7 @@ const NewReservation = ({ inputs, title }) => {
                       </MenuItem>
                       {allClients &&
                         allClients.map((categoria) => (
-                          <MenuItem key={categoria._id} value={categoria._id}>
+                          <MenuItem key={categoria.id} value={categoria.id}>
                             {categoria.firstname} {categoria.lastname}
                           </MenuItem>
                         ))}
@@ -261,7 +300,7 @@ const NewReservation = ({ inputs, title }) => {
                 </Grid>
               </Grid>
 
-              <button onClick={(e) => clientCreate(e)}>Send</button>
+              <button onClick={(e) => reservationCreate(e)}>Send</button>
             </form>
           </div>
           <ToastContainer />
