@@ -4,14 +4,37 @@ import { reservationColumns, reservationRows } from "../../datatablesource";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ReservationDataTable = () => {
   const [data, setData] = useState(reservationRows);
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
+    deleteReservation(id)
   };
 
+  /**
+  * TODO - Need to implement backend
+  * @param {string} id reservationId
+  */
+  async function deleteReservation(id) {
+    const response = await axios.delete(
+      `http://localhost:5000/api/v1/reservation/${id}`
+    );
+
+    if (response.status === 200) {
+      console.log("Success in Axios res.client ", response);
+
+      toast("Success! Reservation delete successfully", { type: "success" });
+
+      getAllReservations();
+    } else {
+      console.log("Something went wrong in Axios");
+      toast("Something went wrong", { type: "error" });
+    }
+  }
 
   const actionColumn = [
     {
@@ -42,7 +65,7 @@ const ReservationDataTable = () => {
     );
 
     if (response.status === 200) {
-        console.log("Response: ", response);
+      console.log("Response: ", response);
       setData(response.data.reservations)
 
     } else {
