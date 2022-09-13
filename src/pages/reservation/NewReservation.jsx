@@ -92,6 +92,7 @@ const NewReservation = ({ inputs, title }) => {
   }
 
   async function reservationCreate(e) {
+    console.log("create API");
     e.preventDefault();
     const response = await axios.post(
       "http://localhost:5000/api/v1/reservation",
@@ -100,8 +101,9 @@ const NewReservation = ({ inputs, title }) => {
         service: service,
         stylist: stylist,
         // date: new Date(date),
-        startTime: new Date(startTime),
+        startTime: startTime,
         endTime: endTime,
+        // status: status
       }
     );
 
@@ -122,7 +124,7 @@ const NewReservation = ({ inputs, title }) => {
     );
 
     if (response.status === 200) {
-      console.log("Success in Axios res.client ", response);
+      // console.log("Success in Axios res.client ", response);
       setAllClients(response.data.clients);
       // setLoading(false)
     } else {
@@ -134,11 +136,38 @@ const NewReservation = ({ inputs, title }) => {
     const response = await axios.get("http://localhost:5000/api/v1/stylists");
 
     if (response.status === 200) {
-      console.log("Success in Axios res.stylists ", response);
+      // console.log("Success in Axios res.stylists ", response);
       setAllServices(response.data);
       // setLoading(false)
     } else {
       console.log("Something went wrong in Axios");
+    }
+  }
+
+  async function reservationUpdate(e) {
+    e.preventDefault();
+    console.log("Update API");
+    const response = await axios.put(
+      `http://localhost:5000/api/v1/reservation/${userDetails?._id}`,
+      {
+        client: client,
+        service: service,
+        stylist: stylist,
+        startTime: startTime,
+        endTime: endTime,
+        status : status
+      },
+      console.log("status: ", status)
+    );
+
+    if (response.status === 200) {
+      toast("Success! Client updated successfully", { type: "success" });
+
+      setTimeout(() => {
+        navigate("/reservation");
+      }, "2000");
+    } else {
+      toast("Something went wrong", { type: "error" });
     }
   }
 
@@ -158,6 +187,10 @@ const NewReservation = ({ inputs, title }) => {
   //     "endTime": "Sat Sep 10 2022 06:00:00 GMT+0530 (India Standard Time)"
   // }
 
+  const sendHandler = (e) => {
+    isEdit ? reservationUpdate(e) : reservationCreate(e);
+  };
+
   return (
     <div className="new">
       <Sidebar />
@@ -176,6 +209,7 @@ const NewReservation = ({ inputs, title }) => {
                   <div className="formInput">
                     <label>Client</label>
                     <Select
+                      style={{width: 200}}
                       type="text"
                       placeholder="John"
                       value={client}
@@ -246,6 +280,7 @@ const NewReservation = ({ inputs, title }) => {
                   <div className="formInput">
                     <label>Stylist</label>
                     <Select
+                      style={{width: 200}}
                       type="text"
                       placeholder="john_doe@gmail.com"
                       value={stylist}
@@ -314,7 +349,7 @@ const NewReservation = ({ inputs, title }) => {
                 </Grid>
               </Grid>
 
-              <button onClick={(e) => reservationCreate(e)}>Send</button>
+              <button onClick={(e) => sendHandler(e)}>Send</button>
             </form>
           </div>
           <ToastContainer />
