@@ -81,9 +81,12 @@ const ReservationDataTable = () => {
       headerName: "Date",
       width: 300,
       renderCell: (params) => {
+        console.log("Date field Params: ", params);
+        console.log("Date: ", params?.row?.date);
         return (
           <div className="cellAction">
-            {moment(params?.row?.date).format("MMMM Do YYYY, h:mm:ss a")}
+            {/* {moment(params?.row?.startTime).format("MMMM Do YYYY, h:mm:ss a")} */}
+            {moment(params?.row?.startTime).format("MMMM Do YYYY")}
           </div>
         );
       },

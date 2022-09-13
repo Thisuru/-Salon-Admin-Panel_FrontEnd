@@ -94,7 +94,7 @@ const NewReservation = ({ inputs, title }) => {
         stylist: stylist,
         // date: new Date(date),
         startTime: new Date(startTime),
-        endTime: new Date(endTime),
+        endTime: endTime,
       }
     );
 
@@ -165,14 +165,6 @@ const NewReservation = ({ inputs, title }) => {
             <form>
               <Grid container>
                 <Grid item xs={6}>
-                  {/* <div className='formInput'>
-                    <input
-                      type='file'
-                      id='file'
-                      onChange={(e) => setFile(e.target.files[0])}
-                      style={{ display: 'none' }}
-                    />
-                  </div> */}
 
                   <div className="formInput">
                     <label>Client</label>
@@ -204,15 +196,8 @@ const NewReservation = ({ inputs, title }) => {
                     />
                   </div>
 
-                  <div className="formInput">
+                  {/* <div className="formInput">
                     <label>Start Time</label>
-                    {/* <input
-                      type='text'
-                      placeholder='+94 234 567 897'
-                      value={startTime}
-                      onChange={(e) => setStartTime(e.target.value)}
-                    /> */}
-
                     <TextField
                       id="startTime"
                       // label='End Time'
@@ -228,8 +213,25 @@ const NewReservation = ({ inputs, title }) => {
                       }}
                       sx={{ width: 150 }}
                     />
+                  </div> */}
+                  
+                  <div className="formInput">
+                    <label>Start Time</label>
+                    <TextField
+                      id="startTime"
+                      // label='Date'
+                      type="date"
+                      // defaultValue="2017-05-24"
+                      value={startTime}
+                      sx={{ width: 220 }}
+                      onChange={(e) => setStartTime(e.target.value)}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
                   </div>
                 </Grid>
+
                 <Grid item xs={6}>
                   <div className="formInput">
                     <label>Stylist</label>
@@ -248,7 +250,7 @@ const NewReservation = ({ inputs, title }) => {
                     </Select>
                   </div>
 
-                  <div className="formInput">
+                  {/* <div className="formInput">
                     <label>Date</label>
                     <TextField
                       id="date"
@@ -262,16 +264,9 @@ const NewReservation = ({ inputs, title }) => {
                         shrink: true,
                       }}
                     />
+                  </div> */}
 
-                    {/* <input
-                      type='text'
-                      placeholder='+94 234 567 897'
-                      value={date}
-                      onChange={(e) => setDate(e.target.value)}
-                    /> */}
-                  </div>
-
-                  <div className="formInput">
+                  {/* <div className="formInput">
                     <label>End Time</label>
                     <TextField
                       id="endTime"
@@ -288,15 +283,24 @@ const NewReservation = ({ inputs, title }) => {
                       }}
                       sx={{ width: 150 }}
                     />
+                  </div> */}
 
-                    {/* <label>End Time</label>
-                    <input
-                      type='text'
-                      placeholder='+94 234 567 897'
+                  <div className="formInput">
+                    <label>End Time</label>
+                    <TextField
+                      id="endTime"
+                      // label='Date'
+                      type="date"
+                      // defaultValue="2017-05-24"
                       value={endTime}
+                      sx={{ width: 220 }}
                       onChange={(e) => setEndTime(e.target.value)}
-                    /> */}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                    />
                   </div>
+
                 </Grid>
               </Grid>
 
