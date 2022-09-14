@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 const Datatable = () => {
   const [data, setData] = useState(userRows);
@@ -43,9 +44,20 @@ const Datatable = () => {
     },
   ];
 
-  async function getAllClient() {
+  async function getAllClient(params) {
+    let BASE_URL = 'http://localhost:5000/api/v1/clients?'
+
+    if (params?.page) {
+      BASE_URL += 'page=' + params.page + '&'
+    }
+    if (params?.search) {
+      BASE_URL += 'search=' + params.search
+    }
+
+    console.log("Base URL", BASE_URL);
+
     const response = await axios.get(
-      "http://localhost:5000/api/v1/clients?page=1"
+      BASE_URL
     );
 
     if (response.status === 200) {
@@ -74,6 +86,13 @@ const Datatable = () => {
     }
   }
 
+  const clientSearch = (e) => {
+    console.log("search val: ", e.target.value);
+    getAllClient({
+      search: e.target.value
+    })
+  }
+
   useEffect(() => {
     getAllClient()
   }, []);
@@ -82,6 +101,10 @@ const Datatable = () => {
     <div className="datatable">
       <div className="datatableTitle">
         Add New User
+        <div className="search">
+          <input type="text" placeholder="Search..." onChange={clientSearch} />
+          <SearchOutlinedIcon />
+        </div>
         <Link to="/users/new" className="link">
           Add New
         </Link>
@@ -92,9 +115,9 @@ const Datatable = () => {
         columns={userColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
-        // rowCount={50000}
-        // onPageChange={(newPage) => setPage(newPage)}
-        // checkboxSelection
+      // rowCount={50000}
+      // onPageChange={(newPage) => setPage(newPage)}
+      // checkboxSelection
       />
       <ToastContainer />
     </div>

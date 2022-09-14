@@ -7,6 +7,7 @@ import Calendar from "./pages/calendar/Calendar";
 import { userInputs, userUpdateInputs } from "./formSource";
 import Reservation from "./pages/reservation/Reservation";
 import NewReservation from "./pages/reservation/NewReservation";
+import { Form } from "./pages/form/Form";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
                   <NewReservation inputs={userUpdateInputs} title="Edit User" />
                 }
               />
+              <Route path="form" element={<Form/>} />
             </Route>
           </Route>
         </Routes>
