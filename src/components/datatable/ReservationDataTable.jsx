@@ -7,6 +7,7 @@ import axios from 'axios';
 import moment from "moment/moment";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 const ReservationDataTable = () => {
   const [data, setData] = useState(reservationRows);
@@ -17,10 +18,7 @@ const ReservationDataTable = () => {
     deleteReservation(id)
   };
 
-  /**
-  * TODO - Need to implement backend
-  * @param {string} id reservationId
-  */
+  
   async function deleteReservation(id) {
     const response = await axios.delete(
       `http://localhost:5000/api/v1/reservation/${id}`
@@ -81,8 +79,8 @@ const ReservationDataTable = () => {
       headerName: "Date",
       width: 300,
       renderCell: (params) => {
-        console.log("Date field Params: ", params);
-        console.log("Date: ", params?.row?.date);
+        // console.log("Date field Params: ", params);
+        // console.log("Date: ", params?.row?.date);
         return (
           <div className="cellAction">
             {/* {moment(params?.row?.startTime).format("MMMM Do YYYY, h:mm:ss a")} */}
@@ -136,6 +134,10 @@ const ReservationDataTable = () => {
     }
   }
 
+  const reservationSearch = (e) => {
+    console.log("e: ", e.target.value);
+  }
+
   useEffect(() => {
     getAllReservations()
   }, []);
@@ -144,6 +146,10 @@ const ReservationDataTable = () => {
     <div className="datatable">
       <div className="datatableTitle">
         Reservations
+        <div className="search">
+          <input type="text" placeholder="Search..." onChange={reservationSearch} />
+          <SearchOutlinedIcon />
+        </div>
         <Link to="/reservation/new" className="link">
           Add New
         </Link>
