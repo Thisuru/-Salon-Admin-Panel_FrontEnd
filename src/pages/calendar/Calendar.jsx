@@ -1,6 +1,6 @@
 import Navbar from "../../components/navbar/Navbar"
 import Sidebar from "../../components/sidebar/Sidebar"
-import "./calendar.scss"
+import Datepicker from "../../components/datePicker/Datepicker";
 
 const Calendar = () => {
   return (
@@ -9,7 +9,8 @@ const Calendar = () => {
       <div className="homeContainer">
         <Navbar />
         <div >
-          Calendar
+          <h1 className="header-text">Calendar</h1>
+          <Datepicker/>
         </div>
       </div>
     </div>
