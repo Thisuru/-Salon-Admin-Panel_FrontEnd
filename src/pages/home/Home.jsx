@@ -1,6 +1,9 @@
+import BarchartReservation from "../../components/charts/BarchartReservation"
+import PiechartReservation from "../../components/charts/PiechartReservation"
 import Navbar from "../../components/navbar/Navbar"
 import Sidebar from "../../components/sidebar/Sidebar"
 import "./home.scss"
+
 
 const Home = () => {
   return (
@@ -8,8 +11,9 @@ const Home = () => {
       <Sidebar />
       <div className="homeContainer">
         <Navbar />
-        <div >
-          Home
+        <div className="charts">
+          <PiechartReservation />
+          <BarchartReservation />
         </div>
       </div>
     </div>
