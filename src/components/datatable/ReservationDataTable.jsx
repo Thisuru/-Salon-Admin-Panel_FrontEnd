@@ -125,7 +125,7 @@ const ReservationDataTable = () => {
     );
 
     if (response.status === 200) {
-      console.log("Response: ", response);
+      // console.log("Response: ", response);
       setLoading(false);
       setData(response.data.reservations)
 

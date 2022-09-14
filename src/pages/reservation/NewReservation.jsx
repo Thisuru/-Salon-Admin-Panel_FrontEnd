@@ -185,11 +185,14 @@ const NewReservation = ({ inputs, title }) => {
                   <div className="formInput">
                     <label>Client</label>
                     <Select
-                      style={{width: 200}}
+                      style={{width: "250px", height:"35px", marginBottom: '10px', marginTop: '10px'}}
                       type="text"
                       placeholder="John"
                       value={client}
-                      onChange={(e) => setClient(e.target.value)}
+                      onChange={(e) => {
+                        console.log("Client: ", e.target.value);
+                        setClient(e.target.value)
+                      }}
                     >
                       <MenuItem value="">
                         <em>None</em>
@@ -206,16 +209,43 @@ const NewReservation = ({ inputs, title }) => {
                   <div className="formInput">
                     <label>Service</label>
                     <input
+                      style={{width: "250px", marginBottom: '10px', marginTop: '10px'}}
                       type="text"
                       placeholder="Doe"
                       value={service}
                       onChange={(e) => setService(e.target.value)}
                     />
                   </div>
-
+                  
                   <div className="formInput">
+                    <label>Stylist</label>
+                    <Select
+                      style={{width: "250px", height:"35px", marginBottom: '10px', marginTop: '10px'}}
+                      type="text"
+                      placeholder="john_doe@gmail.com"
+                      value={stylist}
+                      onChange={(e) => {
+                        console.log("Stylist: ", e.target.value);
+                        setStylist(e.target.value)
+                      }}
+                    >
+                      {allservices &&
+                        allservices.map((categoria) => (
+                          <MenuItem key={categoria._id} value={categoria._id}>
+                            {categoria.firstname} {categoria.lastname}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </div>
+                  
+                </Grid>
+
+                <Grid item xs={6}>
+
+                <div className="formInput">
                     <label>Start Time</label>
                     <TextField
+                      style={{width: "250px", height:"35px", marginBottom: '50px', marginTop: '10px'}}
                       id="startTime"
                       // label='Date'
                       type="date"
@@ -231,30 +261,11 @@ const NewReservation = ({ inputs, title }) => {
                       }}
                     />
                   </div>
-                </Grid>
-
-                <Grid item xs={6}>
-                  <div className="formInput">
-                    <label>Stylist</label>
-                    <Select
-                      style={{width: 200}}
-                      type="text"
-                      placeholder="john_doe@gmail.com"
-                      value={stylist}
-                      onChange={(e) => setStylist(e.target.value)}
-                    >
-                      {allservices &&
-                        allservices.map((categoria) => (
-                          <MenuItem key={categoria._id} value={categoria._id}>
-                            {categoria.firstname} {categoria.lastname}
-                          </MenuItem>
-                        ))}
-                    </Select>
-                  </div>
 
                   <div className="formInput">
                     <label>End Time</label>
                     <TextField
+                      style={{width: "250px", height:"35px", marginBottom: '10px', marginTop: '10px'}}
                       id="endTime"
                       // label='Date'
                       type="date"
