@@ -64,7 +64,7 @@ const NewReservation = ({ inputs, title }) => {
       setStylist(userDetail?.stylist);
       setStartTime(startT);
       setEndTime(endT);
-      // setStatus(userDetail?.status);
+      setStatus(userDetail?.status);
 
     } else {
       toast("Something went wrong", { type: "error" });
@@ -153,7 +153,7 @@ const NewReservation = ({ inputs, title }) => {
     );
 
     if (response.status === 200) {
-      toast("Success! Client updated successfully", { type: "success" });
+      toast("Success! Reservation updated successfully", { type: "success" });
 
       setTimeout(() => {
         navigate("/reservation");

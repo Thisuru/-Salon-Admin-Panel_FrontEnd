@@ -42,6 +42,7 @@ const New = ({ inputs, title }) => {
       setLastName(userDetail?.lastname);
       setEmail(userDetail?.email);
       setPhoneNumber(userDetail?.phonenumber);
+      console.log("User details: ", userDetail);
     } else {
       toast("Something went wrong", { type: "error" });
     }

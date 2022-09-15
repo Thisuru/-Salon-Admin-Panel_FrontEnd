@@ -15,9 +15,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/">
-            <Route index element={<Home />} />
+            <Route index element={<Login />} />
 
-            <Route path="login" element={<Login />} />
+            <Route path="dashboard" element={<Home />} />
 
             <Route path="users">
               <Route index element={<List />} />
@@ -45,7 +45,7 @@ function App() {
               <Route
                 path="edit/:id"
                 element={
-                  <NewReservation inputs={userUpdateInputs} title="Edit User" />
+                  <NewReservation inputs={userUpdateInputs} title="Edit Reservation" />
                 }
               />
               <Route path="form" element={<Form/>} />

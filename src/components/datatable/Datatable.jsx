@@ -77,7 +77,7 @@ const Datatable = () => {
     if (response.status === 200) {
       console.log("Success in Axios res.client ", response);
 
-      toast("Success! Client delete successfully", { type: "success" });
+      toast("Success! Client deleted successfully", { type: "success" });
 
       getAllClient();
     } else {

@@ -10,7 +10,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="top">
-        <Link to="/" style={{ textDecoration: "none" }}>
+        <Link to="/dashboard" style={{ textDecoration: "none" }}>
           <span className="logo">Admin panel</span>
         </Link>
       </div>
@@ -18,7 +18,7 @@ const Sidebar = () => {
       <div className="center">
         <ul>
           <p className="title">MAIN</p>
-          <Link to="/" style={{ textDecoration: "none" }}>
+          <Link to="/dashboard" style={{ textDecoration: "none" }}>
           <li>
             <DashboardIcon className="icon" />
             <span>Dashboard</span>
@@ -45,10 +45,10 @@ const Sidebar = () => {
           </li>
           </Link>
           <p className="title">USER</p>
-          <Link to="/login" style={{ textDecoration: "none" }}>
+          <Link to="/logout" style={{ textDecoration: "none" }}>
           <li>
             <ExitToAppIcon className="icon" />
-            <span>Logout</span>
+            <span>Log out</span>
           </li>
           </Link>
         </ul>
