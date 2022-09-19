@@ -13,7 +13,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -33,8 +34,14 @@ const Login = () => {
       })
       .then((res) => {
         console.log("Login response: ", res);
-        localStorage.setItem("token", res.data.token);
-        navigate("/dashboard")
+
+        if (res.data.status === true) {
+          localStorage.setItem("token", res.data.token);
+          navigate("/dashboard")
+        } else {
+          toast(res.data.message, { type: "error" });
+        }
+
       })
       .catch((err) => console.error(err));
   };
@@ -47,7 +54,7 @@ const Login = () => {
 
   return (
     <div className="listContainer">
-      <Navbar/>
+      <Navbar />
       <div>
         <Container maxWidth="sm">
           <Grid
@@ -98,7 +105,7 @@ const Login = () => {
                   </Grid>
 
                   <Grid item>
-                    <Button style={{backgroundColor: '#e9205c'}} type="submit" fullWidth variant="contained">
+                    <Button style={{ backgroundColor: '#e9205c' }} type="submit" fullWidth variant="contained">
                       Sign In
                     </Button>
                   </Grid>
@@ -108,6 +115,7 @@ const Login = () => {
           </Grid>
         </Container>
       </div>
+      <ToastContainer />
     </div>
   );
 };
