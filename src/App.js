@@ -1,60 +1,64 @@
-import Home from "./pages/home/Home";
-import Login from "./pages/login/Login";
-import List from "./pages/list/List";
-import New from "./pages/new/New";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Calendar from "./pages/calendar/Calendar";
-import { userInputs, userUpdateInputs } from "./formSource";
-import Reservation from "./pages/reservation/Reservation";
-import NewReservation from "./pages/reservation/NewReservation";
-import { Form } from "./pages/form/Form";
+import Home from './pages/home/Home'
+import Login from './pages/login/Login'
+import List from './pages/list/List'
+import New from './pages/new/New'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+// import Calendar from './pages/calendar/Calendar'
+import { userInputs, userUpdateInputs } from './formSource'
+import Reservation from './pages/reservation/Reservation'
+import NewReservation from './pages/reservation/NewReservation'
+import { Form } from './pages/form/Form'
+import Calander from './modules/Calander/Calander'
 
 function App() {
   return (
-    <div className="App">
+    <div className='App'>
       <BrowserRouter>
         <Routes>
-          <Route path="/">
+          <Route path='/'>
             <Route index element={<Login />} />
 
-            <Route path="dashboard" element={<Home />} />
+            <Route path='dashboard' element={<Home />} />
 
-            <Route path="users">
+            <Route path='users'>
               <Route index element={<List />} />
               <Route
-                path="new"
-                element={<New inputs={userInputs} title="Add New User" />}
+                path='new'
+                element={<New inputs={userInputs} title='Add New User' />}
               />
               <Route
-                path="edit/:id"
-                element={<New inputs={userUpdateInputs} title="Edit User" />}
+                path='edit/:id'
+                element={<New inputs={userUpdateInputs} title='Edit User' />}
               />
             </Route>
 
-            <Route path="calendar" element={<Calendar />} />
+            <Route path='calendar' element={<Calander />} />
 
             {/* <Route path="reservation" element={<Reservation/>} /> */}
-            <Route path="reservation">
+            <Route path='reservation'>
               <Route index element={<Reservation />} />
               <Route
-                path="new"
+                path='new'
                 element={
-                  <NewReservation inputs={userInputs} title="Add New User" />
+                  <NewReservation inputs={userInputs} title='Add New User' />
                 }
               />
               <Route
-                path="edit/:id"
+                path='edit/:id'
                 element={
-                  <NewReservation inputs={userUpdateInputs} title="Edit Reservation" />
+                  <NewReservation
+                    inputs={userUpdateInputs}
+                    title='Edit Reservation'
+                  />
                 }
               />
-              <Route path="form" element={<Form/>} />
+              <Route path='form' element={<Form />} />
             </Route>
           </Route>
         </Routes>
       </BrowserRouter>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
