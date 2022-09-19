@@ -4,6 +4,7 @@ import { reservationColumns, reservationRows } from "../../datatablesource";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import AuthService from "../../api/Authaxios";
 import moment from "moment/moment";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,7 +19,7 @@ const ReservationDataTable = () => {
     deleteReservation(id)
   };
 
-  
+
   async function deleteReservation(id) {
     const response = await axios.delete(
       `http://localhost:5000/api/v1/reservation/${id}`
@@ -94,7 +95,20 @@ const ReservationDataTable = () => {
       headerName: "Status",
       width: 200,
       renderCell: (params) => {
-        return <div className="cellAction">{params?.row?.status}</div>;
+        return (
+          <div className="cellAction">
+            {/* {params?.row?.status} */}
+
+            <select defaultValue={params?.row?.status} name="status" id="status">
+              <option value="pending">pending</option>
+              <option value="inProgress">inProgress</option>
+              <option value="completed">completed</option>
+              <option value="cancelled">cancelled</option>
+              <option value="deleted">deleted</option>
+            </select>
+
+          </div>
+        )
       },
     },
     {
@@ -120,7 +134,7 @@ const ReservationDataTable = () => {
   ];
 
   async function getAllReservations() {
-    const response = await axios.get(
+    const response = await AuthService.get(
       "http://localhost:5000/api/v1/reservation?page=1"
     );
 
@@ -157,14 +171,14 @@ const ReservationDataTable = () => {
       {loading ? (
         <h3>Loading</h3>
       ) : (
-      <DataGrid
-        className="datagrid"
-        rows={data}
-        // columns={reservationColumns.concat(actionColumn)}
-        columns={actionColumn}
-        pageSize={9}
-        rowsPerPageOptions={[9]}
-      />
+        <DataGrid
+          className="datagrid"
+          rows={data}
+          // columns={reservationColumns.concat(actionColumn)}
+          columns={actionColumn}
+          pageSize={9}
+          rowsPerPageOptions={[9]}
+        />
       )}
       <ToastContainer />
     </div>
