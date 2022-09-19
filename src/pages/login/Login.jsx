@@ -17,19 +17,21 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
-    email: "",
-    pass: "",
+    username: "",
+    password: "",
     showPass: false,
   });
 
   const handleSubmit = (e) => {
+    console.log("handleSubmit");
     e.preventDefault();
     axios
-      .post("https://reqres.in/api/login", {
-        email: values.email,
-        password: values.pass,
+      .post("http://localhost:5000/api/v1/user/login", {
+        username: values.username,
+        password: values.password,
       })
       .then((res) => {
+        console.log("Login response: ", res);
         localStorage.setItem("token", res.data.token);
         navigate("/dashboard")
       })
@@ -57,13 +59,13 @@ const Login = () => {
               <Grid container direction="column" spacing={2}>
                 <Grid item>
                   <TextField
-                    type="email"
+                    type="text"
                     fullWidth
                     label="Enter your email"
                     placeholder="Email Address"
                     variant="outlined"
                     required
-                    onChange={(e) => setValues({ ...values, email: e.target.value })}
+                    onChange={(e) => setValues({ ...values, username: e.target.value })}
                   />
                 </Grid>
 
@@ -75,7 +77,7 @@ const Login = () => {
                     placeholder="Password"
                     variant="outlined"
                     required
-                    onChange={(e) => setValues({ ...values, pass: e.target.value })}
+                    onChange={(e) => setValues({ ...values, password: e.target.value })}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">

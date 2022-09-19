@@ -4,6 +4,7 @@ import { userColumns, userRows } from "../../datatablesource";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import AuthService from "../../api/Authaxios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
@@ -56,7 +57,7 @@ const Datatable = () => {
 
     console.log("Base URL", BASE_URL);
 
-    const response = await axios.get(
+    const response = await AuthService.get(
       BASE_URL
     );
 
