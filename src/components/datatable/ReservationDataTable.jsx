@@ -19,24 +19,6 @@ const ReservationDataTable = () => {
     deleteReservation(id)
   };
 
-
-  async function deleteReservation(id) {
-    const response = await axios.delete(
-      `http://localhost:5000/api/v1/reservation/${id}`
-    );
-
-    if (response.status === 200) {
-      console.log("Success in Axios res.client ", response);
-
-      toast("Success! Reservation delete successfully", { type: "success" });
-
-      getAllReservations();
-    } else {
-      console.log("Something went wrong in Axios");
-      toast("Something went wrong", { type: "error" });
-    }
-  }
-
   const actionColumn = [
     {
       field: "customName",
@@ -132,6 +114,37 @@ const ReservationDataTable = () => {
       },
     },
   ];
+
+  async function deleteReservation(id) {
+    const response = await axios.delete(
+      `http://localhost:5000/api/v1/reservation/${id}`
+    );
+
+    if (response.status === 200) {
+      console.log("Success in Axios res.client ", response);
+
+      toast("Success! Reservation delete successfully", { type: "success" });
+
+      getAllReservations();
+    } else {
+      console.log("Something went wrong in Axios");
+      toast("Something went wrong", { type: "error" });
+    }
+  }
+
+  async function updateStatus(status, id) {
+    const response = await axios.put("http://localhost:5000/api/v1/reservation/status?page=1", {
+      status: status,
+      id: id
+    });
+
+    if (response.status === 200) {
+      toast("Success! Status updated successfully", { type: "success" });
+
+    } else {
+      toast("Something went wrong", { type: "error" });
+    }
+  }
 
   async function getAllReservations() {
     const response = await AuthService.get(

@@ -32,6 +32,7 @@ import { withRouter } from 'react-router-dom'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import './index.css'
 import el from 'date-fns/esm/locale/el/index.js';
+import AuthService from "../../api/Authaxios";
 
 const DragAndDropCalendar = withDragAndDrop(Calendar)
 const localizer = momentLocalizer(moment)
@@ -90,7 +91,7 @@ const Calander = () => {
 
     console.log("getting appointments")
 
-      const response = await axios.get(
+      const response = await AuthService.get(
         `http://localhost:5000/api/v1/reservation?page=1`
       );
   
