@@ -378,12 +378,6 @@ const NewReservation = ({ inputs, title }) => {
                   style={{
                     width: '150px',
                     padding: '10px',
-                  //   border: 'none',
-                  //   backgroundColor: 'teal',
-                  //   color : 'white',
-                  //   fontWeight: 'bold',
-                  //   cursor: 'pointer',
-                  //   marginTop: '10px'
                   }}
                 onClick={(e) => sendHandler(e)}
                 disabled={

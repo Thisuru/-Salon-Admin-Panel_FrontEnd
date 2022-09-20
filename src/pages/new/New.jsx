@@ -173,7 +173,21 @@ const New = ({ inputs, title }) => {
                 </Grid>
               </Grid>
 
-              <button onClick={(e) => sendHandler(e)}>Send</button>
+              <button
+                style={{
+                  width: '150px',
+                  padding: '10px',
+                }}
+                onClick={(e) => sendHandler(e)}
+                disabled={
+                  !!!firstName ||
+                  !!!lasttName ||
+                  !!!email ||
+                  !!!phoneNumber 
+                }
+              >
+                Send
+              </button>
             </form>
           </div>
           <ToastContainer />
