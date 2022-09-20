@@ -6,6 +6,8 @@ import axios from "axios";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
 import Grid from "@mui/material/Grid";
 
@@ -132,43 +134,120 @@ const New = ({ inputs, title }) => {
 
                   <div className="formInput">
                     <label>First Name</label>
-                    <input
+
+                    {/* <input
                       type="text"
                       placeholder="John"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
+                    /> */}
+
+                    <TextField
+                      style={{
+                        width: 250,
+                        height: 50,
+                        marginBottom: 10,
+                        marginTop : 10
+                      }}
+                      id="firstname"
+                      label="firstname"
+                      variant="outlined"
+                      value={firstName}
+                      required
+                      fullWidth
+                      onChange={(e) => setFirstName(e.target.value)}
                     />
+
                   </div>
 
                   <div className="formInput">
                     <label>Last Name</label>
-                    <input
+
+                    {/* <input
                       type="text"
                       placeholder="Doe"
                       value={lasttName}
                       onChange={(e) => setLastName(e.target.value)}
+                    /> */}
+
+                    <TextField
+                      style={{
+                        width: 250,
+                        height: 50,
+                        marginBottom: 10,
+                        marginTop : 10
+                      }}
+                      id="lastname"
+                      label="lastname"
+                      variant="outlined"
+                      value={lasttName}
+                      required
+                      fullWidth
+                      onChange={(e) => setLastName(e.target.value)}
                     />
+
+
                   </div>
                 </Grid>
                 <Grid item xs={6}>
                   <div className="formInput">
                     <label>Email</label>
-                    <input
+
+                    {/* <input
                       type="text"
                       placeholder="john_doe@gmail.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
+                    /> */}
+
+                    <TextField
+                      style={{
+                        width: 250,
+                        height: 50,
+                        marginBottom: 10,
+                        marginTop : 10
+                      }}
+                      id="email"
+                      label="email"
+                      variant="outlined"
+                      value={email}
+                      required
+                      fullWidth
+                      autoComplete="email"
+                      onChange={(e) => setEmail(e.target.value)}
                     />
+
                   </div>
 
                   <div className="formInput">
                     <label>Phone</label>
-                    <input
+
+                    {/* <input
                       type="text"
                       placeholder="+94 234 567 897"
                       value={phoneNumber}
                       onChange={(e) => setPhoneNumber(e.target.value)}
+                    /> */}
+
+                    <TextField
+                      style={{
+                        width: 250,
+                        height: 50,
+                        marginBottom: 10,
+                        marginTop : 10
+                      }}
+                      id="phone"
+                      label="phone"
+                      variant="outlined"
+                      type="number"
+                      value={phoneNumber}
+                      required
+                      fullWidth
+                      autoComplete="phone"
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                     />
+
                   </div>
                 </Grid>
               </Grid>
@@ -183,7 +262,7 @@ const New = ({ inputs, title }) => {
                   !!!firstName ||
                   !!!lasttName ||
                   !!!email ||
-                  !!!phoneNumber 
+                  !!!phoneNumber
                 }
               >
                 Send
@@ -192,6 +271,7 @@ const New = ({ inputs, title }) => {
           </div>
           <ToastContainer />
         </div>
+
       </div>
     </div>
   );
