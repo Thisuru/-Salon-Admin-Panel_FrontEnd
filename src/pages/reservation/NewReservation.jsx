@@ -3,6 +3,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import AuthService from "../../api/Authaxios";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -98,7 +99,7 @@ const NewReservation = ({ inputs, title }) => {
   }
 
   async function getAllClients() {
-    const response = await axios.get(
+    const response = await AuthService.get(
       "http://localhost:5000/api/v1/clients?page=1"
     );
 
