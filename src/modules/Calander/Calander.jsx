@@ -218,6 +218,8 @@ const Calander = () => {
       isAllDay: droppedOnAllDaySlot = false,
     }) => {
       const { allDay } = event
+      console.log("Calendar11: ", event, start, end, resourceId);
+
       if (!allDay && droppedOnAllDaySlot) {
         event.allDay = true
       }

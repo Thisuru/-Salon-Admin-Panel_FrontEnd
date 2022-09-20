@@ -2,3 +2,7 @@
     margin-left: unset !important;
     margin-right: unset !important;
 }
+
+.rbc-month-row {
+    min-height: 100px;
+}

@@ -248,7 +248,7 @@ const NewReservation = ({ inputs, title }) => {
                         </MenuItem>
                         {allClients &&
                           allClients.map((categoria) => {
-                            console.log("categoria : ", categoria);
+                            // console.log("categoria : ", categoria);
                             return (
                               <MenuItem key={categoria.id} value={categoria.id}>
                                 {categoria.firstname} {categoria.lastname}
@@ -352,7 +352,10 @@ const NewReservation = ({ inputs, title }) => {
                         <DateTimePicker
                           // label="Date&Time picker"
                           value={startTime}
-                          onChange={(value) => setStartTime(value)}
+                          onChange={(value) => {
+                            setStartTime(value)
+                            console.log("Start time :", value);
+                          }}
                           // onChange={handleChange}
                           renderInput={(params) => <TextField {...params} />}
                           style={{
@@ -390,6 +393,7 @@ const NewReservation = ({ inputs, title }) => {
                           onChange={(value) => {
                             setEndTime(value);
                             getOnlyAvailableStylists(startTime, value);
+                            console.log("End time :", value);
                           }}
                           // onChange={handleChange}
                           renderInput={(params) => <TextField {...params} />}
