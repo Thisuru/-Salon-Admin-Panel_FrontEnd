@@ -85,9 +85,9 @@ const ReservationDataTable = () => {
               defaultValue={params?.row?.status}
               name="status"
               id="status"
-              onChange={() =>
-                updateStatus(params?.row?.status, params?.row?.id)
-              }
+              onChange={(e) => {
+                updateStatus(e?.target?.value, params?.row?.id)
+              }}
             >
               <option value="pending">pending</option>
               <option value="inProgress">inProgress</option>

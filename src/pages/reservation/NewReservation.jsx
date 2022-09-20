@@ -146,6 +146,8 @@ const NewReservation = ({ inputs, title }) => {
   }
 
   async function getOnlyAvailableStylists(startTime, endTime) {
+    console.log("start time : ", startTime);
+    console.log("end time : ", endTime);
     const response = await axios.post(
       "http://localhost:5000/api/v1/stylists/getAvailableStylish",
       {
@@ -373,16 +375,16 @@ const NewReservation = ({ inputs, title }) => {
                 </Grid>
 
                 <button
-                  // style={{
-                  //   width: '150px',
-                  //   padding: '10px',
+                  style={{
+                    width: '150px',
+                    padding: '10px',
                   //   border: 'none',
                   //   backgroundColor: 'teal',
                   //   color : 'white',
                   //   fontWeight: 'bold',
                   //   cursor: 'pointer',
                   //   marginTop: '10px'
-                  // }}
+                  }}
                 onClick={(e) => sendHandler(e)}
                 disabled={
                   !!!client ||
