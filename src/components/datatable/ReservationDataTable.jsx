@@ -153,13 +153,24 @@ const ReservationDataTable = () => {
     }
   }
 
-  async function getAllReservations() {
+  async function getAllReservations(params) {
+    let BASE_URL = 'http://localhost:5000/api/v1/reservation?'
+
+    if (params?.page) {
+      BASE_URL += 'page=' + params.page + '&'
+    }
+    if (params?.search) {
+      BASE_URL += 'search=' + params.search
+    }
+
+    console.log("Base URL", BASE_URL);
+
     const response = await AuthService.get(
-      "http://localhost:5000/api/v1/reservation?page=1"
+      BASE_URL
     );
 
     if (response.status === 200) {
-      // console.log("Response: ", response);
+      console.log("Success in Axios res.reservations ", response);
       setLoading(false);
       setData(response.data.reservations)
 
@@ -170,6 +181,9 @@ const ReservationDataTable = () => {
 
   const reservationSearch = (e) => {
     console.log("e: ", e.target.value);
+    getAllReservations({
+      search: e.target.value
+    })
   }
 
   useEffect(() => {
