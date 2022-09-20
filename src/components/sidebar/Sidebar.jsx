@@ -48,7 +48,7 @@ const Sidebar = () => {
           </li>
           </Link>
           <p className="title">USER</p>
-          <Link to="/logout" style={{ textDecoration: "none" }}>
+          <Link to="/" style={{ textDecoration: "none" }}>
           <li onClick={logoutHandler}>
             <ExitToAppIcon className="icon" />
             <span>Log out</span>

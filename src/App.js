@@ -40,7 +40,7 @@ function App() {
               <Route
                 path='new'
                 element={
-                  <NewReservation inputs={userInputs} title='Add New User' />
+                  <NewReservation inputs={userInputs} title='Add New Reservation' />
                 }
               />
               <Route

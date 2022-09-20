@@ -15,6 +15,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { colors, MenuItem, Select, TextField } from "@mui/material";
 import dayjs from "dayjs";
 
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+
 const NewReservation = ({ inputs, title }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -200,6 +204,11 @@ const NewReservation = ({ inputs, title }) => {
   console.log("allClients : ", allClients);
   console.log("allservices : ", allservices);
 
+
+  const handleService = (event) => {
+    setService(event.target.value);
+  };
+
   if (clientLoading || stylistLoading || loading) {
     return <div>Loading</div>;
   } else {
@@ -249,7 +258,7 @@ const NewReservation = ({ inputs, title }) => {
                       </Select>
                     </div>
 
-                    <div className="formInput">
+                    {/* <div className="formInput">
                       <label>Service</label>
                       <input
                         style={{
@@ -262,7 +271,30 @@ const NewReservation = ({ inputs, title }) => {
                         value={service}
                         onChange={(e) => setService(e.target.value)}
                       />
-                    </div>
+                    </div> */}
+
+                    <Box sx={{ minWidth: 120 }}>
+                      <FormControl >
+                        <InputLabel id="demo-simple-select-label">Service</InputLabel>
+                        <Select
+                          style={{
+                            width: "250px",
+                            height: "35px",
+                            marginBottom: "10px",
+                            marginTop: "10px",
+                          }}
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          value={service}
+                          label="service"
+                          onChange={handleService}
+                        >
+                          <MenuItem value='HairStyle'>HairStyle</MenuItem>
+                          <MenuItem value='Facial'>Facial</MenuItem>
+                          <MenuItem value='MakeUP'>MakeUP</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Box>
 
                     <div className="formInput">
                       <label>Stylist</label>
@@ -379,22 +411,22 @@ const NewReservation = ({ inputs, title }) => {
                     width: '150px',
                     padding: '10px',
                   }}
-                onClick={(e) => sendHandler(e)}
-                disabled={
-                  !!!client ||
-                  !!!service ||
-                  !!!stylist ||
-                  !!!startTime ||
-                  !!!endTime
-                }
+                  onClick={(e) => sendHandler(e)}
+                  disabled={
+                    !!!client ||
+                    !!!service ||
+                    !!!stylist ||
+                    !!!startTime ||
+                    !!!endTime
+                  }
                 >
-                Send
-              </button>
-            </form>
+                  Send
+                </button>
+              </form>
+            </div>
+            <ToastContainer />
           </div>
-          <ToastContainer />
         </div>
-      </div>
       </div >
     );
   }
