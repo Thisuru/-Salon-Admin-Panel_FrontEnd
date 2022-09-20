@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { reservationColumns, reservationRows } from "../../datatablesource";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 import AuthService from "../../api/Authaxios";
 import moment from "moment/moment";
 import { ToastContainer, toast } from "react-toastify";
@@ -16,7 +16,7 @@ const ReservationDataTable = () => {
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
-    deleteReservation(id)
+    deleteReservation(id);
   };
 
   const actionColumn = [
@@ -81,7 +81,14 @@ const ReservationDataTable = () => {
           <div className="cellAction">
             {/* {params?.row?.status} */}
 
-            <select defaultValue={params?.row?.status} name="status" id="status">
+            <select
+              defaultValue={params?.row?.status}
+              name="status"
+              id="status"
+              onChange={() =>
+                updateStatus(params?.row?.status, params?.row?.id)
+              }
+            >
               <option value="pending">pending</option>
               <option value="inProgress">inProgress</option>
               <option value="completed">completed</option>
@@ -90,7 +97,7 @@ const ReservationDataTable = () => {
             </select>
 
           </div>
-        )
+        );
       },
     },
     {

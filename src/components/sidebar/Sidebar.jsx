@@ -7,6 +7,9 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
+  const logoutHandler = () => {
+    localStorage.clear();
+  };
   return (
     <div className="sidebar">
       <div className="top">
@@ -46,7 +49,7 @@ const Sidebar = () => {
           </Link>
           <p className="title">USER</p>
           <Link to="/logout" style={{ textDecoration: "none" }}>
-          <li>
+          <li onClick={logoutHandler}>
             <ExitToAppIcon className="icon" />
             <span>Log out</span>
           </li>

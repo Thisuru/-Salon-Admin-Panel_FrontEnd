@@ -54,7 +54,7 @@ const Login = () => {
 
   return (
     <div className="listContainer">
-      <Navbar />
+      {/* <Navbar /> */}
       <div>
         <Container maxWidth="sm">
           <Grid

@@ -26,8 +26,9 @@ const New = ({ inputs, title }) => {
     const isEditRoute = location?.pathname?.includes("edit");
     setIsEdit(isEditRoute);
     if (isEditRoute) {
+
+      getClientById();
     }
-    getClientById();
   }, []);
 
   async function getClientById() {
