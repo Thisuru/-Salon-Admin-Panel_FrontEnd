@@ -12,6 +12,7 @@ import Month from './functions/Month'
 
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import PropTypes from 'prop-types'
 import {
@@ -209,6 +210,28 @@ const Calander = () => {
     []
   )
 
+  //Reservation Drag and Drop Update
+  async function reservationUpdate(event, start, end) {
+
+    console.log("reservationUpdate start: ", start);
+    console.log("reservationUpdate end: ", end);
+    const response = await axios.put(
+      `http://localhost:5000/api/v1/reservation/calendar`,
+      {
+        id: event.id,
+        startTime: start,
+        endTime: end
+      },
+    );
+
+    if (response.status === 200) {
+      toast("Success! Reservation updated successfully", { type: "success" });
+
+    } else {
+      toast("Something went wrong", { type: "error" });
+    }
+  }
+
   const moveEvent = useCallback(
     ({
       event,
@@ -218,7 +241,12 @@ const Calander = () => {
       isAllDay: droppedOnAllDaySlot = false,
     }) => {
       const { allDay } = event
-      console.log("Calendar11: ", event, start, end, resourceId);
+      console.log("Calender event: ", event);
+      console.log("Calender start: ", start);
+      console.log("Calender end: ", end);
+      console.log("Calender id: ", event.id);
+
+      reservationUpdate(event, start, end)
 
       if (!allDay && droppedOnAllDaySlot) {
         event.allDay = true
@@ -310,6 +338,7 @@ const Calander = () => {
           />
         </div>
       </Fragment>
+      <ToastContainer />
     </>
   )
 }
