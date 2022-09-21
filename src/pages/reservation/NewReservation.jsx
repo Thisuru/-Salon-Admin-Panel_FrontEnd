@@ -209,6 +209,15 @@ const NewReservation = ({ inputs, title }) => {
     setService(event.target.value);
   };
 
+  const currentDate = new Date();
+
+  const disablePreDates = (currentDate) => {
+    const startSeconds = Date.parse(currentDate);
+    return (date) => {
+      return Date.parse(date) < startSeconds;
+    }
+  }
+
   if (clientLoading || stylistLoading || loading) {
     return <div>Loading</div>;
   } else {
@@ -364,6 +373,7 @@ const NewReservation = ({ inputs, title }) => {
                             marginBottom: "10px",
                             marginTop: "10px",
                           }}
+                          shouldDisableDate={disablePreDates(currentDate)}
                         />
                       </div>
 
@@ -404,6 +414,7 @@ const NewReservation = ({ inputs, title }) => {
                             marginTop: "10px",
                           }}
                           disabled={!!!startTime}
+                          shouldDisableDate={disablePreDates(currentDate)}
                         />
                       </div>
                     </Grid>
