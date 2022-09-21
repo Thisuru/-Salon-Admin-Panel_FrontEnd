@@ -14,7 +14,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { colors, MenuItem, Select, TextField } from "@mui/material";
 import dayjs from "dayjs";
-
+import moment from "moment/moment";
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
@@ -234,13 +234,13 @@ const NewReservation = ({ inputs, title }) => {
             <div className="right">
               <form>
                 <Grid container>
-                  <Grid item xs={6}>
+                  <Grid item xs={8}>
                     <div className="formInput">
                       <label>Client</label>
                       <Select
                         style={{
                           width: "250px",
-                          height: "35px",
+                          height: 40,
                           marginBottom: "10px",
                           marginTop: "10px",
                         }}
@@ -288,7 +288,7 @@ const NewReservation = ({ inputs, title }) => {
                         <Select
                           style={{
                             width: "250px",
-                            height: "35px",
+                            height: 40,
                             marginBottom: "10px",
                             marginTop: "10px",
                           }}
@@ -310,7 +310,7 @@ const NewReservation = ({ inputs, title }) => {
                       <Select
                         style={{
                           width: "250px",
-                          height: "35px",
+                          height: 40,
                           marginBottom: "10px",
                           marginTop: "10px",
                         }}
@@ -363,7 +363,8 @@ const NewReservation = ({ inputs, title }) => {
                           value={startTime}
                           onChange={(value) => {
                             setStartTime(value)
-                            console.log("Start time :", value);
+                            console.log("Start time11 :", value);
+                            console.log("Start time GTM :", moment(value).format("h:mm a"));
                           }}
                           // onChange={handleChange}
                           renderInput={(params) => <TextField {...params} />}

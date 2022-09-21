@@ -123,7 +123,7 @@ const New = ({ inputs, title }) => {
           <div className="right">
             <form>
               <Grid container>
-                <Grid item xs={6}>
+                <Grid item xs={8}>
                   {/* <div className='formInput'>
                     <input
                       type='file'
@@ -145,7 +145,7 @@ const New = ({ inputs, title }) => {
 
                     <TextField
                       style={{
-                        width: 250,
+                        width: 1000,
                         height: 50,
                         marginBottom: 10,
                         marginTop : 10
@@ -173,7 +173,7 @@ const New = ({ inputs, title }) => {
 
                     <TextField
                       style={{
-                        width: 250,
+                        width: 1000,
                         height: 50,
                         marginBottom: 10,
                         marginTop : 10
@@ -203,7 +203,7 @@ const New = ({ inputs, title }) => {
 
                     <TextField
                       style={{
-                        width: 250,
+                        width: 1000,
                         height: 50,
                         marginBottom: 10,
                         marginTop : 10
@@ -232,7 +232,7 @@ const New = ({ inputs, title }) => {
 
                     <TextField
                       style={{
-                        width: 250,
+                        width: 1000,
                         height: 50,
                         marginBottom: 10,
                         marginTop : 10
