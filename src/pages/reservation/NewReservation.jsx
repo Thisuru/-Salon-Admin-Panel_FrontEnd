@@ -32,18 +32,18 @@ const NewReservation = ({ inputs, title }) => {
   const [service, setService] = useState("");
   const [stylist, setStylist] = useState("");
   const [startTime, setStartTime] = useState("");
-  console.log(
-    "🚀 ~ file: NewReservation.jsx ~ line 30 ~ NewReservation ~ startTime",
-    dayjs(startTime),
-    new Date(startTime),
-    " drfdfd ",
-    dayjs(new Date(startTime))
-  );
+  // console.log(
+  //   "🚀 ~ file: NewReservation.jsx ~ line 30 ~ NewReservation ~ startTime",
+  //   dayjs(startTime),
+  //   new Date(startTime),
+  //   " drfdfd ",
+  //   dayjs(new Date(startTime))
+  // );
   const [endTime, setEndTime] = useState("");
-  console.log(
-    "🚀 ~ file: NewReservation.jsx ~ line 32 ~ NewReservation ~ endTime",
-    endTime
-  );
+  // console.log(
+  //   "🚀 ~ file: NewReservation.jsx ~ line 32 ~ NewReservation ~ endTime",
+  //   endTime
+  // );
   const [status, setStatus] = useState("");
   const [clientLoading, setClientLoading] = useState(true);
   const [stylistLoading, setStylistLoading] = useState(true);
@@ -78,9 +78,6 @@ const NewReservation = ({ inputs, title }) => {
 
     if (response.status === 200) {
       const userDetail = response?.data;
-      console.log("userDetails", userDetail);
-      console.log("userDetail?.client : ", userDetail?.client);
-      console.log("userDetail?.stylist : ", userDetail?.stylist);
 
       var d = new Date(userDetail?.endTime);
       var endT = d.toISOString().split("T")[0];
@@ -150,8 +147,6 @@ const NewReservation = ({ inputs, title }) => {
   }
 
   async function getOnlyAvailableStylists(startTime, endTime) {
-    console.log("start time : ", startTime);
-    console.log("end time : ", endTime);
     const response = await axios.post(
       "http://localhost:5000/api/v1/stylists/getAvailableStylish",
       {
@@ -198,12 +193,18 @@ const NewReservation = ({ inputs, title }) => {
   }
 
   const sendHandler = (e) => {
-    isEdit ? reservationUpdate(e) : reservationCreate(e);
+    e.preventDefault()
+    let checkAvailableTime = validateTime(startTime, endTime)
+
+    if (!checkAvailableTime) {
+      toast("Reservation maximum duration is 1 hour", { type: "error" });
+    } else {
+      isEdit ? reservationUpdate(e) : reservationCreate(e);
+    }
   };
 
   console.log("allClients : ", allClients);
   console.log("allservices : ", allservices);
-
 
   const handleService = (event) => {
     setService(event.target.value);
@@ -215,6 +216,19 @@ const NewReservation = ({ inputs, title }) => {
     const startSeconds = Date.parse(currentDate);
     return (date) => {
       return Date.parse(date) < startSeconds;
+    }
+  }
+
+  const validateTime = () => {
+
+    const difference = endTime.diff(startTime, 'hours')
+
+    console.log("DIFFRENCE: ", difference);
+
+    if (difference <= 1) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -239,7 +253,7 @@ const NewReservation = ({ inputs, title }) => {
                       <label>Client</label>
                       <Select
                         style={{
-                          width: "250px",
+                          width: 225,
                           height: 40,
                           marginBottom: "10px",
                           marginTop: "10px",
@@ -287,7 +301,7 @@ const NewReservation = ({ inputs, title }) => {
                         <InputLabel id="demo-simple-select-label">Service</InputLabel>
                         <Select
                           style={{
-                            width: "250px",
+                            width: 225,
                             height: 40,
                             marginBottom: "10px",
                             marginTop: "10px",
@@ -309,7 +323,7 @@ const NewReservation = ({ inputs, title }) => {
                       <label>Stylist</label>
                       <Select
                         style={{
-                          width: "250px",
+                          width: 225,
                           height: 40,
                           marginBottom: "10px",
                           marginTop: "10px",
@@ -375,6 +389,9 @@ const NewReservation = ({ inputs, title }) => {
                             marginTop: "10px",
                           }}
                           shouldDisableDate={disablePreDates(currentDate)}
+                          shouldDisableTime={(timeValue, clockType) => {
+                            return (clockType === "hours" && timeValue <= 7) || (clockType === "hours" && timeValue > 17);
+                          }}
                         />
                       </div>
 
@@ -416,6 +433,9 @@ const NewReservation = ({ inputs, title }) => {
                           }}
                           disabled={!!!startTime}
                           shouldDisableDate={disablePreDates(currentDate)}
+                          shouldDisableTime={(timeValue, clockType) => {
+                            return (clockType === "hours" && timeValue <= 7) || (clockType === "hours" && timeValue > 17);
+                          }}
                         />
                       </div>
                     </Grid>

@@ -27,11 +27,11 @@ const Sidebar = () => {
             <span>Dashboard</span>
           </li>
           </Link>
-          <p className="title">CLIENTS</p>
+          <p className="title">USERS</p>
           <Link to="/users" style={{ textDecoration: "none" }}>
             <li>
               <PersonOutlineIcon className="icon" />
-              <span>Users</span>
+              <span>Clients</span>
             </li>
           </Link>
           <p className="title">RESERVATION</p>
