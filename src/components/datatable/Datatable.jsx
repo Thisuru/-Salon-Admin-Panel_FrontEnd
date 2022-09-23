@@ -154,7 +154,7 @@ const Datatable = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleDeleteConfirm} autoFocus>
+          <Button style={{color: 'red'}} onClick={handleDeleteConfirm} autoFocus>
             Delete
           </Button>
         </DialogActions>

@@ -110,7 +110,7 @@ const New = ({ inputs, title }) => {
         navigate("/users");
       }, "2000");
     } else {
-      toast("Something went wrong", { type: "error" });
+      toast(response.data.message, { type: "error" });
     }
   }
 
