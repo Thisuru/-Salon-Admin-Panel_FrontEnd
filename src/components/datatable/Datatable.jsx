@@ -8,13 +8,34 @@ import AuthService from "../../api/Authaxios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const Datatable = () => {
   const [data, setData] = useState(userRows);
+  const [open, setOpen] = useState(false);
+  const [deleteRowId, setDeleteRowId] = useState('')
 
   const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
-    deleteClient(id);
+    setOpen(true);
+    setDeleteRowId(id)
+    // setData(data.filter((item) => item.id !== id));
+    // deleteClient(id);
+  };
+
+  const handleDeleteConfirm = () => {
+    console.log("ID:: ", deleteRowId);
+    setData(data.filter((item) => item.id !== deleteRowId));
+    deleteClient(deleteRowId);
+    setOpen(false);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
 
@@ -24,10 +45,6 @@ const Datatable = () => {
       headerName: "Action",
       width: 200,
       renderCell: (params) => {
-        // console.log(
-        //   "🚀 ~ file: Datatable.jsx ~ line 22 ~ Datatable ~ params",
-        //   params
-        // );
         return (
           <div className="cellAction">
             <Link to={`/users/edit/${params.row.id}`} style={{ textDecoration: "none" }}>
@@ -116,11 +133,32 @@ const Datatable = () => {
         columns={userColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
-      // rowCount={50000}
-      // onPageChange={(newPage) => setPage(newPage)}
       // checkboxSelection
       />
+
       <ToastContainer />
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Delete Client Confimation"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete this Client?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleDeleteConfirm} autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
