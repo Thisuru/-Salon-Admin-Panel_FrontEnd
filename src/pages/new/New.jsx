@@ -6,9 +6,7 @@ import axios from "axios";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Grid from "@mui/material/Grid";
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -73,8 +71,6 @@ const New = ({ inputs, title }) => {
   }
 
   async function clientCreate(value) {
-    console.log("Client Create Formik body: ", value);
-
     const response = await axios.post("http://localhost:5000/api/v1/clients", {
       firstname: value.firstname,
       lastname: value.lastname,
@@ -85,19 +81,18 @@ const New = ({ inputs, title }) => {
     console.log("Req body: ", firstName, lasttName, phoneNumber, email);
 
     if (response.status === 200) {
-      console.log("Responseclienttt:", response);
       toast("Success! Client created successfully", { type: "success" });
 
       setTimeout(() => {
         navigate("/users");
       }, "2000");
+
     } else {
       toast(response.data.message, { type: "error" });
     }
   }
 
   async function updateClient(value) {
-    console.log("Values: ", value);
     const response = await axios.put(
       `http://localhost:5000/api/v1/clients/${userDetails?._id}`,
       {
@@ -120,7 +115,6 @@ const New = ({ inputs, title }) => {
   }
 
   const sendHandler = (value) => {
-    console.log("sendHandler value: ", value);
     isEdit ? updateClient(value) : clientCreate(value);
   };
 
@@ -134,7 +128,6 @@ const New = ({ inputs, title }) => {
     enableReinitialize: true,
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log("Values:: ", values);
       sendHandler(values)
     },
   });
@@ -151,27 +144,6 @@ const New = ({ inputs, title }) => {
         <div className="bottom">
           <div className="right">
             <form onSubmit={formik.handleSubmit}>
-              {/* <Grid container> */}
-
-              {/* <div className="formInput">
-                    <label>First Name</label>
-                    <TextField
-                      style={{
-                        width: 1000,
-                        height: 50,
-                        marginBottom: 10,
-                        marginTop : 10
-                      }}
-                      id="firstname"
-                      label="firstname"
-                      variant="outlined"
-                      value={firstName}
-                      required
-                      fullWidth
-                      onChange={(e) => setFirstName(e.target.value)}
-                    />
-                  </div> */}
-
               <TextField
                 fullWidth
                 id="firstname"
@@ -224,92 +196,11 @@ const New = ({ inputs, title }) => {
                 fullWidth type="submit">
                 Submit
               </Button>
-              {/* <div className="formInput">
-                    <label>Last Name</label>
-                    <TextField
-                      style={{
-                        width: 1000,
-                        height: 50,
-                        marginBottom: 10,
-                        marginTop: 10
-                      }}
-                      id="lastname"
-                      label="lastname"
-                      variant="outlined"
-                      value={lasttName}
-                      required
-                      fullWidth
-                      onChange={(e) => setLastName(e.target.value)}
-                    />
-                  </div> */}
-
-              {/* <Grid item xs={6}>
-                  <div className="formInput">
-                    <label>Email</label>
-                    <TextField
-                      style={{
-                        width: 1000,
-                        height: 50,
-                        marginBottom: 10,
-                        marginTop: 10
-                      }}
-                      id="email"
-                      label="email"
-                      variant="outlined"
-                      value={email}
-                      required
-                      fullWidth
-                      autoComplete="email"
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-
-                  </div>
-
-                  <div className="formInput">
-                    <label>Phone</label>
-                    <TextField
-                      style={{
-                        width: 1000,
-                        height: 50,
-                        marginBottom: 10,
-                        marginTop: 10
-                      }}
-                      id="phone"
-                      label="phone"
-                      variant="outlined"
-                      type="number"
-                      value={phoneNumber}
-                      required
-                      fullWidth
-                      autoComplete="phone"
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                      inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                    />
-
-                  </div>
-                </Grid> */}
-              {/* </Grid> */}
-
-              {/* <button
-                style={{
-                  width: '150px',
-                  padding: '10px',
-                }}
-                onClick={(e) => sendHandler(e)}
-                disabled={
-                  !!!firstName ||
-                  !!!lasttName ||
-                  !!!email ||
-                  !!!phoneNumber
-                }
-              >
-                Send
-              </button> */}
             </form>
           </div>
+
           <ToastContainer />
         </div>
-
       </div>
     </div>
   );
