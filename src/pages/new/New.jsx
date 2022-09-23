@@ -124,25 +124,8 @@ const New = ({ inputs, title }) => {
             <form>
               <Grid container>
                 <Grid item xs={8}>
-                  {/* <div className='formInput'>
-                    <input
-                      type='file'
-                      id='file'
-                      onChange={(e) => setFile(e.target.files[0])}
-                      style={{ display: 'none' }}
-                    />
-                  </div> */}
-
                   <div className="formInput">
                     <label>First Name</label>
-
-                    {/* <input
-                      type="text"
-                      placeholder="John"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                    /> */}
-
                     <TextField
                       style={{
                         width: 1000,
@@ -163,14 +146,6 @@ const New = ({ inputs, title }) => {
 
                   <div className="formInput">
                     <label>Last Name</label>
-
-                    {/* <input
-                      type="text"
-                      placeholder="Doe"
-                      value={lasttName}
-                      onChange={(e) => setLastName(e.target.value)}
-                    /> */}
-
                     <TextField
                       style={{
                         width: 1000,
@@ -186,21 +161,12 @@ const New = ({ inputs, title }) => {
                       fullWidth
                       onChange={(e) => setLastName(e.target.value)}
                     />
-
-
                   </div>
                 </Grid>
+
                 <Grid item xs={6}>
                   <div className="formInput">
                     <label>Email</label>
-
-                    {/* <input
-                      type="text"
-                      placeholder="john_doe@gmail.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    /> */}
-
                     <TextField
                       style={{
                         width: 1000,
@@ -222,14 +188,6 @@ const New = ({ inputs, title }) => {
 
                   <div className="formInput">
                     <label>Phone</label>
-
-                    {/* <input
-                      type="text"
-                      placeholder="+94 234 567 897"
-                      value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                    /> */}
-
                     <TextField
                       style={{
                         width: 1000,

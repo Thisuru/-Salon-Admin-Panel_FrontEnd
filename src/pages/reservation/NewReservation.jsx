@@ -32,18 +32,7 @@ const NewReservation = ({ inputs, title }) => {
   const [service, setService] = useState("");
   const [stylist, setStylist] = useState("");
   const [startTime, setStartTime] = useState("");
-  // console.log(
-  //   "🚀 ~ file: NewReservation.jsx ~ line 30 ~ NewReservation ~ startTime",
-  //   dayjs(startTime),
-  //   new Date(startTime),
-  //   " drfdfd ",
-  //   dayjs(new Date(startTime))
-  // );
   const [endTime, setEndTime] = useState("");
-  // console.log(
-  //   "🚀 ~ file: NewReservation.jsx ~ line 32 ~ NewReservation ~ endTime",
-  //   endTime
-  // );
   const [status, setStatus] = useState("");
   const [clientLoading, setClientLoading] = useState(true);
   const [stylistLoading, setStylistLoading] = useState(true);
@@ -56,7 +45,6 @@ const NewReservation = ({ inputs, title }) => {
     setValue(newValue);
   };
   useEffect(() => {
-    // Your code here
     const isEditRoute = location?.pathname?.includes("edit");
     setIsEdit(isEditRoute);
     if (isEditRoute) {
@@ -79,17 +67,17 @@ const NewReservation = ({ inputs, title }) => {
     if (response.status === 200) {
       const userDetail = response?.data;
 
-      var d = new Date(userDetail?.endTime);
-      var endT = d.toISOString().split("T")[0];
-      var sd = new Date(userDetail?.startTime);
-      var startT = sd.toISOString().split("T")[0];
+      var momentEndTime = moment(new Date(userDetail?.endTime));
+      // var endT = d.toISOString().split("T")[0];
+      var momentStartTime = moment(new Date(userDetail?.startTime));
+      // var startT = sd.toISOString().split("T")[0];
 
       setUserDetails(userDetail);
       setClient(userDetail?.client);
       setService(userDetail?.service);
       setStylist(userDetail?.stylist);
-      setStartTime(startT);
-      setEndTime(endT);
+      setStartTime(momentStartTime);
+      setEndTime(momentEndTime);
       setStatus(userDetail?.status);
       setLoading(false);
     } else {
@@ -105,7 +93,6 @@ const NewReservation = ({ inputs, title }) => {
         client: client,
         service: service,
         stylist: stylist,
-        // date: new Date(date),
         startTime: startTime,
         endTime: endTime,
         // status: status
@@ -195,7 +182,7 @@ const NewReservation = ({ inputs, title }) => {
   const sendHandler = (e) => {
     e.preventDefault()
     let checkAvailableTime = validateTime(startTime, endTime)
-
+    console.log("checkAvailableTime: ", checkAvailableTime);
     if (!checkAvailableTime) {
       toast("Reservation maximum duration is 1 hour", { type: "error" });
     } else {
@@ -220,7 +207,8 @@ const NewReservation = ({ inputs, title }) => {
   }
 
   const validateTime = () => {
-
+    console.log("startTT: ", startTime);
+    console.log("endTT: ", endTime);
     const difference = endTime.diff(startTime, 'hours')
 
     console.log("DIFFRENCE: ", difference);
@@ -281,21 +269,6 @@ const NewReservation = ({ inputs, title }) => {
                       </Select>
                     </div>
 
-                    {/* <div className="formInput">
-                      <label>Service</label>
-                      <input
-                        style={{
-                          width: "250px",
-                          marginBottom: "10px",
-                          marginTop: "10px",
-                        }}
-                        type="text"
-                        placeholder="Doe"
-                        value={service}
-                        onChange={(e) => setService(e.target.value)}
-                      />
-                    </div> */}
-
                     <Box sx={{ minWidth: 120 }}>
                       <FormControl >
                         <InputLabel id="demo-simple-select-label">Service</InputLabel>
@@ -351,27 +324,6 @@ const NewReservation = ({ inputs, title }) => {
                     <Grid item xs={6}>
                       <div className="formInput">
                         <label>Start Time</label>
-                        {/* <TextField
-                          style={{
-                            width: "250px",
-                            height: "35px",
-                            marginBottom: "50px",
-                            marginTop: "10px",
-                          }}
-                          id="startTime"
-                          // label='Date'
-                          type="date"
-                          // defaultValue="2017-05-24"
-                          value={startTime}
-                          sx={{ width: 220 }}
-                          onChange={(e) => {
-                            console.log("Start time: ", e.target.value);
-                            setStartTime(e.target.value);
-                          }}
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                        /> */}
                         <DateTimePicker
                           // label="Date&Time picker"
                           value={startTime}
@@ -397,24 +349,6 @@ const NewReservation = ({ inputs, title }) => {
 
                       <div className="formInput">
                         <label>End Time</label>
-                        {/* <TextField
-                        style={{
-                          width: "250px",
-                          height: "35px",
-                          marginBottom: "10px",
-                          marginTop: "10px",
-                        }}
-                        id="endTime"
-                        // label='Date'
-                        type="date"
-                        // defaultValue="2017-05-24"
-                        value={endTime}
-                        sx={{ width: 220 }}
-                        onChange={(e) => setEndTime(e.target.value)}
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                      /> */}
                         <DateTimePicker
                           // label="Date&Time picker"
                           value={endTime}
