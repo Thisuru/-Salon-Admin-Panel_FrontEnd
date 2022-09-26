@@ -133,7 +133,7 @@ const AdminDatatable = () => {
             ) : (
                 <DataGrid
                     className="datagrid"
-                    rows={data}
+                    rows={adminRows}
                     columns={adminColumns.concat(actionColumn)}
                     pageSize={9}
                     rowsPerPageOptions={[9]}

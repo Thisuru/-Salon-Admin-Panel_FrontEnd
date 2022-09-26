@@ -8,6 +8,7 @@ import Reservation from './pages/reservation/Reservation'
 import NewReservation from './pages/reservation/NewReservation'
 import Calander from './modules/Calander/Calander'
 import AdminUsers from './pages/admin/AdminUsers'
+import Register from './pages/register/Register'
 
 function App() {
   return (
@@ -60,10 +61,12 @@ function App() {
               /> */}
               {/* <Route
                 path='edit/:id'
-                element={<New inputs={userUpdateInputs} title='Edit User' />}
+                element={<New inputs={userUpdateInputs} title='Edit Admin' />}
               /> */}
             </Route>
           </Route>
+
+          <Route path='register' element={<Register />} />
           
         </Routes>
       </BrowserRouter>

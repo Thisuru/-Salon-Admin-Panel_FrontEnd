@@ -170,6 +170,13 @@ export const userColumns = [
       firstname: "Thisuru",
       lastname: "Deesan",
       phonenumber: "0714487755",
-      email: "thisurudeesanadmin@gmail.com"
+      email: "thisuruadmin@gmail.com"
     },
+    // {
+    //   id: 2,
+    //   firstname: "Nisuru",
+    //   lastname: "Geesan",
+    //   phonenumber: "0727164755",
+    //   email: "nisuruadmin@gmail.com"
+    // },
   ];
