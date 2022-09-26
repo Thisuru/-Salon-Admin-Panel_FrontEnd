@@ -211,16 +211,18 @@ const Calander = () => {
   )
 
   //Reservation Drag and Drop Update
-  async function reservationUpdate(event, start, end) {
+  async function reservationUpdate(event, start, end, stylist) {
 
     console.log("reservationUpdate start: ", start);
     console.log("reservationUpdate end: ", end);
+    console.log("reservationUpdate stylist: ", stylist);
     const response = await axios.put(
       `http://localhost:5000/api/v1/reservation/calendar`,
       {
         id: event.id,
-        startTime: start,
-        endTime: end
+        NewStartTime: start,
+        NewEndTime: end,
+        stylist : stylist
       },
     );
 
@@ -228,7 +230,7 @@ const Calander = () => {
       toast("Success! Reservation updated successfully", { type: "success" });
 
     } else {
-      toast("Something went wrong", { type: "error" });
+      toast(response.data.message, { type: "error" });
     }
   }
 
@@ -245,8 +247,9 @@ const Calander = () => {
       console.log("Calender start: ", start);
       console.log("Calender end: ", end);
       console.log("Calender id: ", event.id);
+      console.log("resourceId: ", resourceId);
 
-      reservationUpdate(event, start, end)
+      reservationUpdate(event, start, end, resourceId)
 
       if (!allDay && droppedOnAllDaySlot) {
         event.allDay = true
