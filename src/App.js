@@ -3,12 +3,11 @@ import Login from './pages/login/Login'
 import List from './pages/list/List'
 import New from './pages/new/New'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-// import Calendar from './pages/calendar/Calendar'
 import { userInputs, userUpdateInputs } from './formSource'
 import Reservation from './pages/reservation/Reservation'
 import NewReservation from './pages/reservation/NewReservation'
-import { Form } from './pages/form/Form'
 import Calander from './modules/Calander/Calander'
+import AdminUsers from './pages/admin/AdminUsers'
 
 function App() {
   return (
@@ -34,7 +33,6 @@ function App() {
 
             <Route path='calendar' element={<Calander />} />
 
-            {/* <Route path="reservation" element={<Reservation/>} /> */}
             <Route path='reservation'>
               <Route index element={<Reservation />} />
               <Route
@@ -52,9 +50,21 @@ function App() {
                   />
                 }
               />
-              <Route path='form' element={<Form />} />
+            </Route>
+
+            <Route path='admin'>
+              <Route index element={<AdminUsers />} />
+              {/* <Route
+                path='new'
+                element={<New inputs={userInputs} title='Add New Admin' />}
+              /> */}
+              {/* <Route
+                path='edit/:id'
+                element={<New inputs={userUpdateInputs} title='Edit User' />}
+              /> */}
             </Route>
           </Route>
+          
         </Routes>
       </BrowserRouter>
     </div>

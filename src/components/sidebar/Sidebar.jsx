@@ -4,6 +4,7 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
@@ -45,6 +46,13 @@ const Sidebar = () => {
           <li>
             <CalendarMonthIcon className="icon" />
             <span>Calendar</span>
+          </li>
+          </Link>
+          <p className="title">ADMIN</p>
+          <Link to="/admin" style={{ textDecoration: "none" }}>
+          <li>
+            <AdminPanelSettingsIcon className="icon" />
+            <span>Admin Users</span>
           </li>
           </Link>
           <p className="title">USER</p>

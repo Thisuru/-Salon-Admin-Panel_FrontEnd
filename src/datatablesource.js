@@ -137,3 +137,39 @@ export const userColumns = [
       status: "pending"
     }
   ];
+
+  //Admin User table columns
+  export const adminColumns = [
+    // { field: "_id", headerName: "ID", width: 70 },
+    {
+      field: "firstname",
+      headerName: "FirstName",
+      width: 230,
+    },
+    {
+      field: "lastname",
+      headerName: "LastName",
+      width: 230,
+    },
+    {
+      field: "phonenumber",
+      headerName: "PhoneNumber",
+      width: 230,
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      width: 230,
+    }
+  ];
+
+  //Admin User table Rows
+  export const adminRows = [
+    {
+      id: 1,
+      firstname: "Thisuru",
+      lastname: "Deesan",
+      phonenumber: "0714487755",
+      email: "thisurudeesanadmin@gmail.com"
+    },
+  ];
