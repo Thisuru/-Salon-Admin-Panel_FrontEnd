@@ -9,6 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -18,8 +19,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 const AdminDatatable = () => {
     const [data, setData] = useState(adminRows);
     const [open, setOpen] = useState(false);
+    const [openAdd, setOpenAdd] = useState(false);
     const [deleteRowId, setDeleteRowId] = useState('')
     const [loading, setLoading] = useState(true);
+    const [inviteEmail, setInviteEmail] = useState('')
 
     const handleDelete = (id) => {
         setOpen(true);
@@ -29,14 +32,21 @@ const AdminDatatable = () => {
     const handleDeleteConfirm = () => {
         console.log("ID:: ", deleteRowId);
         setData(data.filter((item) => item.id !== deleteRowId));
-        deleteClient(deleteRowId);
+        deleteUser(deleteRowId);
         setOpen(false);
     };
+
+    const openAddNew = () => {
+        setOpenAdd(true);
+    }
 
     const handleClose = () => {
         setOpen(false);
     };
 
+    const handleCloseAdd = () => {
+        setOpenAdd(false);
+    };
 
     const actionColumn = [
         {
@@ -61,8 +71,8 @@ const AdminDatatable = () => {
         },
     ];
 
-    async function getAllClient(params) {
-        let BASE_URL = 'http://localhost:5000/api/v1/clients?'
+    async function getAllUsers(params) {
+        let BASE_URL = 'http://localhost:5000/api/v1/user?'
 
         if (params?.page) {
             BASE_URL += 'page=' + params.page + '&'
@@ -73,46 +83,62 @@ const AdminDatatable = () => {
 
         console.log("Base URL", BASE_URL);
 
-        const response = await AuthService.get(
+        const response = await axios.get(
             BASE_URL
         );
 
         if (response.status === 200) {
-            console.log("Success in Axios res.client ", response);
+            console.log("Success in Axios res.user ", response);
             setLoading(false);
-            setData(response.data.clients)
+            setData(response.data.users)
 
         } else {
             console.log("Something went wrong in Axios");
         }
     }
 
-    async function deleteClient(id) {
+    async function deleteUser(id) {
         const response = await axios.delete(
-            `http://localhost:5000/api/v1/clients/${id}`
+            `http://localhost:5000/api/v1/user/${id}`
         );
 
         if (response.status === 200) {
             console.log("Success in Axios res.client ", response);
 
-            toast("Success! Client deleted successfully", { type: "success" });
+            toast("Success! Admin user deleted successfully", { type: "success" });
 
-            getAllClient();
+            getAllUsers();
         } else {
             console.log("Something went wrong in Axios");
             toast("Something went wrong", { type: "error" });
         }
     }
 
+    async function sendInviteEmail(email) {
+        setOpenAdd(false);
+        const response = await axios.post("http://localhost:5000/api/v1/sendEmail", {
+            email: email,
+            message: `Please redirect to the following URL to register to the app
+                       URL : http://localhost:3000/register?FMfcgzGqQmMThGcJFtbvnGvvnXTThRxB `
+        });
+    
+        if (response.status === 200) {
+          toast("Success! Email sent successfully", { type: "success" });
+    
+        } else {
+          toast(response.data.message, { type: "error" });
+        }
+      }
+
     const clientSearch = (e) => {
         console.log("search val: ", e.target.value);
-        getAllClient({
+        getAllUsers({
             search: e.target.value
         })
     }
 
     useEffect(() => {
-        getAllClient()
+        getAllUsers()
     }, []);
 
     return (
@@ -123,9 +149,9 @@ const AdminDatatable = () => {
                     <input type="text" placeholder="Search..." onChange={clientSearch} />
                     <SearchOutlinedIcon />
                 </div>
-                <Link to="/admin/new" className="link">
-                    Add New
-                </Link>
+                {/* <Link to="/admin/new" className="link"> */}
+                <button className="add-new-button" onClick={openAddNew}>Invite Admin</button>
+                {/* </Link> */}
             </div>
 
             {loading ? (
@@ -133,7 +159,7 @@ const AdminDatatable = () => {
             ) : (
                 <DataGrid
                     className="datagrid"
-                    rows={adminRows}
+                    rows={data}
                     columns={adminColumns.concat(actionColumn)}
                     pageSize={9}
                     rowsPerPageOptions={[9]}
@@ -162,6 +188,32 @@ const AdminDatatable = () => {
                     <Button style={{ color: 'red' }} onClick={handleDeleteConfirm} autoFocus>
                         Delete
                     </Button>
+                </DialogActions>
+            </Dialog>
+
+
+            <Dialog open={openAdd}
+                onClose={handleCloseAdd}>
+                <DialogTitle>Invite Admin</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Please enter the invitess's email address here. We
+                        will send regiser URL through the Email.
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Email Address"
+                        type="email"
+                        fullWidth
+                        variant="standard"
+                        onChange={(e) => setInviteEmail(e.target.value)}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseAdd}>Cancel</Button>
+                    <Button onClick={() => sendInviteEmail(inviteEmail)}>Invite</Button>
                 </DialogActions>
             </Dialog>
         </div>
