@@ -227,6 +227,7 @@ const ReservationDataTable = () => {
           columns={actionColumn}
           pageSize={9}
           rowsPerPageOptions={[9]}
+          disableColumnMenu
         />
       )}
       <ToastContainer />
