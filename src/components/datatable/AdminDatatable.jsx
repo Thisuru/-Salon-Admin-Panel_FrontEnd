@@ -114,17 +114,32 @@ const AdminDatatable = () => {
         }
     }
 
-    async function sendInviteEmail(email) {
+    async function inviteEmailExpiryToken(email) {
         setOpenAdd(false);
+        const response = await axios.post("http://localhost:5000/api/v1/sendEmail/invitetoken", {
+            email: email
+        });
+    
+        if (response.status === 200) {
+          console.log("inviteEmailExpiryToken: ", response.data.token);
+          sendInviteEmail(email, response.data.token)
+    
+        } else {
+          toast(response.data.message, { type: "error" });
+        }
+      }
+
+    async function sendInviteEmail(email, token) {
+        // setOpenAdd(false);
         const response = await axios.post("http://localhost:5000/api/v1/sendEmail", {
             email: email,
             message: `Please redirect to the following URL to register to the app
-                       URL : http://localhost:3000/register?FMfcgzGqQmMThGcJFtbvnGvvnXTThRxB `
+                       URL : http://localhost:3000/register/${token} `
         });
     
         if (response.status === 200) {
           toast("Success! Email sent successfully", { type: "success" });
-    
+
         } else {
           toast(response.data.message, { type: "error" });
         }
@@ -214,7 +229,7 @@ const AdminDatatable = () => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCloseAdd}>Cancel</Button>
-                    <Button onClick={() => sendInviteEmail(inviteEmail)}>Invite</Button>
+                    <Button onClick={() => inviteEmailExpiryToken(inviteEmail)}>Invite</Button>
                 </DialogActions>
             </Dialog>
         </div>

@@ -66,7 +66,7 @@ function App() {
             </Route>
           </Route>
 
-          <Route path='register' element={<Register />} />
+          <Route path='register/:token' element={<Register />} />
           
         </Routes>
       </BrowserRouter>
