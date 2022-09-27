@@ -9,6 +9,7 @@ import NewReservation from './pages/reservation/NewReservation'
 import Calander from './modules/Calander/Calander'
 import AdminUsers from './pages/admin/AdminUsers'
 import Register from './pages/register/Register'
+import AdminEdit from './pages/admin/AdminEdit'
 
 function App() {
   return (
@@ -55,14 +56,10 @@ function App() {
 
             <Route path='admin'>
               <Route index element={<AdminUsers />} />
-              {/* <Route
-                path='new'
-                element={<New inputs={userInputs} title='Add New Admin' />}
-              /> */}
-              {/* <Route
+              <Route
                 path='edit/:id'
-                element={<New inputs={userUpdateInputs} title='Edit Admin' />}
-              /> */}
+                element={<AdminEdit inputs={userUpdateInputs} title='Edit Admin' />}
+              />
             </Route>
           </Route>
 
