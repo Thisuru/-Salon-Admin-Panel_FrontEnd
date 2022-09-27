@@ -9,9 +9,9 @@ import {
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -23,6 +23,14 @@ const Login = () => {
     password: "",
     showPass: false,
   });
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      navigate("/users");
+    }
+  }, []);
 
   const handleSubmit = (e) => {
     console.log("handleSubmit");
@@ -102,6 +110,12 @@ const Login = () => {
                         ),
                       }}
                     />
+                  </Grid>
+
+                  <Grid item>
+                    <Link to={`/admin/edit`} style={{ textDecoration: "none", textAlign: "center" }}>
+                      <p>Forgotten password?</p>
+                    </Link>
                   </Grid>
 
                   <Grid item>
