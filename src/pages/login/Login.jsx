@@ -15,6 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./login.scss"
 
 const Login = () => {
   const navigate = useNavigate();
@@ -73,6 +74,7 @@ const Login = () => {
             style={{ minHeight: "100vh" }}
           >
             <Paper elelvation={2} sx={{ padding: 5 }}>
+              <h1 className="h1-text">Login</h1>
               <form onSubmit={handleSubmit}>
                 <Grid container direction="column" spacing={2}>
                   <Grid item>
