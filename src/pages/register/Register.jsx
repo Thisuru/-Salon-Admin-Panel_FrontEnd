@@ -9,9 +9,9 @@ import {
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -47,11 +47,17 @@ const validationSchema = yup.object({
 
 const Register = () => {
     const navigate = useNavigate();
+    const params = useParams();
     const [values, setValues] = useState({
         username: "",
         password: "",
         showPass: false,
     });
+
+    useEffect(() => {
+        console.log("Query Params: ", params.token);
+        decodeTokenCheckAvailability(params.token)
+    }, []);
 
     const formik = useFormik({
         initialValues: {
@@ -72,27 +78,44 @@ const Register = () => {
 
     const userRegister = (values) => {
         axios
-          .post("http://localhost:5000/api/v1/user/register", {
-            firstname: values.firstname,
-            lastname: values.lastname,
-            username : values.username,
-            email : values.email,
-            phone : values.phone,
-            password : values.password
-        })
-          .then((res) => {
-            console.log("Login response: ", res);
-    
-            if (res.data.status === true) {
-                toast('User Created!', { type: "success" });
-              navigate("/")
-            } else {
-              toast(res.data.message, { type: "error" });
-            }
-    
-          })
-          .catch((err) => console.error(err));
-      };
+            .post("http://localhost:5000/api/v1/user/register", {
+                firstname: values.firstname,
+                lastname: values.lastname,
+                username: values.username,
+                email: values.email,
+                phone: values.phone,
+                password: values.password
+            })
+            .then((res) => {
+                console.log("Login response: ", res);
+
+                if (res.data.status === true) {
+                    toast('User Created!', { type: "success" });
+                    navigate("/")
+                } else {
+                    toast(res.data.message, { type: "error" });
+                }
+
+            })
+            .catch((err) => console.error(err));
+    };
+
+    async function decodeTokenCheckAvailability(token) {
+        const response = await axios.post("http://localhost:5000/api/v1/user/decode", {
+            token: token
+        });
+
+        if (response.status === 200) {
+              toast("Please enter details to register", { type: "success" });
+
+        } else {
+            toast(response.data.message, { type: "error" });
+
+            setTimeout(() => {
+                navigate("/");
+              }, "2000");
+        }
+    }
 
     const handlePassVisibilty = () => {
         setValues({
