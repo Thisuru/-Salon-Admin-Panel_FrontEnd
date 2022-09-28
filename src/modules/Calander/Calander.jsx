@@ -35,6 +35,24 @@ import './index.css'
 import el from 'date-fns/esm/locale/el/index.js';
 import AuthService from "../../api/Authaxios";
 
+//modal imports
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+////modal styles
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
 const DragAndDropCalendar = withDragAndDrop(Calendar)
 const localizer = momentLocalizer(moment)
 
@@ -77,52 +95,60 @@ const Calander = () => {
   const [loading, setLoading] = useState(true)
   const clickRef = useRef(null)
 
+  const [open, setOpen] = useState(false);
+  const handleOpen = (calEvent) => {
+    setEventData(calEvent)
+    setOpen(true);
+  }
+  const handleClose = () => setOpen(false);
+  const [eventData, setEventData] = useState([]);
+
   useEffect(() => {
 
-    if(loading){
+    if (loading) {
       getAllAppointments();
       getAllStylist();
     }
-    
+
 
   }, [])
 
-  
-  const getAllAppointments = async () =>{
+
+  const getAllAppointments = async () => {
 
     console.log("getting appointments")
 
-      const response = await AuthService.get(
-        `http://localhost:5000/api/v1/reservation?page=1`
-      );
-  
-      if (response.status === 200) {
-        console.log("Success in Axios res.Reservations ", response);
+    const response = await AuthService.get(
+      `http://localhost:5000/api/v1/reservation?page=1`
+    );
 
-        const eventArray = response.data?.reservations?.map(elm => ({ 
-          
-            id: elm.id,
-            title: elm.service,
-            client: elm.client.firstname + ' ' + elm.client.lastname,
-            stylist: elm.stylist.firstname + ' ' + elm.stylist.lastname,
-            start: new Date(elm.startTime),
-            end: new Date(elm.endTime),
-            resourceId: elm?.stylist._id,
-            // hexColor: elm.service === "MakeUp" ? '00FF00' : ( elm.service === "HairStyle" ? '1966EF' : 'FFFF00' ),
-            hexColor: elm.service === "MakeUp" ? '00FF00' : ( elm.service === "HairStyle" ? '1966EF' : ( elm.service === "Facial" ? '92eb34' : 'FFFF00' ) ),
-          
-        }));
+    if (response.status === 200) {
+      console.log("Success in Axios res.Reservations ", response);
 
-        console.log(eventArray, "event array final")
+      const eventArray = response.data?.reservations?.map(elm => ({
 
-        setMyEvents(eventArray)
+        id: elm.id,
+        title: elm.service,
+        client: elm.client.firstname + ' ' + elm.client.lastname,
+        stylist: elm.stylist.firstname + ' ' + elm.stylist.lastname,
+        start: new Date(elm.startTime),
+        end: new Date(elm.endTime),
+        resourceId: elm?.stylist._id,
+        // hexColor: elm.service === "MakeUp" ? '00FF00' : ( elm.service === "HairStyle" ? '1966EF' : 'FFFF00' ),
+        hexColor: elm.service === "MakeUp" ? '00FF00' : (elm.service === "HairStyle" ? '1966EF' : (elm.service === "Facial" ? '92eb34' : 'FFFF00')),
 
-        toast("Success! Get All Appointments successfully", { type: "success" });
+      }));
 
-      } else {
-        console.log("Something went wrong in Axios");
-        toast("Something went wrong", { type: "error" });
-      }
+      console.log(eventArray, "event array final")
+
+      setMyEvents(eventArray)
+
+      toast("Success! Get All Appointments successfully", { type: "success" });
+
+    } else {
+      console.log("Something went wrong in Axios");
+      toast("Something went wrong", { type: "error" });
+    }
   }
 
   const getAllStylist = async () => {
@@ -130,30 +156,30 @@ const Calander = () => {
 
     console.log("getting stylist")
 
-      const response = await axios.get(
-        `http://localhost:5000/api/v1/stylists`
-      );
-  
-      if (response.status === 200) {
-        console.log("Success in Axios res.stylists ", response);
+    const response = await axios.get(
+      `http://localhost:5000/api/v1/stylists`
+    );
 
-        const stylistArray = response.data?.map(elm => ({ 
-          
-            resourceId: elm._id,
-            resourceTitle: elm.firstname + " " + elm.lastname,
-          
-        }));
+    if (response.status === 200) {
+      console.log("Success in Axios res.stylists ", response);
 
-        // console.log(eventArray, "event array final")
+      const stylistArray = response.data?.map(elm => ({
 
-        setStylist(stylistArray)
-  
-        toast("Success! Get All stylist successfully", { type: "success" });
+        resourceId: elm._id,
+        resourceTitle: elm.firstname + " " + elm.lastname,
 
-      } else {
-        console.log("Something went wrong in Axios");
-        toast("Something went wrong", { type: "error" });
-      }
+      }));
+
+      // console.log(eventArray, "event array final")
+
+      setStylist(stylistArray)
+
+      toast("Success! Get All stylist successfully", { type: "success" });
+
+    } else {
+      console.log("Something went wrong in Axios");
+      toast("Something went wrong", { type: "error" });
+    }
   }
 
   const { defaultDate, scrollToTime } = useMemo(
@@ -176,7 +202,7 @@ const Calander = () => {
         id: event.id,
         NewStartTime: start,
         NewEndTime: end,
-        stylist : stylist
+        stylist: stylist
       },
     );
 
@@ -260,7 +286,8 @@ const Calander = () => {
      */
     window.clearTimeout(clickRef?.current)
     clickRef.current = window.setTimeout(() => {
-      window.alert(calEvent.client)
+      // window.alert(calEvent.client)
+      handleOpen(calEvent);
     }, 250)
   }, [])
 
@@ -307,6 +334,28 @@ const Calander = () => {
         </div>
       </Fragment>
       <ToastContainer />
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            <h2>{eventData.title}</h2>
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+
+            <p>
+              ID: {eventData.id},<br />
+              Client Name: {eventData.client},<br />
+              Stylist Name: {eventData.stylist}
+            </p>
+
+          </Typography>
+        </Box>
+      </Modal>
     </>
   )
 }
