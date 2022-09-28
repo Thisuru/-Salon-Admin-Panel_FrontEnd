@@ -97,46 +97,19 @@ const Calander = () => {
       );
   
       if (response.status === 200) {
-        console.log("Success in Axios res.client ", response);
-
-      //   {
-      //     "id": "6320143fe0e7a938198a4738",
-      //     "client": {
-      //         "_id": "631c64adb70ba382c754d8c6",
-      //         "firstname": "Kavidu",
-      //         "lastname": "Udara",
-      //         "phonenumber": "0782643599",
-      //         "email": "kavidu@yahoo.com",
-      //         "createdAt": "2022-09-10T10:19:25.060Z",
-      //         "updatedAt": "2022-09-15T05:04:55.729Z",
-      //         "__v": 0
-      //     },
-      //     "service": "MakeUp",
-      //     "stylist": {
-      //         "_id": "6319b2cb6fbdd3eee2808f3a",
-      //         "firstname": "Nirmani",
-      //         "lastname": "Stylist",
-      //         "phonenumber": "0714517823",
-      //         "email": "nirmani@gmail.com",
-      //         "createdAt": "2022-09-08T09:15:55.970Z",
-      //         "updatedAt": "2022-09-08T09:15:55.970Z",
-      //         "__v": 0
-      //     },
-      //     "startTime": "2022-09-08T00:00:00.000Z",
-      //     "endTime": "2022-09-20T00:00:00.000Z",
-      //     "status": "completed"
-      // },
-
-
+        console.log("Success in Axios res.Reservations ", response);
 
         const eventArray = response.data?.reservations?.map(elm => ({ 
           
             id: elm.id,
             title: elm.service,
+            client: elm.client.firstname + ' ' + elm.client.lastname,
+            stylist: elm.stylist.firstname + ' ' + elm.stylist.lastname,
             start: new Date(elm.startTime),
             end: new Date(elm.endTime),
             resourceId: elm?.stylist._id,
-            hexColor: elm.service === "MakeUp" ? '00FF00' : ( elm.service === "HairStyle" ? '1966EF' : 'FFFF00' ),
+            // hexColor: elm.service === "MakeUp" ? '00FF00' : ( elm.service === "HairStyle" ? '1966EF' : 'FFFF00' ),
+            hexColor: elm.service === "MakeUp" ? '00FF00' : ( elm.service === "HairStyle" ? '1966EF' : ( elm.service === "Facial" ? '92eb34' : 'FFFF00' ) ),
           
         }));
 
@@ -144,7 +117,6 @@ const Calander = () => {
 
         setMyEvents(eventArray)
 
-  
         toast("Success! Get All Appointments successfully", { type: "success" });
 
       } else {
@@ -163,22 +135,7 @@ const Calander = () => {
       );
   
       if (response.status === 200) {
-        console.log("Success in Axios res.client ", response);
-
-        // { resourceId: 1, resourceTitle: 'Leo Messi' },
-        // { resourceId: 2, resourceTitle: 'Wendy Smith' },
-        // { resourceId: 3, resourceTitle: 'Tommy' },
-        // { resourceId: 4, resourceTitle: 'Jack' },
-
-        // "_id": "631ac79de92d57e79c79b180",
-        // "firstname": "Anura",
-        // "lastname": "Stylist",
-        // "phonenumber": "0778249345",
-        // "email": "anurastylist@gmail.com",
-        // "createdAt": "2022-09-09T04:57:01.687Z",
-        // "updatedAt": "2022-09-09T04:57:01.687Z",
-        // "__v": 0
-
+        console.log("Success in Axios res.stylists ", response);
 
         const stylistArray = response.data?.map(elm => ({ 
           
@@ -190,7 +147,6 @@ const Calander = () => {
         // console.log(eventArray, "event array final")
 
         setStylist(stylistArray)
-
   
         toast("Success! Get All stylist successfully", { type: "success" });
 
@@ -198,8 +154,6 @@ const Calander = () => {
         console.log("Something went wrong in Axios");
         toast("Something went wrong", { type: "error" });
       }
-
-
   }
 
   const { defaultDate, scrollToTime } = useMemo(
@@ -211,7 +165,7 @@ const Calander = () => {
   )
 
   //Reservation Drag and Drop Update
-  async function reservationUpdate(event, start, end, stylist) {
+  async function reservationUpdate(event, start, end, stylist, allDay, droppedOnAllDaySlot) {
 
     console.log("reservationUpdate start: ", start);
     console.log("reservationUpdate end: ", end);
@@ -229,6 +183,16 @@ const Calander = () => {
     if (response.status === 200) {
       toast("Success! Reservation updated successfully", { type: "success" });
 
+      if (!allDay && droppedOnAllDaySlot) {
+        event.allDay = true
+      }
+
+      setMyEvents((prev) => {
+        const existing = prev.find((ev) => ev.id === event.id) ?? {}
+        const filtered = prev.filter((ev) => ev.id !== event.id)
+        return [...filtered, { ...existing, start, end, stylist, allDay }]
+      })
+
     } else {
       toast(response.data.message, { type: "error" });
     }
@@ -244,22 +208,22 @@ const Calander = () => {
     }) => {
       const { allDay } = event
       console.log("Calender event: ", event);
-      console.log("Calender start: ", start);
-      console.log("Calender end: ", end);
-      console.log("Calender id: ", event.id);
-      console.log("resourceId: ", resourceId);
+      // console.log("Calender start: ", start);
+      // console.log("Calender end: ", end);
+      // console.log("Calender id: ", event.id);
+      // console.log("resourceId: ", resourceId);
 
-      reservationUpdate(event, start, end, resourceId)
+      reservationUpdate(event, start, end, resourceId, allDay, droppedOnAllDaySlot)
 
-      if (!allDay && droppedOnAllDaySlot) {
-        event.allDay = true
-      }
+      // if (!allDay && droppedOnAllDaySlot) {
+      //   event.allDay = true
+      // }
 
-      setMyEvents((prev) => {
-        const existing = prev.find((ev) => ev.id === event.id) ?? {}
-        const filtered = prev.filter((ev) => ev.id !== event.id)
-        return [...filtered, { ...existing, start, end, resourceId, allDay }]
-      })
+      // setMyEvents((prev) => {
+      //   const existing = prev.find((ev) => ev.id === event.id) ?? {}
+      //   const filtered = prev.filter((ev) => ev.id !== event.id)
+      //   return [...filtered, { ...existing, start, end, resourceId, allDay }]
+      // })
     },
     [setMyEvents]
   )
@@ -286,6 +250,7 @@ const Calander = () => {
   }, [])
 
   const onSelectEvent = useCallback((calEvent) => {
+    console.log("calEvent: ", JSON.stringify(calEvent));
     /**
      * Here we are waiting 250 milliseconds (use what you want) prior to firing
      * our method. Why? Because both 'click' and 'doubleClick'
@@ -295,7 +260,7 @@ const Calander = () => {
      */
     window.clearTimeout(clickRef?.current)
     clickRef.current = window.setTimeout(() => {
-      window.alert(calEvent)
+      window.alert(calEvent.client)
     }, 250)
   }, [])
 
@@ -321,7 +286,7 @@ const Calander = () => {
         <div className='height600'>
           <DragAndDropCalendar
             defaultDate={defaultDate}
-            defaultView={Views.DAY}
+            defaultView={Views.MONTH}
             events={myEvents}
             localizer={localizer}
             onEventDrop={moveEvent}
