@@ -65,6 +65,9 @@ const AdminDatatable = () => {
                         >
                             Delete
                         </div>
+                        <Link to={`/admin/reset_password/${params.row.id}`} style={{ textDecoration: "none" }}>
+                            <div className="resetButton">Reset</div>
+                        </Link>
                     </div>
                 );
             },

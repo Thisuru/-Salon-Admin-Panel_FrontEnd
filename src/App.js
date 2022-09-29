@@ -10,6 +10,7 @@ import Calander from './modules/Calander/Calander'
 import AdminUsers from './pages/admin/AdminUsers'
 import Register from './pages/register/Register'
 import AdminEdit from './pages/admin/AdminEdit'
+import AdminReset from './pages/admin/AdminReset'
 
 function App() {
   return (
@@ -59,6 +60,10 @@ function App() {
               <Route
                 path='edit/:id'
                 element={<AdminEdit inputs={userUpdateInputs} title='Edit Admin' />}
+              />
+              <Route
+                path='reset_password/:id'
+                element={<AdminReset inputs={userUpdateInputs} title='Reset Password' />}
               />
             </Route>
           </Route>
