@@ -20,30 +20,6 @@ const data = [
         pv: 9800,
         amt: 2290,
     },
-    {
-        name: 'Res 4',
-        uv: 2780,
-        pv: 3908,
-        amt: 2000,
-    },
-    {
-        name: 'Res 5',
-        uv: 1890,
-        pv: 4800,
-        amt: 2181,
-    },
-    // {
-    //     name: 'Res 6',
-    //     uv: 2390,
-    //     pv: 3800,
-    //     amt: 2500,
-    // },
-    // {
-    //     name: 'Res 7',
-    //     uv: 3490,
-    //     pv: 4300,
-    //     amt: 2100,
-    // },
 ];
 
 const BarchartReservation = () => {

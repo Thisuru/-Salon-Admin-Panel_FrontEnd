@@ -68,7 +68,7 @@ const AdminEdit = ({ inputs, title }) => {
             setUserDetails(userDetail);
             setFirstName(userDetail?.firstname);
             setLastName(userDetail?.lastname);
-            setUserName(userDetail.username);
+            setUserName(userDetail?.username);
             setEmail(userDetail?.email);
             setPhoneNumber(userDetail?.phonenumber);
         } else {
