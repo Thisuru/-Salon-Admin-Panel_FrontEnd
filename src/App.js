@@ -63,7 +63,7 @@ function App() {
               />
               <Route
                 path='reset_password/:id'
-                element={<AdminReset inputs={userUpdateInputs} title='Reset Password' />}
+                element={<AdminReset inputs={userUpdateInputs} title='Change Password' />}
               />
             </Route>
           </Route>

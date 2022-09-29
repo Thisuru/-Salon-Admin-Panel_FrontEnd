@@ -6,7 +6,16 @@ import axios from "axios";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import TextField from '@mui/material/TextField';
+import {
+    Container,
+    Grid,
+    Paper,
+    TextField,
+    IconButton,
+    InputAdornment,
+} from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -29,6 +38,11 @@ const AdminReset = ({ inputs, title }) => {
     const navigate = useNavigate();
     const params = useParams();
     const [isReset, setIsReset] = useState(false);
+    const [values, setValues] = useState({
+        // username: "",
+        // password: "",
+        showPass: false,
+    });
 
     const [password, setPassword] = useState("");
     const [confirmpassword, setConfirmPassword] = useState("");
@@ -93,6 +107,13 @@ const AdminReset = ({ inputs, title }) => {
         },
     });
 
+    const handlePassVisibilty = () => {
+        setValues({
+            ...values,
+            showPass: !values.showPass,
+        });
+    };
+
     return (
         <div className="new">
             <Sidebar />
@@ -114,6 +135,19 @@ const AdminReset = ({ inputs, title }) => {
                                 type="password"
                                 value={formik.values.password}
                                 onChange={formik.handleChange}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={handlePassVisibilty}
+                                                aria-label="toggle password"
+                                                edge="end"
+                                            >
+                                                {values.showPass ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
                                 error={formik.touched.password && Boolean(formik.errors.password)}
                                 helperText={formik.touched.password && formik.errors.password}
                             />

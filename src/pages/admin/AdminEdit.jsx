@@ -161,6 +161,7 @@ const AdminEdit = ({ inputs, title }) => {
                             />
 
                             <TextField
+                                disabled
                                 fullWidth
                                 id="email"
                                 name="email"
