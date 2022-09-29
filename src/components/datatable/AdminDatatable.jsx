@@ -31,7 +31,7 @@ const AdminDatatable = () => {
 
     const handleDeleteConfirm = () => {
         console.log("ID:: ", deleteRowId);
-        setData(data.filter((item) => item.id !== deleteRowId));
+        setData(data.filter((item) => item.id != deleteRowId));
         deleteUser(deleteRowId);
         setOpen(false);
     };

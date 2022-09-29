@@ -206,7 +206,7 @@ const NewReservation = ({ inputs, title }) => {
     }
   }
 
-  const validateTime = () => {
+  const validateTime = (startTime, endTime) => {
     console.log("startTT: ", startTime);
     console.log("endTT: ", endTime);
     const difference = endTime.diff(startTime, 'hours')
