@@ -1,6 +1,6 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { reservationColumns, reservationRows } from "../../datatablesource";
+import { reservationRows } from "../../datatablesource";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -9,14 +9,35 @@ import moment from "moment/moment";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const ReservationDataTable = () => {
   const [data, setData] = useState(reservationRows);
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [deleteRowId, setDeleteRowId] = useState('')
 
   const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
-    deleteReservation(id);
+    setOpen(true);
+    setDeleteRowId(id)
+    // setData(data.filter((item) => item.id !== id));
+    // deleteReservation(id);
+  };
+
+  const handleDeleteConfirm = () => {
+    console.log("ID:: ", deleteRowId);
+    setData(data.filter((item) => item.id != deleteRowId));
+    deleteReservation(deleteRowId);
+    setOpen(false);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const actionColumn = [
@@ -225,6 +246,28 @@ const ReservationDataTable = () => {
         />
       )}
       <ToastContainer />
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Delete Reservation Confimation"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete this Reservation?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button style={{color: 'red'}} onClick={handleDeleteConfirm} autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
