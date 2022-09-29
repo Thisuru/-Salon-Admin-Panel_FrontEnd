@@ -62,8 +62,6 @@ const ReservationDataTable = () => {
       headerName: "Date",
       width: 300,
       renderCell: (params) => {
-        // console.log("Date field Params: ", params);
-        // console.log("Date: ", params?.row?.date);
         return (
           <div className="cellAction">
             {/* {moment(params?.row?.startTime).format("MMMM Do YYYY, h:mm:ss a")} */}
@@ -77,8 +75,6 @@ const ReservationDataTable = () => {
       headerName: "Time",
       width: 300,
       renderCell: (params) => {
-        // console.log("Date field Params: ", params);
-        // console.log("Date: ", params?.row?.date);
         return (
           <div className="cellAction">
             {/* {moment(params?.row?.startTime).format("MMMM Do YYYY, h:mm:ss a")} */}
@@ -94,8 +90,6 @@ const ReservationDataTable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            {/* {params?.row?.status} */}
-
             <select
               defaultValue={params?.row?.status}
               name="status"

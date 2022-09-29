@@ -12,7 +12,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import Grid from "@mui/material/Grid";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { colors, MenuItem, Select, TextField } from "@mui/material";
+import { MenuItem, Select, TextField } from "@mui/material";
 import dayjs from "dayjs";
 import moment from "moment/moment";
 import Box from '@mui/material/Box';
@@ -39,7 +39,7 @@ const NewReservation = ({ inputs, title }) => {
   const [loading, setLoading] = useState(true);
 
   const [userDetails, setUserDetails] = useState(null);
-  const [value, setValue] = React.useState(dayjs("2014-08-18T21:11:54"));
+  const [value, setValue] = useState(dayjs("2014-08-18T21:11:54"));
 
   const handleChange = (newValue) => {
     setValue(newValue);
@@ -259,7 +259,6 @@ const NewReservation = ({ inputs, title }) => {
                         </MenuItem>
                         {allClients &&
                           allClients.map((categoria) => {
-                            // console.log("categoria : ", categoria);
                             return (
                               <MenuItem key={categoria.id} value={categoria.id}>
                                 {categoria.firstname} {categoria.lastname}

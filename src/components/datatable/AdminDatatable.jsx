@@ -182,7 +182,6 @@ const AdminDatatable = () => {
                     pageSize={9}
                     rowsPerPageOptions={[9]}
                     disableColumnMenu
-                // checkboxSelection
                 />
             )}
 

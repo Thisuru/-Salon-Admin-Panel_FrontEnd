@@ -3,15 +3,6 @@ import { PieChart, Pie, Tooltip } from 'recharts';
 import axios from "axios";
 import { useState } from 'react';
 
-// const data = [
-//     { name: 'All Reservations', value: 5 },
-//     { name: 'Completed Reservations', value: 3 },
-//     { name: 'Group C', value: 300 },
-//     { name: 'Group D', value: 200 },
-//     { name: 'Group E', value: 278 },
-//     { name: 'Group F', value: 189 },
-// ];
-
 const PiechartReservation = () => {
     const [allCount, setAllCount] = useState(0);
     const [completedCount, setCompletedCount] = useState(0);
