@@ -43,7 +43,7 @@ const ReservationDataTable = () => {
   const actionColumn = [
     {
       field: "customName",
-      headerName: "Custom Name",
+      headerName: "Customer Name",
       width: 200,
       renderCell: (params) => {
         return (

@@ -94,25 +94,30 @@ const Calander = () => {
   const [currenMonth, setCurrentMonth] = useState(getMonth())
   const [loading, setLoading] = useState(true)
   const clickRef = useRef(null)
-
   const [open, setOpen] = useState(false);
-  const handleOpen = (calEvent) => {
-    setEventData(calEvent)
-    setOpen(true);
-  }
-  const handleClose = () => setOpen(false);
   const [eventData, setEventData] = useState([]);
+  const [startDate, setStartDate] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const handleClose = () => setOpen(false);
+
+  const handleOpen = (calEvent) => {
+
+    let reservationDate = moment(calEvent.start).format("MMMM Do YYYY");
+    let reservationTime = moment(calEvent.start).format("h:mm:ss a");
+
+    setEventData(calEvent);
+    setStartDate(reservationDate);
+    setStartTime(reservationTime);
+    setOpen(true);
+
+  }
 
   useEffect(() => {
-
     if (loading) {
       getAllAppointments();
       getAllStylist();
     }
-
-
   }, [])
-
 
   const getAllAppointments = async () => {
 
@@ -277,6 +282,7 @@ const Calander = () => {
 
   const onSelectEvent = useCallback((calEvent) => {
     console.log("calEvent: ", JSON.stringify(calEvent));
+    console.log("DATEEEE: ", calEvent.start);
     /**
      * Here we are waiting 250 milliseconds (use what you want) prior to firing
      * our method. Why? Because both 'click' and 'doubleClick'
@@ -342,16 +348,17 @@ const Calander = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            <h2>{eventData.title}</h2>
+          <Typography id="modal-modal-title" variant="h6" component="h1">
+            {<h2>{eventData.title}</h2>}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
 
-            <p>
-              ID: {eventData.id},<br />
-              Client Name: {eventData.client},<br />
-              Stylist Name: {eventData.stylist}
-            </p>
+            {<p>
+              Client Name: <b>{eventData.client}</b>,<br />
+              Stylist Name: <b>{eventData.stylist}</b>, <br />
+              Reservation Date: <b>{startDate}</b>, <br />
+              Reservation Time: <b>{startTime}</b>
+            </p>}
 
           </Typography>
         </Box>
