@@ -29,7 +29,7 @@ const Datatable = () => {
 
   const handleDeleteConfirm = () => {
     console.log("ID:: ", deleteRowId);
-    setData(data.filter((item) => item.id !== deleteRowId));
+    setData(data.filter((item) => item.id != deleteRowId));
     deleteClient(deleteRowId);
     setOpen(false);
   };
