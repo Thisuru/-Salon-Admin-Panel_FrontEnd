@@ -39,13 +39,13 @@ const AdminReset = ({ inputs, title }) => {
     const params = useParams();
     const [isReset, setIsReset] = useState(false);
     const [values, setValues] = useState({
-        // username: "",
-        // password: "",
+        password: "",
         showPass: false,
     });
-
-    const [password, setPassword] = useState("");
-    const [confirmpassword, setConfirmPassword] = useState("");
+    const [confirmpassword, setConfirmPassword] = useState({
+        confirmpassword: "",
+        showConfirmPass : false
+    });
     const [userDetails, setUserDetails] = useState(null);
 
     useEffect(() => {
@@ -96,8 +96,8 @@ const AdminReset = ({ inputs, title }) => {
 
     const formik = useFormik({
         initialValues: {
-            password: password,
-            confirmpassword: confirmpassword
+            password: '',
+            confirmpassword: ''
         },
         enableReinitialize: true,
         validationSchema: validationSchema,
@@ -111,6 +111,13 @@ const AdminReset = ({ inputs, title }) => {
         setValues({
             ...values,
             showPass: !values.showPass,
+        });
+    };
+
+    const handleConfirmPassVisibilty = () => {
+        setConfirmPassword({
+            ...confirmpassword,
+            showConfirmPass: !confirmpassword.showConfirmPass,
         });
     };
 
@@ -132,7 +139,9 @@ const AdminReset = ({ inputs, title }) => {
                                 id="password"
                                 name="password"
                                 label="Password"
-                                type="password"
+                                type={values.showPass ? "text" : "password"}
+                                // variant="outlined"
+                                // required
                                 value={formik.values.password}
                                 onChange={formik.handleChange}
                                 InputProps={{
@@ -156,10 +165,25 @@ const AdminReset = ({ inputs, title }) => {
                                 fullWidth
                                 id="confirmpassword"
                                 name="confirmpassword"
-                                label="Confirm Password"
-                                type="password"
+                                label="confirmpassword"
+                                type={confirmpassword.showConfirmPass ? "text" : "password"}
+                                // variant="outlined"
+                                // required
                                 value={formik.values.confirmpassword}
                                 onChange={formik.handleChange}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={handleConfirmPassVisibilty}
+                                                aria-label="toggle password"
+                                                edge="end"
+                                            >
+                                                {confirmpassword.showConfirmPass ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
                                 error={formik.touched.confirmpassword && Boolean(formik.errors.confirmpassword)}
                                 helperText={formik.touched.confirmpassword && formik.errors.confirmpassword}
                             />
