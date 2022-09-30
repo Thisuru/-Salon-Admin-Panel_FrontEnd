@@ -1,0 +1,85 @@
+.success-container {
+    min-height: 515px;
+    padding: 4rem;
+    /* background: url("/public/images/about-us.svg") no-repeat; */
+    width: 100%;
+    background-size: cover;
+    object-fit: contain;
+    position: relative;
+  }
+  
+  .success-container::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    /* background-color: #fff5f1ea; */
+  }
+  
+  .success-title {
+    text-align: center;
+    font-family: "Playfair Display", serif;
+    font-size: 50px;
+    font-weight: 600;
+    line-height: 50px;
+    letter-spacing: -0.03em;
+    position: relative;
+  }
+  
+  .success-para_1 {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    text-align: center;
+    color: #000000;
+    position: relative;
+    padding-left: 24%;
+    padding-right: 24%;
+    margin-top: 60px;
+  }
+  
+  .success-para_2 {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 99%;
+    text-align: center;
+    letter-spacing: -0.03em;
+    color: #b99a5f;
+    position: relative;
+    padding-left: 24%;
+    padding-right: 24%;
+  }
+
+  .success-para_3 {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 99%;
+    text-align: center;
+    letter-spacing: -0.03em;
+    color: #A5A5A5;
+    position: relative;
+    padding-top: 2%;
+    padding-left: 24%;
+    padding-right: 24%;
+  }
+
+  .success-para_4 {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 99%;
+    text-align: center;
+    letter-spacing: -0.03em;
+    color: #A5A5A5;
+    position: relative;
+    padding-top: 1%;
+    padding-left: 24%;
+    padding-right: 24%;
+  }
+
+  .success-mobileLogo {
+    margin-top: 2%;
+    margin-left: 48%;
+  }
+  

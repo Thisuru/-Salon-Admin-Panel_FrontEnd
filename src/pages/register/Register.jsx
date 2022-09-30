@@ -18,6 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import SuccessMessage from "../../components/error/SuccessMessage";
 
 const phoneRegExp = /^(?:0|94|\+94)?(?:(11|21|23|24|25|26|27|31|32|33|34|35|36|37|38|41|45|47|51|52|54|55|57|63|65|66|67|81|912)(0|2|3|4|5|7|9)|7(0|1|2|4|5|6|7|8)\d)\d{6}$/
 
@@ -48,6 +49,7 @@ const validationSchema = yup.object({
 const Register = () => {
     const navigate = useNavigate();
     const params = useParams();
+    const [isRegister, setIsRegister] = useState(true);
     const [values, setValues] = useState({
         username: "",
         password: "",
@@ -106,14 +108,16 @@ const Register = () => {
         });
 
         if (response.status === 200) {
-              toast("Please enter details to register", { type: "success" });
+            setIsRegister(true)
+            toast("Please enter details to register", { type: "success" });
 
         } else {
+            setIsRegister(false)
             toast(response.data.message, { type: "error" });
 
             setTimeout(() => {
                 navigate("/");
-              }, "2000");
+              }, "5000");
         }
     }
 
@@ -127,7 +131,7 @@ const Register = () => {
     return (
         <div className="listContainer">
             {/* <Navbar /> */}
-            <div>
+            {isRegister ? (<div>
                 <Container maxWidth="sm">
                     <Grid
                         container
@@ -243,7 +247,11 @@ const Register = () => {
                         </Paper>
                     </Grid>
                 </Container>
-            </div>
+            </div>)  : (
+
+                <SuccessMessage />
+                // <h3>User is already Signed Up</h3>
+            )}
             <ToastContainer />
         </div>
     );
