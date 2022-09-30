@@ -56,18 +56,18 @@ const AdminDatatable = () => {
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
-                        <Link to={`/admin/edit/${params.row.id}`} style={{ textDecoration: "none" }}>
+                        {/* <Link to={`/admin/edit/${params.row.id}`} style={{ textDecoration: "none" }}>
                             <div className="viewButton">Edit</div>
-                        </Link>
+                        </Link> */}
                         <div
                             className="deleteButton"
                             onClick={() => handleDelete(params.row.id)}
                         >
                             Delete
                         </div>
-                        <Link to={`/admin/reset_password/${params.row.id}`} style={{ textDecoration: "none" }}>
+                        {/* <Link to={`/admin/reset_password/${params.row.id}`} style={{ textDecoration: "none" }}>
                             <div className="resetButton">Reset</div>
-                        </Link>
+                        </Link> */}
                     </div>
                 );
             },

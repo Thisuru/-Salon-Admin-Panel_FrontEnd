@@ -115,11 +115,18 @@ const AdminEdit = ({ inputs, title }) => {
         },
     });
 
+    const navigateChangePassword = () => {
+        navigate(`/admin/reset_password/${params?.id}`)
+    }
+
     return (
         <div className="new">
             <Sidebar />
             <div className="newContainer">
                 <Navbar />
+                <div className="top">
+                    <button className="add-new-button-admin" onClick={navigateChangePassword}>Change Password</button>
+                </div>
                 <div className="top">
                     <h1>{title}</h1>
                 </div>

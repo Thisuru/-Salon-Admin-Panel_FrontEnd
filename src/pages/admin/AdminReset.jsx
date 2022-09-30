@@ -1,4 +1,4 @@
-// import "./new.scss";
+import "./admin.scss"
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import { useEffect, useState } from "react";
@@ -121,11 +121,18 @@ const AdminReset = ({ inputs, title }) => {
         });
     };
 
+    const navigateEdit = () => {
+        navigate(`/admin/edit/${params?.id}`);
+    }
+
     return (
         <div className="new">
             <Sidebar />
             <div className="newContainer">
                 <Navbar />
+                <div className="top">
+                    <button className="add-new-button-admin" onClick={navigateEdit}>Edit Admin</button>
+                </div>
                 <div className="top">
                     <h1>{title}</h1>
                 </div>
@@ -165,7 +172,7 @@ const AdminReset = ({ inputs, title }) => {
                                 fullWidth
                                 id="confirmpassword"
                                 name="confirmpassword"
-                                label="confirmpassword"
+                                label="Confirm password"
                                 type={confirmpassword.showConfirmPass ? "text" : "password"}
                                 // variant="outlined"
                                 // required
