@@ -43,6 +43,10 @@ const validationSchema = yup.object({
         .string('Enter your password')
         .min(8, 'Password should be of minimum 8 characters length')
         .required('Password is required'),
+    confirmpassword: yup
+        .string('Enter your password again')
+        .min(8, 'Password should be of minimum 8 characters length')
+        .required('Password confirmation is required'),
 
 });
 
@@ -54,6 +58,10 @@ const Register = () => {
         username: "",
         password: "",
         showPass: false,
+    });
+    const [confirmpassword, setConfirmPassword] = useState({
+        confirmpassword: "",
+        showConfirmPass : false
     });
 
     useEffect(() => {
@@ -68,7 +76,8 @@ const Register = () => {
             username: '',
             email: '',
             phone: '',
-            password: ''
+            password: '',
+            confirmpassword: ''
         },
         enableReinitialize: true,
         validationSchema: validationSchema,
@@ -86,7 +95,8 @@ const Register = () => {
                 username: values.username,
                 email: values.email,
                 phone: values.phone,
-                password: values.password
+                password: values.password,
+                confirmpassword : values.confirmpassword
             })
             .then((res) => {
                 console.log("Login response: ", res);
@@ -117,7 +127,7 @@ const Register = () => {
 
             setTimeout(() => {
                 navigate("/");
-              }, "5000");
+            }, "5000");
         }
     }
 
@@ -125,6 +135,13 @@ const Register = () => {
         setValues({
             ...values,
             showPass: !values.showPass,
+        });
+    };
+
+    const handleConfirmPassVisibilty = () => {
+        setConfirmPassword({
+            ...confirmpassword,
+            showConfirmPass: !confirmpassword.showConfirmPass,
         });
     };
 
@@ -238,6 +255,35 @@ const Register = () => {
                                     </Grid>
 
                                     <Grid item>
+                                        <TextField
+                                            fullWidth
+                                            id="confirmpassword"
+                                            name="confirmpassword"
+                                            label="Confirm password"
+                                            type={confirmpassword.showConfirmPass ? "text" : "password"}
+                                            // variant="outlined"
+                                            // required
+                                            value={formik.values.confirmpassword}
+                                            onChange={formik.handleChange}
+                                            InputProps={{
+                                                endAdornment: (
+                                                    <InputAdornment position="end">
+                                                        <IconButton
+                                                            onClick={handleConfirmPassVisibilty}
+                                                            aria-label="toggle password"
+                                                            edge="end"
+                                                        >
+                                                            {confirmpassword.showConfirmPass ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                                        </IconButton>
+                                                    </InputAdornment>
+                                                ),
+                                            }}
+                                            error={formik.touched.confirmpassword && Boolean(formik.errors.confirmpassword)}
+                                            helperText={formik.touched.confirmpassword && formik.errors.confirmpassword}
+                                        />
+                                    </Grid>
+
+                                    <Grid item>
                                         <Button style={{ backgroundColor: '#e9205c' }} type="submit" fullWidth variant="contained">
                                             Sign Up
                                         </Button>
@@ -247,7 +293,7 @@ const Register = () => {
                         </Paper>
                     </Grid>
                 </Container>
-            </div>)  : (
+            </div>) : (
 
                 <SuccessMessage />
                 // <h3>User is already Signed Up</h3>

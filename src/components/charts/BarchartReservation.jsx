@@ -5,19 +5,19 @@ const data = [
     {
         name: 'Res 1',
         uv: 4000,
-        pv: 2400,
+        pv: 1,
         amt: 2400,
     },
     {
         name: 'Res 2',
         uv: 3000,
-        pv: 1398,
+        pv: 2,
         amt: 2210,
     },
     {
         name: 'Res 3',
         uv: 2000,
-        pv: 9800,
+        pv: 1,
         amt: 2290,
     },
 ];
