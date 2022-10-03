@@ -11,6 +11,8 @@ import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Button from '@mui/material/Button';
+import { Box, Card, CardContent, Divider, Typography } from "@mui/material";
+import Grid from '@mui/material/Unstable_Grid2';
 
 const phoneRegExp = /^(?:0|94|\+94)?(?:(11|21|23|24|25|26|27|31|32|33|34|35|36|37|38|41|45|47|51|52|54|55|57|63|65|66|67|81|912)(0|2|3|4|5|7|9)|7(0|1|2|4|5|6|7|8)\d)\d{6}$/
 
@@ -124,84 +126,99 @@ const AdminEdit = ({ inputs, title }) => {
             <Sidebar />
             <div className="newContainer">
                 <Navbar />
-                <div className="top">
+                <div className="topB">
                     <button className="add-new-button-admin" onClick={navigateChangePassword}>Change Password</button>
                 </div>
-                <div className="top">
-                    <h1>{title}</h1>
-                </div>
 
-                <div className="bottom">
-                    <div className="right">
-                        <form onSubmit={formik.handleSubmit}>
-                            <TextField
-                                fullWidth
-                                id="firstname"
-                                name="firstname"
-                                label="First name"
-                                value={formik.values.firstname}
-                                onChange={formik.handleChange}
-                                error={formik.touched.firstname && Boolean(formik.errors.firstname)}
-                                helperText={formik.touched.firstname && formik.errors.firstname}
-                            />
+                <div className="user-form">
+                    <Box sx={{ flexGrow: 1 }}>
+                        <Grid container spacing={2}>
+                            <Grid xs={6}>
+                                <Card>
+                                    <CardContent>
+                                        <Typography variant="h5" gutterBottom>
+                                            <b>{title}</b>
+                                        </Typography>
+                                        <Divider light />
+                                        <div className="form">
+                                            <form onSubmit={formik.handleSubmit}>
+                                                <TextField
+                                                    fullWidth
+                                                    id="firstname"
+                                                    name="firstname"
+                                                    label="First name"
+                                                    className="text-field"
+                                                    value={formik.values.firstname}
+                                                    onChange={formik.handleChange}
+                                                    error={formik.touched.firstname && Boolean(formik.errors.firstname)}
+                                                    helperText={formik.touched.firstname && formik.errors.firstname}
+                                                />
 
-                            <TextField
-                                fullWidth
-                                id="lastname"
-                                name="lastname"
-                                label="Last name"
-                                value={formik.values.lastname}
-                                onChange={formik.handleChange}
-                                error={formik.touched.lastname && Boolean(formik.errors.lastname)}
-                                helperText={formik.touched.lastname && formik.errors.lastname}
-                            />
+                                                <TextField
+                                                    fullWidth
+                                                    id="lastname"
+                                                    name="lastname"
+                                                    label="Last name"
+                                                    className="text-field"
+                                                    value={formik.values.lastname}
+                                                    onChange={formik.handleChange}
+                                                    error={formik.touched.lastname && Boolean(formik.errors.lastname)}
+                                                    helperText={formik.touched.lastname && formik.errors.lastname}
+                                                />
 
-                            <TextField
-                                fullWidth
-                                id="username"
-                                name="username"
-                                label="User name"
-                                value={formik.values.username}
-                                onChange={formik.handleChange}
-                                error={formik.touched.username && Boolean(formik.errors.username)}
-                                helperText={formik.touched.username && formik.errors.username}
-                            />
+                                                <TextField
+                                                    fullWidth
+                                                    id="username"
+                                                    name="username"
+                                                    label="User name"
+                                                    className="text-field"
+                                                    value={formik.values.username}
+                                                    onChange={formik.handleChange}
+                                                    error={formik.touched.username && Boolean(formik.errors.username)}
+                                                    helperText={formik.touched.username && formik.errors.username}
+                                                />
 
-                            <TextField
-                                disabled
-                                fullWidth
-                                id="email"
-                                name="email"
-                                label="Email"
-                                value={formik.values.email}
-                                onChange={formik.handleChange}
-                                error={formik.touched.email && Boolean(formik.errors.email)}
-                                helperText={formik.touched.email && formik.errors.email}
-                            />
-                            <TextField
-                                fullWidth
-                                id="phone"
-                                name="phone"
-                                label="Phone"
-                                value={formik.values.phone}
-                                onChange={formik.handleChange}
-                                error={formik.touched.phone && Boolean(formik.errors.phone)}
-                                helperText={formik.touched.phone && formik.errors.phone}
-                            />
+                                                <TextField
+                                                    // disabled
+                                                    fullWidth
+                                                    id="email"
+                                                    name="email"
+                                                    label="Email"
+                                                    className="text-field"
+                                                    value={formik.values.email}
+                                                    onChange={formik.handleChange}
+                                                    error={formik.touched.email && Boolean(formik.errors.email)}
+                                                    helperText={formik.touched.email && formik.errors.email}
+                                                />
+                                                <TextField
+                                                    fullWidth
+                                                    id="phone"
+                                                    name="phone"
+                                                    label="Phone"
+                                                    className="text-field"
+                                                    value={formik.values.phone}
+                                                    onChange={formik.handleChange}
+                                                    error={formik.touched.phone && Boolean(formik.errors.phone)}
+                                                    helperText={formik.touched.phone && formik.errors.phone}
+                                                />
 
-                            <Button
-                                color="primary"
-                                variant="contained"
-                                style={{
-                                    backgroundColor: '#e9205c'
-                                }}
-                                fullWidth type="submit">
-                                Submit
-                            </Button>
-                        </form>
-                    </div>
+                                                <Button
+                                                    color="secondary"
+                                                    variant="contained"
+                                                    fullWidth
+                                                    type="submit">
+                                                    <b>Submit</b>
+                                                </Button>
+                                            </form>
+                                        </div>
 
-                    <ToastContainer />
+                                        <ToastContainer />
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                            <Grid xs={6}></Grid>
+                        </Grid>
+                    </Box>
                 </div>
             </div>
         </div>

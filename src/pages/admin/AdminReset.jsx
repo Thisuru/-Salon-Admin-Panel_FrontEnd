@@ -7,6 +7,11 @@ import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
+    Box,
+    Card,
+    CardContent,
+    Divider,
+    Typography,
     Container,
     Grid,
     Paper,
@@ -44,7 +49,7 @@ const AdminReset = ({ inputs, title }) => {
     });
     const [confirmpassword, setConfirmPassword] = useState({
         confirmpassword: "",
-        showConfirmPass : false
+        showConfirmPass: false
     });
     const [userDetails, setUserDetails] = useState(null);
 
@@ -130,84 +135,97 @@ const AdminReset = ({ inputs, title }) => {
             <Sidebar />
             <div className="newContainer">
                 <Navbar />
-                <div className="top">
+                <div className="topB">
                     <button className="add-new-button-admin" onClick={navigateEdit}>Edit Admin</button>
                 </div>
-                <div className="top">
-                    <h1>{title}</h1>
-                </div>
 
-                <div className="bottom">
-                    <div className="right">
-                        <form onSubmit={formik.handleSubmit}>
+                <div className="user-form">
+                    <Box sx={{ flexGrow: 1 }}>
+                        <Grid container spacing={2}>
+                            <Grid xs={6}>
+                                <Card>
+                                    <CardContent>
+                                        <Typography variant="h5" gutterBottom>
+                                            <b>{title}</b>
+                                        </Typography>
+                                        <Divider light />
+                                        <div className="form" style={{marginTop : 24 }}>
+                                            <form onSubmit={formik.handleSubmit}>
 
-                            <TextField
-                                fullWidth
-                                id="password"
-                                name="password"
-                                label="Password"
-                                type={values.showPass ? "text" : "password"}
-                                // variant="outlined"
-                                // required
-                                value={formik.values.password}
-                                onChange={formik.handleChange}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                onClick={handlePassVisibilty}
-                                                aria-label="toggle password"
-                                                edge="end"
-                                            >
-                                                {values.showPass ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                                error={formik.touched.password && Boolean(formik.errors.password)}
-                                helperText={formik.touched.password && formik.errors.password}
-                            />
+                                                <TextField
+                                                    fullWidth
+                                                    id="password"
+                                                    name="password"
+                                                    label="Password"
+                                                    type={values.showPass ? "text" : "password"}
+                                                    // variant="outlined"
+                                                    // required
+                                                    className="admin-password"
+                                                    value={formik.values.password}
+                                                    onChange={formik.handleChange}
+                                                    InputProps={{
+                                                        endAdornment: (
+                                                            <InputAdornment position="end">
+                                                                <IconButton
+                                                                    onClick={handlePassVisibilty}
+                                                                    aria-label="toggle password"
+                                                                    edge="end"
+                                                                >
+                                                                    {values.showPass ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                                                </IconButton>
+                                                            </InputAdornment>
+                                                        ),
+                                                    }}
+                                                    error={formik.touched.password && Boolean(formik.errors.password)}
+                                                    helperText={formik.touched.password && formik.errors.password}
+                                                />
 
-                            <TextField
-                                fullWidth
-                                id="confirmpassword"
-                                name="confirmpassword"
-                                label="Confirm password"
-                                type={confirmpassword.showConfirmPass ? "text" : "password"}
-                                // variant="outlined"
-                                // required
-                                value={formik.values.confirmpassword}
-                                onChange={formik.handleChange}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                onClick={handleConfirmPassVisibilty}
-                                                aria-label="toggle password"
-                                                edge="end"
-                                            >
-                                                {confirmpassword.showConfirmPass ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                                error={formik.touched.confirmpassword && Boolean(formik.errors.confirmpassword)}
-                                helperText={formik.touched.confirmpassword && formik.errors.confirmpassword}
-                            />
+                                                <TextField
+                                                    fullWidth
+                                                    id="confirmpassword"
+                                                    name="confirmpassword"
+                                                    label="Confirm password"
+                                                    type={confirmpassword.showConfirmPass ? "text" : "password"}
+                                                    // variant="outlined"
+                                                    // required
+                                                    className="admin-password"
+                                                    value={formik.values.confirmpassword}
+                                                    onChange={formik.handleChange}
+                                                    InputProps={{
+                                                        endAdornment: (
+                                                            <InputAdornment position="end">
+                                                                <IconButton
+                                                                    onClick={handleConfirmPassVisibilty}
+                                                                    aria-label="toggle password"
+                                                                    edge="end"
+                                                                >
+                                                                    {confirmpassword.showConfirmPass ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                                                </IconButton>
+                                                            </InputAdornment>
+                                                        ),
+                                                    }}
+                                                    error={formik.touched.confirmpassword && Boolean(formik.errors.confirmpassword)}
+                                                    helperText={formik.touched.confirmpassword && formik.errors.confirmpassword}
+                                                />
 
-                            <Button
-                                color="primary"
-                                variant="contained"
-                                style={{
-                                    backgroundColor: '#e9205c'
-                                }}
-                                fullWidth type="submit">
-                                Submit
-                            </Button>
-                        </form>
-                    </div>
+                                                <Button
+                                                    color="secondary"
+                                                    variant="contained"
+                                                    fullWidth
+                                                    type="submit">
+                                                    <b>Submit</b>
+                                                </Button>
+                                            </form>
+                                        </div>
 
-                    <ToastContainer />
+                                        <ToastContainer />
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                            <Grid xs={6}></Grid>
+                        </Grid>
+                    </Box>
+
                 </div>
             </div>
         </div>

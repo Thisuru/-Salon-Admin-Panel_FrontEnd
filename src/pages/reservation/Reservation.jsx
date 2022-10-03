@@ -20,9 +20,9 @@ const Reservation = () => {
   return (
     <div className="reservation">
       <Sidebar />
-      <div className="reservationContainer">
+      <div className="reservation-container">
         <Navbar />
-        <div className="reservation-container">
+        <div className="reservation-area">
           <ReservationDataTable />
         </div>
       </div>

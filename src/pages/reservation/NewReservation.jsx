@@ -9,15 +9,24 @@ import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Unstable_Grid2";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { MenuItem, Select, TextField } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardContent,
+  Divider,
+  MenuItem,
+  Select,
+  TextField,
+  Typography
+} from "@mui/material";
 import dayjs from "dayjs";
 import moment from "moment/moment";
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
 
 const NewReservation = ({ inputs, title }) => {
   const location = useLocation();
@@ -31,8 +40,8 @@ const NewReservation = ({ inputs, title }) => {
   const [client, setClient] = useState("");
   const [service, setService] = useState("");
   const [stylist, setStylist] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const [startTime, setStartTime] = useState(null);
+  const [endTime, setEndTime] = useState(null);
   const [status, setStatus] = useState("");
   const [clientLoading, setClientLoading] = useState(true);
   const [stylistLoading, setStylistLoading] = useState(true);
@@ -60,16 +69,14 @@ const NewReservation = ({ inputs, title }) => {
   }, []);
 
   async function getReservationById() {
-    const response = await axios.get(
-      `http://localhost:5000/api/v1/reservation/${params?.id}`
-    );
+    const response = await axios.get(`http://localhost:5000/api/v1/reservation/${params?.id}`);
 
     if (response.status === 200) {
       const userDetail = response?.data;
 
-      var momentEndTime = moment(new Date(userDetail?.endTime));
+      var momentEndTime = dayjs(new Date(userDetail?.endTime));
       // var endT = d.toISOString().split("T")[0];
-      var momentStartTime = moment(new Date(userDetail?.startTime));
+      var momentStartTime = dayjs(new Date(userDetail?.startTime));
       // var startT = sd.toISOString().split("T")[0];
 
       setUserDetails(userDetail);
@@ -87,17 +94,14 @@ const NewReservation = ({ inputs, title }) => {
 
   async function reservationCreate(e) {
     e.preventDefault();
-    const response = await axios.post(
-      "http://localhost:5000/api/v1/reservation",
-      {
-        client: client,
-        service: service,
-        stylist: stylist,
-        startTime: startTime,
-        endTime: endTime,
-        // status: status
-      }
-    );
+    const response = await axios.post("http://localhost:5000/api/v1/reservation", {
+      client: client,
+      service: service,
+      stylist: stylist,
+      startTime: startTime,
+      endTime: endTime
+      // status: status
+    });
 
     if (response.status === 200) {
       toast("Success! Reservation created successfully", { type: "success" });
@@ -110,9 +114,7 @@ const NewReservation = ({ inputs, title }) => {
   }
 
   async function getAllClients() {
-    const response = await AuthService.get(
-      "http://localhost:5000/api/v1/clients?page=1"
-    );
+    const response = await AuthService.get("http://localhost:5000/api/v1/clients?page=1");
 
     if (response.status === 200) {
       setAllClients(response.data.clients);
@@ -134,15 +136,12 @@ const NewReservation = ({ inputs, title }) => {
   }
 
   async function getOnlyAvailableStylists(startTime, endTime) {
-    const response = await axios.post(
-      "http://localhost:5000/api/v1/stylists/getAvailableStylish",
-      {
-        // start: "2022-09-20T00:00:00.000+00:00",
-        // end: "2022-09-21T00:00:00.000+00:00",
-        start: new Date(startTime),
-        end: new Date(endTime),
-      }
-    );
+    const response = await axios.post("http://localhost:5000/api/v1/stylists/getAvailableStylish", {
+      // start: "2022-09-20T00:00:00.000+00:00",
+      // end: "2022-09-21T00:00:00.000+00:00",
+      start: new Date(startTime),
+      end: new Date(endTime)
+    });
 
     if (response.status === 200) {
       console.log("getOnlyAvailableStylists: ", response.data.availabelStylish);
@@ -163,7 +162,7 @@ const NewReservation = ({ inputs, title }) => {
         stylist: stylist,
         startTime: startTime,
         endTime: endTime,
-        status: status,
+        status: status
       },
       console.log("status: ", status)
     );
@@ -180,8 +179,8 @@ const NewReservation = ({ inputs, title }) => {
   }
 
   const sendHandler = (e) => {
-    e.preventDefault()
-    let checkAvailableTime = validateTime(startTime, endTime)
+    e.preventDefault();
+    let checkAvailableTime = validateTime(startTime, endTime);
     console.log("checkAvailableTime: ", checkAvailableTime);
     if (!checkAvailableTime) {
       toast("Reservation maximum duration is 1 hour", { type: "error" });
@@ -203,13 +202,13 @@ const NewReservation = ({ inputs, title }) => {
     const startSeconds = Date.parse(currentDate);
     return (date) => {
       return Date.parse(date) < startSeconds;
-    }
-  }
+    };
+  };
 
   const validateTime = (startTime, endTime) => {
     console.log("startTT: ", startTime);
     console.log("endTT: ", endTime);
-    const difference = endTime.diff(startTime, 'hours')
+    const difference = endTime.diff(startTime, "hours");
 
     console.log("DIFFRENCE: ", difference);
 
@@ -218,185 +217,172 @@ const NewReservation = ({ inputs, title }) => {
     } else {
       return false;
     }
-  }
+  };
 
   if (clientLoading || stylistLoading || loading) {
     return <div>Loading</div>;
   } else {
     return (
-      <div className="new">
+      <div className="reservation">
+        {console.log("fffffffffffffffffffff", startTime)}
         <Sidebar />
-        <div className="newContainer">
+        <div className="reservation-container">
           <Navbar />
-          <div className="top">
-            <h1>{title}</h1>
-          </div>
 
-          <div className="bottom">
-            <div className="right">
-              <form>
-                <Grid container>
-                  <Grid item xs={8}>
-                    <div className="formInput">
-                      <label>Client</label>
-                      <Select
-                        style={{
-                          width: 225,
-                          height: 40,
-                          marginBottom: "10px",
-                          marginTop: "10px",
-                        }}
-                        type="text"
-                        placeholder="John"
-                        value={client}
-                        onChange={(e) => {
-                          console.log("Client: ", e.target.value);
-                          setClient(e?.target?.value);
-                        }}
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        {allClients &&
-                          allClients.map((categoria) => {
-                            return (
-                              <MenuItem key={categoria.id} value={categoria.id}>
-                                {categoria.firstname} {categoria.lastname}
+          <div className="reservation-form">
+            <Box sx={{ flexGrow: 1 }}>
+              <Grid container spacing={2}>
+                <Grid xs={6}>
+                  <Card>
+                    <CardContent>
+                      <Typography variant="h5" gutterBottom>
+                        <b>{title}</b>
+                      </Typography>
+                      <Divider light />
+                      <div className="form">
+                        <form>
+                          <FormControl fullWidth>
+                            <InputLabel id="Client-select-label">Client</InputLabel>
+                            <Select
+                              labelId="Client-select-label"
+                              id="Client-select"
+                              value={client}
+                              label="Client"
+                              className="select-field"
+                              onChange={(e) => {
+                                console.log("Client: ", e.target.value);
+                                setClient(e?.target?.value);
+                              }}>
+                              <MenuItem value="">
+                                <em>None</em>
                               </MenuItem>
-                            );
-                          })}
-                      </Select>
-                    </div>
+                              {allClients &&
+                                allClients.map((categoria) => {
+                                  return (
+                                    <MenuItem key={categoria.id} value={categoria.id}>
+                                      {categoria.firstname} {categoria.lastname}
+                                    </MenuItem>
+                                  );
+                                })}
+                            </Select>
+                          </FormControl>
 
-                    <Box sx={{ minWidth: 120 }}>
-                      <FormControl >
-                        <InputLabel id="demo-simple-select-label">Service</InputLabel>
-                        <Select
-                          style={{
-                            width: 225,
-                            height: 40,
-                            marginBottom: "10px",
-                            marginTop: "10px",
-                          }}
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select"
-                          value={service}
-                          label="service"
-                          onChange={handleService}
-                        >
-                          <MenuItem value='HairStyle'>HairStyle</MenuItem>
-                          <MenuItem value='Facial'>Facial</MenuItem>
-                          <MenuItem value='MakeUP'>MakeUP</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Box>
+                          <FormControl fullWidth>
+                            <InputLabel id="Service-select-label">Service</InputLabel>
+                            <Select
+                              labelId="Service-select-label"
+                              id="Service-select"
+                              value={service}
+                              label="service"
+                              className="select-field"
+                              onChange={handleService}>
+                              <MenuItem value="HairStyle">HairStyle</MenuItem>
+                              <MenuItem value="Facial">Facial</MenuItem>
+                              <MenuItem value="MakeUP">MakeUP</MenuItem>
+                            </Select>
+                          </FormControl>
 
-                    <div className="formInput">
-                      <label>Stylist</label>
-                      <Select
-                        style={{
-                          width: 225,
-                          height: 40,
-                          marginBottom: "10px",
-                          marginTop: "10px",
-                        }}
-                        type="text"
-                        placeholder="john_doe@gmail.com"
-                        value={stylist}
-                        onChange={(e) => {
-                          console.log("Stylist: ", e.target.value);
-                          setStylist(e.target.value);
-                        }}
-                        disabled={!!!startTime || !!!endTime}
-                      >
-                        {allservices &&
-                          allservices.map((categoria) => (
-                            <MenuItem key={categoria._id} value={categoria._id}>
-                              {categoria.firstname} {categoria.lastname}
-                            </MenuItem>
-                          ))}
-                      </Select>
-                    </div>
-                  </Grid>
+                          <FormControl fullWidth>
+                            <InputLabel id="Stylist-select-label">Stylist</InputLabel>
+                            <Select
+                              labelId="Stylist-select-label"
+                              id="Stylist-select"
+                              value={stylist}
+                              label="Stylist"
+                              className="select-field"
+                              onChange={(e) => {
+                                console.log("Stylist: ", e.target.value);
+                                setStylist(e.target.value);
+                              }}
+                              disabled={!!!startTime || !!!endTime}>
+                              {allservices &&
+                                allservices.map((categoria) => (
+                                  <MenuItem key={categoria._id} value={categoria._id}>
+                                    {categoria.firstname} {categoria.lastname}
+                                  </MenuItem>
+                                ))}
+                            </Select>
+                          </FormControl>
 
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <Grid item xs={6}>
-                      <div className="formInput">
-                        <label>Start Time</label>
-                        <DateTimePicker
-                          // label="Date&Time picker"
-                          value={startTime}
-                          onChange={(value) => {
-                            setStartTime(value)
-                            console.log("Start time11 :", value);
-                            console.log("Start time GTM :", moment(value).format("h:mm a"));
-                          }}
-                          // onChange={handleChange}
-                          renderInput={(params) => <TextField {...params} />}
-                          style={{
-                            width: "250px",
-                            height: "35px",
-                            marginBottom: "10px",
-                            marginTop: "10px",
-                          }}
-                          shouldDisableDate={disablePreDates(currentDate)}
-                          shouldDisableTime={(timeValue, clockType) => {
-                            return (clockType === "hours" && timeValue <= 7) || (clockType === "hours" && timeValue > 17);
-                          }}
-                        />
+                          <Grid container >
+                            <Grid item xs={6} style={{ padding: "0px 10px 0px 0px" }}>
+                              <FormControl fullWidth>
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                  <DateTimePicker
+                                    value={startTime}
+                                    label="Start Time"
+                                    className="select-field"
+                                    onChange={(value) => {
+                                      setStartTime(value);
+                                      console.log("Start time11 :", value);
+                                      console.log(
+                                        "Start time GTM :",
+                                        moment(value).format("h:mm a")
+                                      );
+                                    }}
+                                    // onChange={handleChange}
+                                    renderInput={(params) => <TextField {...params} />}
+                                    shouldDisableDate={disablePreDates(currentDate)}
+                                    shouldDisableTime={(timeValue, clockType) => {
+                                      return (
+                                        (clockType === "hours" && timeValue <= 7) ||
+                                        (clockType === "hours" && timeValue > 17)
+                                      );
+                                    }}
+                                  />
+                                </LocalizationProvider>
+                              </FormControl>
+                            </Grid>
+                            <Grid item xs={6} style={{ padding: "0px 0px 0px 10px" }}>
+                              <FormControl fullWidth>
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                  <DateTimePicker
+                                    label="End Time"
+                                    value={endTime}
+                                    className="select-field"
+                                    onChange={(value) => {
+                                      setEndTime(value);
+                                      getOnlyAvailableStylists(startTime, value);
+                                      console.log("End time :", value);
+                                    }}
+                                    // onChange={handleChange}
+                                    renderInput={(params) => <TextField {...params} />}
+                                    disabled={!!!startTime}
+                                    shouldDisableDate={disablePreDates(currentDate)}
+                                    shouldDisableTime={(timeValue, clockType) => {
+                                      return (
+                                        (clockType === "hours" && timeValue <= 7) ||
+                                        (clockType === "hours" && timeValue > 17)
+                                      );
+                                    }}
+                                  />
+                                </LocalizationProvider>
+                              </FormControl>
+                            </Grid>
+                          </Grid>
+
+                          <Button
+                            color="secondary"
+                            variant="contained"
+                            fullWidth
+                            onClick={(e) => sendHandler(e)}
+                            disabled={
+                              !!!client || !!!service || !!!stylist || !!!startTime || !!!endTime
+                            }>
+                            <b>Submit</b>
+                          </Button>
+                        </form>
                       </div>
-
-                      <div className="formInput">
-                        <label>End Time</label>
-                        <DateTimePicker
-                          // label="Date&Time picker"
-                          value={endTime}
-                          onChange={(value) => {
-                            setEndTime(value);
-                            getOnlyAvailableStylists(startTime, value);
-                            console.log("End time :", value);
-                          }}
-                          // onChange={handleChange}
-                          renderInput={(params) => <TextField {...params} />}
-                          style={{
-                            width: "250px",
-                            height: "35px",
-                            marginBottom: "10px",
-                            marginTop: "10px",
-                          }}
-                          disabled={!!!startTime}
-                          shouldDisableDate={disablePreDates(currentDate)}
-                          shouldDisableTime={(timeValue, clockType) => {
-                            return (clockType === "hours" && timeValue <= 7) || (clockType === "hours" && timeValue > 17);
-                          }}
-                        />
-                      </div>
-                    </Grid>
-                  </LocalizationProvider>
+                      <ToastContainer />
+                    </CardContent>
+                  </Card>
                 </Grid>
-
-                <button
-                  style={{
-                    width: '150px',
-                    padding: '10px',
-                  }}
-                  onClick={(e) => sendHandler(e)}
-                  disabled={
-                    !!!client ||
-                    !!!service ||
-                    !!!stylist ||
-                    !!!startTime ||
-                    !!!endTime
-                  }
-                >
-                  Send
-                </button>
-              </form>
-            </div>
-            <ToastContainer />
+                <Grid xs={6}></Grid>
+              </Grid>
+            </Box>
           </div>
         </div>
-      </div >
+      </div>
     );
   }
 };

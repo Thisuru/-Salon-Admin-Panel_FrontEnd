@@ -3,12 +3,19 @@
   width: 100%;
   background-color: #f8f8f8;
 
-  .reservationContainer {
-    flex: 6;
-  }
-
   .reservation-container {
-    padding: 24px;
+    flex: 6;
+
+    .reservation-form, .reservation-area {
+      padding: 24px;
+
+      .form {
+        margin-top: 40px;
+
+        .select-field {
+          margin-bottom: 30px;
+        }
+      }
+    }
   }
 }
-
