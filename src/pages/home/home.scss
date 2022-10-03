@@ -1,15 +1,16 @@
 .home {
-    display: flex;
-  
-    .homeContainer {
-      flex: 6;
+  display: flex;
+  background-color: #f8f8f8;
 
-      .charts{
-        text-align: center;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-      }
+  .homeContainer {
+    flex: 6;
+
+    .charts {
+      // text-align: center;
+      // display: flex;
+      // justify-content: space-around;
+      // align-items: center;
+      padding: 24px;
     }
   }
-  
+}

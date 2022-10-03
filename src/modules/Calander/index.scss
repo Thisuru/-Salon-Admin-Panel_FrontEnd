@@ -1,0 +1,26 @@
+.ant-form-horizontal .ant-row {
+    margin-left: unset !important;
+    margin-right: unset !important;
+  }
+  
+  .rbc-month-row {
+    min-height: 100px;
+  }
+  
+  .calendar {
+    display: flex;
+    background-color: #f8f8f8;
+  
+    .calendarContainer {
+      flex: 6;
+  
+      .calendar-area {
+        // text-align: center;
+        // display: flex;
+        // justify-content: space-around;
+        // align-items: center;
+        padding: 24px;
+      }
+    }
+  }
+  

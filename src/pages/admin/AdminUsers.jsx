@@ -1,11 +1,11 @@
-import Sidebar from "../../components/sidebar/Sidebar"
-import Navbar from "../../components/navbar/Navbar"
-import AdminDatatable from "../../components/datatable/AdminDatatable"
+import Sidebar from "../../components/sidebar/Sidebar";
+import Navbar from "../../components/navbar/Navbar";
+import AdminDatatable from "../../components/datatable/AdminDatatable";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Admin.scss";
 
 const AdminUsers = () => {
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,14 +18,16 @@ const AdminUsers = () => {
   }, []);
 
   return (
-    <div className="list">
-      <Sidebar/>
-      <div className="listContainer">
-        <Navbar/>
-       <AdminDatatable />
+    <div className="admin">
+      <Sidebar />
+      <div className="adminContainer">
+        <Navbar />
+        <div className="admin-area">
+          <AdminDatatable />
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AdminUsers
+export default AdminUsers;

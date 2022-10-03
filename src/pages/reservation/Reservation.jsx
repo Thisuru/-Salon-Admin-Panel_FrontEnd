@@ -1,12 +1,11 @@
-import ReservationDataTable from "../../components/datatable/ReservationDataTable"
-import Navbar from "../../components/navbar/Navbar"
-import Sidebar from "../../components/sidebar/Sidebar"
-import "./reservation.scss"
+import ReservationDataTable from "../../components/datatable/ReservationDataTable";
+import Navbar from "../../components/navbar/Navbar";
+import Sidebar from "../../components/sidebar/Sidebar";
+import "./reservation.scss";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Reservation = () => {
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,10 +22,12 @@ const Reservation = () => {
       <Sidebar />
       <div className="reservationContainer">
         <Navbar />
-        <ReservationDataTable/>
+        <div className="reservation-container">
+          <ReservationDataTable />
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Reservation
+export default Reservation;
