@@ -54,6 +54,7 @@ const Register = () => {
     const navigate = useNavigate();
     const params = useParams();
     const [isRegister, setIsRegister] = useState(true);
+    const [email, setEmail] = useState('');
     const [values, setValues] = useState({
         username: "",
         password: "",
@@ -74,7 +75,7 @@ const Register = () => {
             firstname: '',
             lastname: '',
             username: '',
-            email: '',
+            email: email,
             phone: '',
             password: '',
             confirmpassword: ''
@@ -119,6 +120,7 @@ const Register = () => {
 
         if (response.status === 200) {
             setIsRegister(true)
+            setEmail(response.data.email)
             toast("Please enter details to register", { type: "success" });
 
         } else {
@@ -201,6 +203,7 @@ const Register = () => {
 
                                     <Grid item>
                                         <TextField
+                                            disabled
                                             fullWidth
                                             id="email"
                                             name="email"
