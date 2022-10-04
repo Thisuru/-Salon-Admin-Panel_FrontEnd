@@ -6,7 +6,7 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import GroupIcon from '@mui/icons-material/Group';
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -46,60 +46,60 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="top">
-        <Link to="/dashboard" style={{ textDecoration: "none" }}>
+        <NavLink activeClassName='is-active' to="/dashboard" style={{ textDecoration: "none" }}>
           <span className="logo">Admin panel</span>
-        </Link>
+        </NavLink>
       </div>
       <hr />
       <div className="center">
         <ul>
           <p className="title">MAIN</p>
-          <Link to="/dashboard" style={{ textDecoration: "none" }}>
+          <NavLink activeClassName='is-active' to="/dashboard" style={{ textDecoration: "none" }}>
           <li>
             <DashboardIcon className="icon" />
             <span>Dashboard</span>
           </li>
-          </Link>
+          </NavLink>
           <p className="title">USERS</p>
-          <Link to="/users" style={{ textDecoration: "none" }}>
+          <NavLink activeClassName='is-active' to="/users" style={{ textDecoration: "none" }}>
             <li>
               <GroupIcon className="icon" />
               <span>Clients</span>
             </li>
-          </Link>
+          </NavLink>
           <p className="title">RESERVATION</p>
-          <Link to="/reservation" style={{ textDecoration: "none" }}>
+          <NavLink activeClassName='is-active' to="/reservation" style={{ textDecoration: "none" }}>
           <li>
             <BookmarkIcon className="icon" />
             <span>Reservation</span>
           </li>
-          </Link>
-          <Link to="/calendar" style={{ textDecoration: "none" }}>
+          </NavLink>
+          <NavLink activeClassName='is-active' to="/calendar" style={{ textDecoration: "none" }}>
           <li>
             <CalendarMonthIcon className="icon" />
             <span>Calendar</span>
           </li>
-          </Link>
+          </NavLink>
           <p className="title">ADMIN</p>
-          <Link to="/admin" style={{ textDecoration: "none" }}>
+          <NavLink activeClassName='is-active' to="/admin" style={{ textDecoration: "none" }}>
           <li>
             <AdminPanelSettingsIcon className="icon" />
             <span>Admin Users</span>
           </li>
-          </Link>
-          <Link to={"/admin/edit/" + id} style={{ textDecoration: "none" }}>
+          </NavLink>
+          <NavLink activeClassName='is-active' to={"/admin/edit/" + id} style={{ textDecoration: "none" }}>
           <li>
             <PersonOutlineIcon className="icon" />
             <span>My Account</span>
           </li>
-          </Link>
+          </NavLink>
           <p className="title">USER</p>
-          <Link to="/" style={{ textDecoration: "none" }}>
+          <NavLink activeClassName='is-active' to="/" style={{ textDecoration: "none" }}>
           <li onClick={logoutHandler}>
             <ExitToAppIcon className="icon" />
             <span>Log out</span>
           </li>
-          </Link>
+          </NavLink>
         </ul>
       </div>
     </div>
