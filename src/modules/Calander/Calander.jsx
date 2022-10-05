@@ -1,36 +1,25 @@
 import React, { Fragment, useMemo, useState, useCallback, useEffect, useRef } from "react";
-import GlobalContext from "./context/GlobalContext";
 import dayjs from "dayjs";
-import Month from "./functions/Month";
-
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import PropTypes from "prop-types";
 import { Calendar, Views, DateLocalizer, momentLocalizer } from "react-big-calendar";
-// import DemoLink from '../../DemoLink.component'
-// // Storybook cannot alias this, so you would use 'react-big-calendar/lib/addons/dragAndDrop'
 import withDragAndDrop from "../../addons/dragAndDrop";
 import moment from "moment";
-// // Storybook cannot alias this, so you would use 'react-big-calendar/lib/addons/dragAndDrop/styles.scss'
 import "../../../src/addons/dragAndDrop/styles.scss";
-import { events, resourceMap } from "./dumy_data";
-// import { appointmentActions } from './ducks';
-import { withRouter } from "react-router-dom";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./index.scss";
-import el from "date-fns/esm/locale/el/index.js";
 import AuthService from "../../api/Authaxios";
 
 //modal imports
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import { Card, CardContent, Divider } from "@mui/material";
+
 ////modal styles
 const style = {
   position: "absolute",
@@ -80,8 +69,6 @@ const getMonth = (month = dayjs().month()) => {
 const Calander = () => {
   const [myEvents, setMyEvents] = useState([]);
   const [stylist, setStylist] = useState([]);
-  // const [myEvents, setMyEvents] = useState(events)
-  // const [stylist, setStylist] = useState(resourceMap)
   const [currenMonth, setCurrentMonth] = useState(getMonth());
   const [loading, setLoading] = useState(true);
   const clickRef = useRef(null);
@@ -124,7 +111,6 @@ const Calander = () => {
         start: new Date(elm.startTime),
         end: new Date(elm.endTime),
         resourceId: elm?.stylist._id,
-        // hexColor: elm.service === "MakeUp" ? '00FF00' : ( elm.service === "HairStyle" ? '1966EF' : 'FFFF00' ),
         hexColor:
           elm.service === "MakeUp"
             ? "00FF00"
@@ -147,7 +133,6 @@ const Calander = () => {
   };
 
   const getAllStylist = async () => {
-    // localhost:5000/api/v1/stylists
 
     console.log("getting stylist");
 
@@ -160,8 +145,6 @@ const Calander = () => {
         resourceId: elm._id,
         resourceTitle: elm.firstname + " " + elm.lastname
       }));
-
-      // console.log(eventArray, "event array final")
 
       setStylist(stylistArray);
 
@@ -182,9 +165,7 @@ const Calander = () => {
 
   //Reservation Drag and Drop Update
   async function reservationUpdate(event, start, end, stylist, allDay, droppedOnAllDaySlot) {
-    console.log("reservationUpdate start: ", start);
-    console.log("reservationUpdate end: ", end);
-    console.log("reservationUpdate stylist: ", stylist);
+    
     const response = await axios.put(`http://localhost:5000/api/v1/reservation/calendar`, {
       id: event.id,
       NewStartTime: start,
@@ -212,23 +193,8 @@ const Calander = () => {
   const moveEvent = useCallback(
     ({ event, start, end, resourceId, isAllDay: droppedOnAllDaySlot = false }) => {
       const { allDay } = event;
-      console.log("Calender event: ", event);
-      // console.log("Calender start: ", start);
-      // console.log("Calender end: ", end);
-      // console.log("Calender id: ", event.id);
-      // console.log("resourceId: ", resourceId);
 
       reservationUpdate(event, start, end, resourceId, allDay, droppedOnAllDaySlot);
-
-      // if (!allDay && droppedOnAllDaySlot) {
-      //   event.allDay = true
-      // }
-
-      // setMyEvents((prev) => {
-      //   const existing = prev.find((ev) => ev.id === event.id) ?? {}
-      //   const filtered = prev.filter((ev) => ev.id !== event.id)
-      //   return [...filtered, { ...existing, start, end, resourceId, allDay }]
-      // })
     },
     [setMyEvents]
   );
@@ -245,9 +211,7 @@ const Calander = () => {
   );
 
   const onDoubleClickEvent = useCallback((calEvent) => {
-    /**
-     * Notice our use of the same ref as above.
-     */
+    
     window.clearTimeout(clickRef?.current);
     clickRef.current = window.setTimeout(() => {
       window.alert(calEvent);
@@ -255,15 +219,7 @@ const Calander = () => {
   }, []);
 
   const onSelectEvent = useCallback((calEvent) => {
-    console.log("calEvent: ", JSON.stringify(calEvent));
-    console.log("DATEEEE: ", calEvent.start);
-    /**
-     * Here we are waiting 250 milliseconds (use what you want) prior to firing
-     * our method. Why? Because both 'click' and 'doubleClick'
-     * would fire, in the event of a 'doubleClick'. By doing
-     * this, the 'click' handler is overridden by the 'doubleClick'
-     * action.
-     */
+    
     window.clearTimeout(clickRef?.current);
     clickRef.current = window.setTimeout(() => {
       // window.alert(calEvent.client)
@@ -294,13 +250,7 @@ const Calander = () => {
               </Typography>
               <Divider light />
               <br/>
-              {/* <PageHeader title='Calander RND' style={{ justifyContent: 'center' }} /> */}
               <Fragment>
-                {/* <DemoLink fileName="dndresource">
-          <strong>
-            Drag and Drop an "event" from one resource slot to another.
-          </strong>
-        </DemoLink> */}
                 <div className="height600">
                   <DragAndDropCalendar
                     defaultDate={defaultDate}
@@ -362,21 +312,12 @@ Calander.propTypes = {
 const mapStateToProps = (state) => {
   return {
     location: state.Location.data
-    // fieldValues: getFormValues('register')(state),
   };
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    // appointmentActions: bindActionCreators(appointmentActions, dispatch),
   };
 }
-
-// export default BigCalander;
-
-// export default reduxForm({
-//   form: 'register',
-//   validate,
-// })(connect(mapStateToProps, null)(BigCalander));
 
 export default Calander;

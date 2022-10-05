@@ -1,7 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { PieChart, Pie, Tooltip } from "recharts";
 import axios from "axios";
-import { useState } from "react";
 import { Card, CardContent, Divider, Typography } from "@mui/material";
 import "./Reservation.scss";
 
