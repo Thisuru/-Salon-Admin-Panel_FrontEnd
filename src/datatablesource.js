@@ -143,17 +143,22 @@ export const userColumns = [
     // { field: "_id", headerName: "ID", width: 70 },
     {
       field: "firstname",
-      headerName: "FirstName",
+      headerName: "First Name",
       width: 230,
     },
     {
       field: "lastname",
-      headerName: "LastName",
+      headerName: "Last Name",
+      width: 230,
+    },
+    {
+      field: "username",
+      headerName: "User Name",
       width: 230,
     },
     {
       field: "phonenumber",
-      headerName: "PhoneNumber",
+      headerName: "Phone Number",
       width: 230,
     },
     {

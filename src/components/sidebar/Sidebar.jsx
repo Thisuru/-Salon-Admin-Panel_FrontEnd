@@ -46,7 +46,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="top">
-        <NavLink activeclassName='is-active' to="/dashboard" style={{ textDecoration: "none" }}>
+        <NavLink activeclassname='is-active' to="/dashboard" style={{ textDecoration: "none" }}>
           <span className="logo">Admin panel</span>
         </NavLink>
       </div>
@@ -54,47 +54,47 @@ const Sidebar = () => {
       <div className="center">
         <ul>
           <p className="title">MAIN</p>
-          <NavLink activeclassName='is-active' to="/dashboard" style={{ textDecoration: "none" }}>
+          <NavLink ne='is-active' to="/dashboard" style={{ textDecoration: "none" }}>
           <li>
             <DashboardIcon className="icon" />
             <span>Dashboard</span>
           </li>
           </NavLink>
           <p className="title">USERS</p>
-          <NavLink activeclassName='is-active' to="/users" style={{ textDecoration: "none" }}>
+          <NavLink ne='is-active' to="/users" style={{ textDecoration: "none" }}>
             <li>
               <GroupIcon className="icon" />
               <span>Clients</span>
             </li>
           </NavLink>
           <p className="title">RESERVATION</p>
-          <NavLink activeclassName='is-active' to="/reservation" style={{ textDecoration: "none" }}>
+          <NavLink ne='is-active' to="/reservation" style={{ textDecoration: "none" }}>
           <li>
             <BookmarkIcon className="icon" />
             <span>Reservation</span>
           </li>
           </NavLink>
-          <NavLink activeclassName='is-active' to="/calendar" style={{ textDecoration: "none" }}>
+          <NavLink ne='is-active' to="/calendar" style={{ textDecoration: "none" }}>
           <li>
             <CalendarMonthIcon className="icon" />
             <span>Calendar</span>
           </li>
           </NavLink>
           <p className="title">ADMIN</p>
-          <NavLink activeclassName='is-active' to="/admin" style={{ textDecoration: "none" }}>
+          <NavLink ne='is-active' to="/admin" style={{ textDecoration: "none" }}>
           <li>
             <AdminPanelSettingsIcon className="icon" />
             <span>Admin Users</span>
           </li>
           </NavLink>
-          <NavLink activeclassName='is-active' to={"/admin/edit/" + id} style={{ textDecoration: "none" }}>
+          <NavLink ne='is-active' to={"/admin/edit/" + id} style={{ textDecoration: "none" }}>
           <li>
             <PersonOutlineIcon className="icon" />
             <span>My Account</span>
           </li>
           </NavLink>
           <p className="title">USER</p>
-          <NavLink activeclassName='is-active' to="/" style={{ textDecoration: "none" }}>
+          <NavLink ne='is-active' to="/" style={{ textDecoration: "none" }}>
           <li onClick={logoutHandler}>
             <ExitToAppIcon className="icon" />
             <span>Log out</span>

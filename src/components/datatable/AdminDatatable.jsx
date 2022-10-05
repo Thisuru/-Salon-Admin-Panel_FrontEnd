@@ -51,50 +51,50 @@ const AdminDatatable = () => {
     setOpenAdd(false);
   };
 
-  const actionColumn = [
-    {
-      field: "action",
-      headerName: "Action",
-      width: 360,
-      renderCell: (params) => {
-        return (
-          <div className="cellAction">
-            {/* <Link to={`/admin/edit/${params.row.id}`} style={{ textDecoration: "none" }}>
-              <Button
-                className="tocapitalize btn-font-size"
-                size="small"
-                variant="outlined"
-                color="secondary"
-                startIcon={<EditIcon />}>
-                Edit
-              </Button>
-            </Link> */}
+  // const actionColumn = [
+  //   {
+  //     field: "action",
+  //     headerName: "Action",
+  //     width: 360,
+  //     renderCell: (params) => {
+  //       return (
+  //         <div className="cellAction">
+  //           {/* <Link to={`/admin/edit/${params.row.id}`} style={{ textDecoration: "none" }}>
+  //             <Button
+  //               className="tocapitalize btn-font-size"
+  //               size="small"
+  //               variant="outlined"
+  //               color="secondary"
+  //               startIcon={<EditIcon />}>
+  //               Edit
+  //             </Button>
+  //           </Link> */}
 
-            <Button
-              className="tocapitalize btn-font-size"
-              size="small"
-              variant="outlined"
-              color="error"
-              startIcon={<DeleteIcon />}
-              onClick={() => handleDelete(params.row.id)}>
-              Delete
-            </Button>
+  //           <Button
+  //             className="tocapitalize btn-font-size"
+  //             size="small"
+  //             variant="outlined"
+  //             color="error"
+  //             startIcon={<DeleteIcon />}
+  //             onClick={() => handleDelete(params.row.id)}>
+  //             Delete
+  //           </Button>
 
-            {/* <Link to={`/admin/reset_password/${params.row.id}`} style={{ textDecoration: "none" }}>
-              <Button
-                className="tocapitalize btn-font-size"
-                size="small"
-                variant="outlined"
-                color="success"
-                startIcon={<EditIcon />}>
-                Edit
-              </Button>
-            </Link> */}
-          </div>
-        );
-      }
-    }
-  ];
+  //           {/* <Link to={`/admin/reset_password/${params.row.id}`} style={{ textDecoration: "none" }}>
+  //             <Button
+  //               className="tocapitalize btn-font-size"
+  //               size="small"
+  //               variant="outlined"
+  //               color="success"
+  //               startIcon={<EditIcon />}>
+  //               Edit
+  //             </Button>
+  //           </Link> */}
+  //         </div>
+  //       );
+  //     }
+  //   }
+  // ];
 
   async function getAllUsers(params) {
     let BASE_URL = "http://localhost:5000/api/v1/user?";
@@ -206,7 +206,8 @@ const AdminDatatable = () => {
               <DataGrid
                 className="datagrid"
                 rows={data}
-                columns={adminColumns.concat(actionColumn)}
+                // columns={adminColumns.concat(actionColumn)}
+                columns={adminColumns}
                 pageSize={9}
                 rowsPerPageOptions={[9]}
                 disableColumnMenu
