@@ -196,10 +196,15 @@ const NewReservation = ({ inputs, title }) => {
     setService(event.target.value);
   };
 
-  const currentDate = new Date();
+  const disablePreDates = () => {
+    let nowDate = new Date();
 
-  const disablePreDates = (currentDate) => {
-    const startSeconds = Date.parse(currentDate);
+    if ((nowDate.getHours()) < 17) {
+      //get yesterday date as nowDate
+      nowDate.setDate(nowDate.getDate() - 1)
+    }
+
+    const startSeconds = Date.parse(nowDate);
     return (date) => {
       return Date.parse(date) < startSeconds;
     };
@@ -322,7 +327,7 @@ const NewReservation = ({ inputs, title }) => {
                                     }}
                                     // onChange={handleChange}
                                     renderInput={(params) => <TextField {...params} />}
-                                    shouldDisableDate={disablePreDates(currentDate)}
+                                    shouldDisableDate={disablePreDates()}
                                     shouldDisableTime={(timeValue, clockType) => {
                                       return (
                                         (clockType === "hours" && timeValue <= 7) ||
@@ -348,7 +353,7 @@ const NewReservation = ({ inputs, title }) => {
                                     // onChange={handleChange}
                                     renderInput={(params) => <TextField {...params} />}
                                     disabled={!!!startTime}
-                                    shouldDisableDate={disablePreDates(currentDate)}
+                                    shouldDisableDate={disablePreDates()}
                                     shouldDisableTime={(timeValue, clockType) => {
                                       return (
                                         (clockType === "hours" && timeValue <= 7) ||
