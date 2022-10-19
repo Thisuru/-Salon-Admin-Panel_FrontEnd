@@ -23,6 +23,7 @@ const Datatable = () => {
   const [data, setData] = useState(userRows);
   const [open, setOpen] = useState(false);
   const [deleteRowId, setDeleteRowId] = useState("");
+  const [page, setPage] = useState(1);
 
   const handleDelete = (id) => {
     setOpen(true);
@@ -120,6 +121,13 @@ const Datatable = () => {
     });
   };
 
+  // const clientPagination = (newPage) => {
+  //   console.log("pagination val: ", newPage);
+  //   getAllClient({
+  //     page: newPage
+  //   });
+  // };
+
   useEffect(() => {
     getAllClient();
   }, []);
@@ -156,7 +164,10 @@ const Datatable = () => {
               pageSize={9}
               rowsPerPageOptions={[9]}
               disableColumnMenu
-              // checkboxSelection
+              // onPageChange={(newPage) => {
+              //   console.log("New Page: ", newPage + 1);
+              //   clientPagination(newPage + 1)
+              // }}
             />
           </div>
 
