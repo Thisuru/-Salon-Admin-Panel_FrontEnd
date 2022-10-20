@@ -23,7 +23,10 @@ const Datatable = () => {
   const [data, setData] = useState(userRows);
   const [open, setOpen] = useState(false);
   const [deleteRowId, setDeleteRowId] = useState("");
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
+  const [rowCount, setRowCount] = useState(0);
+  const [sort, setSort] = useState("");
+  const [sortField, setSortField] = useState("");
 
   const handleDelete = (id) => {
     setOpen(true);
@@ -33,7 +36,6 @@ const Datatable = () => {
   };
 
   const handleDeleteConfirm = () => {
-    console.log("ID:: ", deleteRowId);
     setData(data.filter((item) => item.id != deleteRowId));
     deleteClient(deleteRowId);
     setOpen(false);
@@ -81,21 +83,24 @@ const Datatable = () => {
     let BASE_URL = "http://localhost:5000/api/v1/clients?";
 
     if (params?.page) {
-      BASE_URL += "page=" + params.page + "&";
+      BASE_URL += "page=" + params?.page + "&limit=" + params?.limit;
     }
     if (params?.search) {
-      BASE_URL += "search=" + params.search;
+      BASE_URL += "&search=" + params?.search;
     }
-
+    if (params?.sort) {
+      BASE_URL += "&sort=" + params?.sort + "&field=" + params?.field;
+    }
     console.log("Base URL", BASE_URL);
-
     const response = await AuthService.get(BASE_URL);
 
     if (response.status === 200) {
       console.log("Success in Axios res.client ", response);
       setData(response.data.clients);
+      setRowCount(response.data.allClientCount)
     } else {
       console.log("Something went wrong in Axios");
+      toast("Something went wrong", { type: "error" });
     }
   }
 
@@ -121,16 +126,14 @@ const Datatable = () => {
     });
   };
 
-  // const clientPagination = (newPage) => {
-  //   console.log("pagination val: ", newPage);
-  //   getAllClient({
-  //     page: newPage
-  //   });
-  // };
-
   useEffect(() => {
-    getAllClient();
-  }, []);
+    getAllClient({
+      page: page,
+      limit: 9,
+      sort: sort,
+      field: sortField
+    });
+  }, [page, sort, sortField]);
 
   return (
     <Card>
@@ -162,12 +165,18 @@ const Datatable = () => {
               rows={data}
               columns={userColumns.concat(actionColumn)}
               pageSize={9}
-              rowsPerPageOptions={[9]}
+              // rowsPerPageOptions={[9]}
               disableColumnMenu
-              // onPageChange={(newPage) => {
-              //   console.log("New Page: ", newPage + 1);
-              //   clientPagination(newPage + 1)
-              // }}
+              pagination
+              paginationMode="server"
+              rowCount={rowCount}
+              onPageChange={(newPage) => {
+                setPage(newPage)
+              }}
+              onSortModelChange={(newSortModel) => {
+                setSort(newSortModel[0].sort)
+                setSortField(newSortModel[0].field)
+              }}
             />
           </div>
 
